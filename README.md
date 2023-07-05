@@ -7,10 +7,4 @@ Use this repository as a template if you want to start working on
 instructions](https://github.com/martinthomson/i-d-template/blob/main/doc/TEMPLATE.md)
 for more information.
 
-Once you have created your own repository, start work by:
-
-1. Set "Workflow permissions" to "Read and write permissions"
-   [in the repository settings](../../settings/actions#actions_default_workflow_permissions_write).
-
-2. Rename the `draft-todo-yourname-protocol.md` file
-   [here](../../edit/main/draft-todo-yourname-protocol.md).
+[Editors Copy](https://ounsworth.github.io/acme-auto-discovery/draft-vanbrouwershaven-acme-auto-discovery.html)
