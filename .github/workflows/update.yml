@@ -24,7 +24,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: "Checkout"
+<<<<<<< HEAD
       uses: actions/checkout@v4
+=======
+      uses: actions/checkout@v2
+>>>>>>> 3d91cfa (Initial commit)
 
     - name: "Update Generated Files"
       uses: martinthomson/i-d-template@v1
