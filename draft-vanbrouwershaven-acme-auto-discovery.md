@@ -153,7 +153,7 @@ To enable the ACME client to obtain the necessary configuration information for 
 
 The well-known directory is a standardized location within the domain's web server where clients can discover specific resources or configurations. In the context of ACME client configuration retrieval, a copy of the ACME directory object or a redirect to it is placed in the well-known directory of the CA's domain, which is specified as a constraint in the CAA record. This allows the ACME client to conveniently retrieve the required configuration.
 
-For instance, when the CAA record restricts certificate issuance to the CA "ca.example" for the domain "example.com", the ACME client retrieves the ACME directory object as specified in Section 7.1.1 of ACME [RFC 8555] from the URL "https://ca.example/.well-known/acme".
+For instance, when the CAA record restricts certificate issuance to the CA "ca.example" for the domain "example.com", the ACME client retrieves the ACME directory object as specified in Section 7.1.1 of ACME [RFC8555] from the URL "https://ca.example/.well-known/acme".
 
 While an alternative consideration was to include the ACME server address directly as an attribute in the CAA record, it was determined that this approach could introduce clutter and significantly increase the size of the record. Additionally, a rigid binding between the CAA record and the ACME server address may present challenges if the CA needs to change its server address in the future.
 
@@ -198,7 +198,7 @@ The process looks as follows:
 1. The ACME client initiates a DNS lookup to retrieve the CAA record(s) according to [RFC8659].
   a. The DNS resolver responds with the CAA record for each domain, specifying the authorized CAs capable of issuing certificates, along with their priorities and other optional parameters.
 2. The ACME client analyzes the CAA records for the domain and selects the CA with the highest priority.
-3. The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected CA (https://[issuer-domain-name]/.well-known/acme)
+3. The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected CA (https://\[issuer-domain-name\]/.well-known/acme)
 4. If the directory object indicates that an External Account Binding is required, but this is not configured on the ACME client, the client will try to determine an alternative common CA in step 2.
   a. If no alternative CA can be found, the process with end with a failure and the user will be informed.
 5. The ACME client proceeds with the ACME challenge process, where it interacts with the ACME server to complete the required validation steps.
@@ -229,7 +229,7 @@ The process with multiple domain names looks as follows:
   a. If a common CA is found, the ACME client proceeds with step 4.
   b. If no common CA is found, the ACME client tries to find a compromise using as few as possible domains with a lower priority.
   c. If no compromise can be found, the process will end with a failure and the user will be informed.
-4. The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected common CA (https://[issuer-domain-name]/.well-known/acme)
+4. The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected common CA (https://\[issuer-domain-name\]/.well-known/acme)
 5. If an External Account Binding is required but not configured the ACME client will try to determine an alternative common CA in step 3.
   a. If no alternative CA can be found, the process with end with a failure and the user will be informed.
 6. The ACME client proceeds with the ACME challenge process, where it interacts with the ACME server to complete the required validation steps.
@@ -281,7 +281,7 @@ Specification document(s): RFC XXXX, Section Y.Z
 Related information: N/A
 ~~~
 
-[[ RFC EDITOR: Please replace XXXX above with the RFC number assigned to this document ]]
+RFC EDITOR: Please replace XXXX above with the RFC number assigned to this document
 
 // TODO: add CAA attributes (not sure if these can be registered)
 
