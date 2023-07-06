@@ -235,7 +235,8 @@ It is crucial for Certification Authorities (CAs) to carefully consider the inte
 
 ## Internal Account Binding using Domain Control Validation
 
-In addition to the external account binding mechanism, an alternative approach can be implemented by the CAs that offers distinct advantages, particularly in cases where service providers may not expose the account binding configuration options to their users. This alternative method leverages domain control validation as the initial step in the process and subsequently pauses to await confirmation from the account holder regarding the account binding. The email address associated with the account can be utilized for differentiating between multiple Certification Authority (CA) accounts holding the same domain name.
+In addition to the external account binding mechanism, an alternative approach can be implemented by the CAs that offers distinct advantages, particularly in cases where service providers may not expose the account binding configuration options to their users. This alternative method leverages domain control validation as the initial step in the process and subsequently pauses to await confirmation from the account holder regarding the account binding. The email address associated with the ACME account can be utilized for differentiating between multiple Certification Authority (CA) accounts holding the same domain name.
+
 The process to establish an internal account binding would be as follows:
 
 1. The user adds the domain name to their Certification Authority (CA) account and completes the domain control verification process within this account.
