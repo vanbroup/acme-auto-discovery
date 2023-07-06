@@ -156,9 +156,10 @@ The well-known directory is a standardized location within the domain's web serv
 
 For instance, when the CAA record restricts certificate issuance to the CA "ca.example" for the domain "example.com", the ACME client retrieves the ACME directory object as specified in Section 7.1.1 of ACME [RFC8555] from the URL "https://ca.example/.well-known/acme".
 
-While an alternative consideration was to include the ACME server address directly as an attribute in the CAA record, it was determined that this approach could introduce clutter and significantly increase the size of the record. Additionally, a rigid binding between the CAA record and the ACME server address may present challenges if the CA needs to change its server address in the future.
+While an alternative consideration was to include the ACME server address directly as a parameter in the CAA record, it was determined that this approach could introduce clutter and significantly increase the size of the record. Additionally, a rigid binding between the CAA record and the ACME server address may present challenges if the CA needs to change its server address in the future.
 
 Thus, the approach outlined in this document, utilizing the well-known directory for ACME client configuration retrieval, offers flexibility for CAs to manage and update their ACME server addresses while maintaining a concise and focused CAA record.
+
 It is important for implementers and operators to ensure the availability and accessibility of the ACME directory object within the well-known directory to facilitate successful ACME client configuration retrieval.
 
 # ACME Client Behavior {#sec-behavior}
