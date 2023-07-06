@@ -98,9 +98,9 @@ When this parameter is not specified the client MUST assume that discovery is en
 
 ### The "priority" Parameter
 
-The value of this parameter, if specified, MUST contain digits, where the value "1" represents the highest priority, and subsequent values like "2", "3", and so on, indicate progressively lower priorities.
+The value of this parameter, if specified, MUST contain a positive integer, where the value "1" represents the highest priority, and subsequent values like "2", "3", and so on, indicate progressively lower priorities.
 
-The default priority, in case this parameter is not specified will be "0".
+In the case that this parameter is not specified, the entry will be considered to have a lower priority than all entries which specify any priority.
 
 ## Examples
 
@@ -114,16 +114,16 @@ example.com CAA 0 issue "ca.example"
 
 By default, when multiple CAA records are present, the CAs are randomized to distribute the load. However, some users may have preferences regarding the order in which CAs are attempted for certificate issuance. To explicitly specify the order, the "priority" parameter can be used.
 
-In the next example, the domain "example.com" has two CAA records. The CAA record with "ca2.example" has a higher priority value of 2, indicating it should be attempted first. The CAA record with "ca1.example" has a lower priority value of 1, indicating it should be attempted second.
+In the next example, the domain "example.com" has two CAA records. The CAA record with "ca1.example" has a higher priority value of 1, indicating it should be attempted first. The CAA record with "ca2.example" has a lower priority value of 2, indicating it should be attempted second.
 
 ~~~ dns-rr
 example.com CAA 0 issue "ca1.example; priority=2"
 example.com CAA 0 issue "ca2.example; priority=1"
 ~~~
 
-CAA records that do not explicitly specify a priority are automatically assigned the highest priority, which is 0. In cases where multiple CAA records have the same priority, the usage will be randomized.
+CAA records that do not explicitly specify a priority are automatically assigned the lowest priority. In cases where multiple CAA records have the same priority, the usage will be randomized.
 
-Consider the following example, where the domain "example.com" has three CAA records. The CAA record with "ca1.example" has no specified priority, and thus it is assigned the highest priority of 0. The CAA records with "ca2.example" and "ca3.example" both have a priority of 1. In this scenario, the ACME client will first attempt to obtain its configuration from "ca1.example". If that fails, it will randomly select either "ca2.example" or "ca3.example" and attempt to obtain the configuration. If all attempts fail, the certificate issuance will ultimately fail.
+Consider the following example, where the domain "example.com" has three CAA records. The CAA record with "ca1.example" has no specified priority, and thus it is assigned the lowest priority. The CAA records with "ca2.example" and "ca3.example" both have a priority of 1. In this scenario, the ACME client will first attempt to obtain its configuration from either "ca2.example" or "ca3.example", selected at random. If both of those fail, it will fall back to "ca1.example". If all attempts fail, the certificate issuance will ultimately fail.
 
 ~~~ dns-rr
 example.com CAA 0 issue "ca1.example"
