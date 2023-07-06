@@ -70,7 +70,8 @@ normative:
   RFC8659:
 
 informative:
-
+  RFC8657:
+  RFC5785:
 
 --- abstract
 
@@ -87,7 +88,7 @@ This document presents a mechanism for automatically discovering the ACME (Autom
 
 The ACME protocol [RFC8555] offers a powerful framework for automating the issuance and validation of certificates, eliminating the need for user intervention. This capability has significantly streamlined the process of obtaining certificates for servers and infrastructure software. However, in shared environments, where multiple entities coexist, users often face limitations in modifying ACME client configurations. Consequently, they are forced to rely on manual certificate management systems or default Certificate Authorities (CAs) preconfigured for the shared environment.
 
-This document introduces a mechanism to address the aforementioned challenge by enabling the automatic discovery of ACME client configurations for relevant domain names within a shared environment. The solution leverages the DNS Certification Authority Authorization (CAA) Resource Record [RFC 8659] to identify the authorized Certification Authorities capable of issuing certificates for a specific domain name or set of domain names.
+This document introduces a mechanism to address the aforementioned challenge by enabling the automatic discovery of ACME client configurations for relevant domain names within a shared environment. The solution leverages the DNS Certification Authority Authorization (CAA) Resource Record [RFC8659] to identify the authorized Certification Authorities capable of issuing certificates for a specific domain name or set of domain names.
 
 By leveraging the power of CAA records, this mechanism empowers users with enhanced control and flexibility. Users can specify their preferences, choose from a broader range of certificate issuers, and even designate a backup Certification Authority.
 
@@ -181,7 +182,7 @@ It is important for implementers and operators to ensure the availability and ac
 
 The process looks as follows:
 
-1. The ACME client initiates a DNS lookup to retrieve the CAA record(s) according to RFC 8659.
+1. The ACME client initiates a DNS lookup to retrieve the CAA record(s) according to [RFC8659].
   a. The DNS resolver responds with the CAA record for each domain, specifying the authorized CAs capable of issuing certificates, along with their priorities and other optional parameters.
 2. The ACME client analyzes the CAA records for the domain and selects the CA with the highest priority.
 3. The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected CA (https://[issuer-domain-name]/.well-known/acme)
@@ -193,7 +194,7 @@ The process looks as follows:
 8. The ACME client receives the issued certificate from the ACME server.
 9. The certificate is ready for use by the ACME client for the specified domain(s).
 
-Prior to establishing a connection with the default ACME server or a pool of ACME servers, the ACME client verifies the presence of any configured CA Authorization records (CAA) as defined in RFC 8659. If a CAA record is found, the ACME client will attempt to obtain a certificate from the CA with the highest priority. If the certificate issuance attempt fails, the client will proceed to lower-priority CAs in an attempt to obtain the certificate.
+Prior to establishing a connection with the default ACME server or a pool of ACME servers, the ACME client verifies the presence of any configured CA Authorization records (CAA) as defined in [RFC8659]. If a CAA record is found, the ACME client will attempt to obtain a certificate from the CA with the highest priority. If the certificate issuance attempt fails, the client will proceed to lower-priority CAs in an attempt to obtain the certificate.
 
 In the event of a failed attempt to obtain a certificate from a particular CA, the ACME client employs a retry mechanism to ensure successful certificate acquisition. However, in cases where certain CAs are known to be temporarily unavailable, the ACME client MAY choose to ignore those CAs for a limited period of time. By temporarily excluding unresponsive CAs from the issuance process, the client can optimize its certificate acquisition strategy and enhance overall efficiency. This approach helps mitigate potential delays caused by unresponsive CAs and allows the client to focus on viable options for obtaining the required certificate.
 
@@ -209,7 +210,7 @@ To mitigate the risk of encountering failures in the certificate issuance proces
 
 The process with multiple domain names looks as follows:
 1. The ACME client identifies the list of domain names for which a certificate is requested.
-2. For each domain in the list, the ACME client initiates a DNS lookup to retrieve the CAA record(s) according to RFC 8659.
+2. For each domain in the list, the ACME client initiates a DNS lookup to retrieve the CAA record(s) according to [RFC8659].
   a. The DNS resolver responds with the CAA record for each domain, specifying the authorized CAs capable of issuing certificates, along with their priorities and other optional parameters.
 3. The ACME client analyzes the CAA records for all domains to identify a common CA that is authorized by all included domains and has the highest priority.
   a. If a common CA is found, the ACME client proceeds with step 4.
@@ -274,13 +275,13 @@ Related information: N/A
 
 ## Risks with Auto-Discovery of Authorized CAs
 
-The mechanism described in this document relies on the DNS Certification Authority Authorization (CAA) Resource Record [RFC 8659] to determine the authorized Certification Authorities (CAs) capable of issuing certificates for a given domain name(s). However, there are potential risks associated with the automatic provisioning of certificates without an explicit indication from the user.
+The mechanism described in this document relies on the DNS Certification Authority Authorization (CAA) Resource Record [RFC8659] to determine the authorized Certification Authorities (CAs) capable of issuing certificates for a given domain name(s). However, there are potential risks associated with the automatic provisioning of certificates without an explicit indication from the user.
 
 ### Unexpected Certificate Issuance
 
 Where the issuance of certificates is currently restricted through CAA records and certificates are provisioned through alternative means (i.e., manual or via a proprietary API) certificates can unexpectedly be replaced with a similar certificate or a certificate of a different type (e.g., DV versus EV) if the ACME client supports this new mechanism.
 
-Its recommended that users who which to obtain certificates attesting to more than domain validation (DV) control, restrict the validation method using a CA specific “validationmethods” CAA parameter value (e.g., “ca-ov”, “ca-ev”, “ca-qwac”) as specified by RFC 8657.
+Its recommended that users who which to obtain certificates attesting to more than domain validation (DV) control, restrict the validation method using a CA specific “validationmethods” CAA parameter value (e.g., “ca-ov”, “ca-ev”, “ca-qwac”) as specified by [RFC8657].
 
 ### Issuance by the ‘wrong’ authorized CA
 
