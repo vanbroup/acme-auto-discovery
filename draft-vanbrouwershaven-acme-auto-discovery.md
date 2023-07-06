@@ -241,12 +241,14 @@ However, it is crucial to acknowledge that this internal account binding mechani
 
 The following value has been registered in the "Well-Known URIs" registry (using the template from [RFC5785]):
 
-```
+~~~
 URI suffix: acme
 Change controller: IETF
 Specification document(s): RFC XXXX, Section Y.Z
 Related information: N/A
-```
+~~~
+
+[[ RFC EDITOR: Please replace XXXX above with the RFC number assigned to this document ]]
 
 // TODO: add CAA attributes (not sure if these can be registered)
 
