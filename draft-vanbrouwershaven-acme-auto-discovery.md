@@ -140,6 +140,7 @@ example.com CAA 0 issue "ca2.example; priority=2"
 ~~~
 
 Implementers and operators should carefully configure CAA records according to their specific requirements and considerations.
+
 // COMMENT: If a mechanism for enabling or disabling auto-discovery is required, users may need to configure their preferences accordingly. While enabling auto-discovery by default could promote adoption, it could lead to unexpected certificate issuance (see the security considerations). For instance, in the given example, if the default setting is set to false, only CA 2 will be used to retrieve the ACME client configuration.
 
 ~~~ dns-rr
