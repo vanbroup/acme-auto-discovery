@@ -55,7 +55,9 @@ informative:
 
 --- abstract
 
-This document presents a mechanism for automatically discovering the ACME (Automated Certificate Management Environment) [RFC8555] client configuration for the relevant domain name(s) in a shared environment. The mechanism leverages the DNS Certification Authority Authorization (CAA) Resource Record [RFC8659] to determine the authorized Certification Authorities (CAs) capable of issuing certificates for the given domain name(s). By retrieving instructions for the ACME client from the authorized CA(s), this mechanism allows for improved user preferences, increased diversity in certificate issuers, and an option to specify backup CA(s).
+A significant impediment to the widespread adoption of the Automated Certificate Management Environment (ACME) [RFC8555] is that ACME clients need to de pre-configured with the URL of the ACME server to be used. This often leaves domain owners at the mercy of their hosting provider as to which Certification Authorities (CAs) can be used. This specification provides a mechanism to bootstrap ACME client configuration from a domain's DNS CAA Resource Record [RFC8659], thus giving control of which CA(s) to use back to the domain owner.
+
+Specifically, this document specifies two new extensions to the DNS CAA Resource Record: the "discovery" and "priority" parameters. Additionally, it registers the URI ".well-known/acme" at which all compliant ACME servers will host their ACME directory object. By retrieving instructions for the ACME client from the authorized CA(s), this mechanism allows for the domain owner to configure multiple CAs in either load-balances or fallback prioritizations which improves user preferences and increased diversity in certificate issuers.
 
 
 --- middle
