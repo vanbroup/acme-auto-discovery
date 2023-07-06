@@ -164,6 +164,7 @@ It is important for implementers and operators to ensure the availability and ac
 
 The process looks as follows:
 
+~~~ aasvg
 +----------------------+                              +----------------------------+
 |                      |                              |                            |
 |     ACME Client      |     1. DNS Lookup (CAA)      |       DNS Resolver         |
@@ -192,6 +193,7 @@ The process looks as follows:
                   +-----------------------------------+ https://acme.ca.example/v2 |<-+
                                                       |                            |
                                                       +----------------------------+
+~~~
 
 1. The ACME client initiates a DNS lookup to retrieve the CAA record(s) according to [RFC8659].
   a. The DNS resolver responds with the CAA record for each domain, specifying the authorized CAs capable of issuing certificates, along with their priorities and other optional parameters.
@@ -306,9 +308,9 @@ Additionally, ACME clients should provide clear visibility and feedback to users
 
 ## Malicious ACME Servers
 
-One potential security risk associated with the mechanism defined in this document is the possibility of clients being directed to malicious ACME servers. Malicious actors could exploit vulnerabilities in the ACME client implementation or inject malicious code, potentially leading to unauthorized access or remote code execution on the client's system.
+One potential security risk associated with the mechanism defined in this document is the possibility of domain owners placing links to malicious ACME servers into their DNS CAA Resource Records in order to attack the infrastructure of hosting providers. Malicious actors could exploit vulnerabilities in the ACME client implementation or inject malicious code, potentially leading to unauthorized access or remote code execution on the client's system.
 
-To minimize this risk, clients must adopt a cautious and security-conscious approach when interacting with ACME servers. It is crucial not to blindly trust servers to behave securely and in accordance with the ACME protocol.
+To minimize this risk, ACME clients must be written with a cautious and security-conscious approach when interacting with ACME servers. It is crucial not to blindly trust servers to behave securely and in accordance with the ACME protocol.
 
 ## Terms of Service and Acceptance
 
