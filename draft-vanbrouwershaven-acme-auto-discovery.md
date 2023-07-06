@@ -45,7 +45,7 @@ venue:
 
 author:
   -
-      ins: P vanBrouwershaven
+      ins: P. van Brouwershaven
       name: Paul van Brouwershaven
       org: Entrust Limited
       abbrev: Entrust
@@ -53,7 +53,7 @@ author:
       city: Ottawa, Ontario
       country: Canada
       code: K2K 3G5
-      email: Paul.vanBrouwershaven@entrust.com
+      email: paul.vanbrouwershaven@entrust.com
   -
       ins: M. Ounsworth
       name: Mike Ounsworth
