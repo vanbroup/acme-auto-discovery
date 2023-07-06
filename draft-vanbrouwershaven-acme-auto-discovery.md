@@ -224,6 +224,7 @@ When the ACME client initiates a certificate request for multiple domain names, 
 To mitigate the risk of encountering failures in the certificate issuance process due to incompatible CAA records, it is crucial to ensure that certificates only include domain names that are under the control of the same entity. By maintaining a consistent ownership and control of the domain names included in a certificate, the likelihood of encountering authorization conflicts among CAA records is minimized. This practice promotes a more streamlined and reliable certificate issuance process, reducing the potential for errors and ensuring that the certificate accurately represents the domains controlled by a single entity.
 
 The process with multiple domain names looks as follows:
+
 1. The ACME client identifies the list of domain names for which a certificate is requested.
 2. For each domain in the list, the ACME client initiates a DNS lookup to retrieve the CAA record(s) according to [RFC8659].
   a. The DNS resolver responds with the CAA record for each domain, specifying the authorized CAs capable of issuing certificates, along with their priorities and other optional parameters.
