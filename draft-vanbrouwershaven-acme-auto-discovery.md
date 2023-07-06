@@ -188,7 +188,7 @@ The process looks as follows:
          |                               +------------+-------------+
          |                                            | Redirect
          |                                            v or alias
-         |                               +--------------------------+ 
+         |                               +--------------------------+
          |     ACME Directory Object     |                          |
          +-------------------------------+ https://acme.ca.example/ |
                                          |                          |
