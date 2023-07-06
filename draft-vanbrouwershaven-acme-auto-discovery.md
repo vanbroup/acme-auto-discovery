@@ -40,7 +40,7 @@ venue:
   type: Working Group
   mail: acme@ietf.org
   arch: https://datatracker.ietf.org/wg/acme/about/
-  github: ounsworth/acme-auto-discovery
+  github: vanbroup/acme-auto-discovery
   latest: TODO
 
 author:
