@@ -165,34 +165,34 @@ It is important for implementers and operators to ensure the availability and ac
 The process looks as follows:
 
 ~~~ aasvg
-+----------------------+                              +----------------------------+
-|                      |                              |                            |
-|     ACME Client      |     1. DNS Lookup (CAA)      |       DNS Resolver         |
-|                      +----------------------------->+                            |
-|                      |                              +------------+---------------+
-|                      |<------------+                             |
-+-------------------+--+             |                             v
-                  ^ |                | DNS Response   +----------------------------+
-                  | |                +----------------+ example.com CAA            |
-                  | |                                 | Record:                    |
-                  | |                                 |                            |
-                  | |        2. Select issuer (CA)    | example.com                |
-                  | |           based on priority     | CAA 0 issue "ca.example    |
-                  | |                                 +----------------------------+
-                  | |
-                  | |                                 +----------------------------+
-                  | |        3. Connect issuer (CA)   |                            |
-                  | +-------------------------------->+  https://example.ca/       +--+
-                  |                                   |          .well-known/acme  |  |
-                  |                                   |                            |  |
-                  |                                   +----------------------------+  |
-                  |                                                                   | Redirect
-                  |                                                                   | or alias
-                  |                                   +----------------------------+  | 
-                  |        ACME Directory Object      |                            |  |
-                  +-----------------------------------+ https://acme.ca.example/v2 |<-+
-                                                      |                            |
-                                                      +----------------------------+
++-------------+                          +--------------------------+
+|             |                          |                          |
+|             |  1. DNS Lookup (CAA)     |       DNS Resolver       |
+| ACME Client +------------------------->+                          |
+|             |                          +------------+-------------+
+|             |<---------+                            |
++----------+--+          |                            v
+         ^ |             |               +--------------------------+
+         | |             | DNS Response  | example.com CAA          |
+         | |             +---------------+ Record:                  |
+         | |                             |                          |
+         | |     2. Select issuer (CA)   | example.com              |
+         | |        based on priority    | CAA 0 issue "ca.example  |
+         | |                             +--------------------------+
+         | |
+         | |                             +--------------------------+
+         | |     3. Connect issuer (CA)  |                          |
+         | +---------------------------->+  https://example.ca/     |
+         |                               |        .well-known/acme  |
+         |                               |                          |
+         |                               +------------+-------------+
+         |                                            | Redirect
+         |                                            v or alias
+         |                               +--------------------------+ 
+         |     ACME Directory Object     |                          |
+         +-------------------------------+ https://acme.ca.example/ |
+                                         |                          |
+                                         +--------------------------+
 ~~~
 
 1. The ACME client initiates a DNS lookup to retrieve the CAA record(s) according to [RFC8659].
