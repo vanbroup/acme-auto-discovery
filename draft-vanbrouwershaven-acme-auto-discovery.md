@@ -179,7 +179,7 @@ The process looks as follows:
          | |             +---------------+ Record:                  |
          | |                             |                          |
          | |     2. Select issuer (CA)   | example.com              |
-         | |        based on priority    | CAA 0 issue "ca.example  |
+         | |        based on priority    | CAA 0 issue "ca.example" |
          | |                             +--------------------------+
          | |
          | |                             +--------------------------+
