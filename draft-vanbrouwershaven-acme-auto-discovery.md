@@ -126,44 +126,44 @@ This section shows some examples of how CAA records can be configured in the con
 
 A simple CAA record allows the issuance of certificates from a single designated CA. In the following example, the CAA record for the domain "example.com" authorizes the CA "ca.example" to issue certificates. However, it does not specify any backup CA. Consequently, if the authorized CA is unable to issue the requested certificate, the certificate issuance will fail.
 
-```
+~~~ dns-rr
 example.com CAA 0 issue "ca.example"
-```
+~~~
 
 By default, when multiple CAA records are present, the CAs are randomized to distribute the load. However, some users may have preferences regarding the order in which CAs are attempted for certificate issuance. To explicitly specify the order, the "priority" parameter can be used.
 
 In the next example, the domain "example.com" has two CAA records. The CAA record with "ca2.example" has a higher priority value of 2, indicating it should be attempted first. The CAA record with "ca1.example" has a lower priority value of 1, indicating it should be attempted second.
 
-```
+~~~ dns-rr
 example.com CAA 0 issue "ca1.example; priority=2"
 example.com CAA 0 issue "ca2.example; priority=1"
-```
+~~~
 
 CAA records that do not explicitly specify a priority are automatically assigned the highest priority, which is 0. In cases where multiple CAA records have the same priority, the usage will be randomized.
 
 Consider the following example, where the domain "example.com" has three CAA records. The CAA record with "ca1.example" has no specified priority, and thus it is assigned the highest priority of 0. The CAA records with "ca2.example" and "ca3.example" both have a priority of 1. In this scenario, the ACME client will first attempt to obtain its configuration from "ca1.example". If that fails, it will randomly select either "ca2.example" or "ca3.example" and attempt to obtain the configuration. If all attempts fail, the certificate issuance will ultimately fail.
 
-```
+~~~ dns-rr
 example.com CAA 0 issue "ca1.example"
 example.com CAA 0 issue "ca2.example; priority=1"
 example.com CAA 0 issue "ca3.example; priority=1"
-```
+~~~
 
 Furthermore, it is possible to configure CAA records to indicate a preference for specific types of certificates. In the following example, the domain "example.com" prefers Extended Validation (EV) certificates issued by "ca1.example". If the issuance of an EV certificate fails, the ACME client will attempt to obtain any type of certificate from "ca1.example". If that also fails, it will then try to obtain any type of certificate from "ca2.example".
 
-```
+~~~ dns-rr
 example.com CAA 0 issue "ca1.example; validationmethods=ca-ev"
 example.com CAA 0 issue "ca1.example; priority=1"
 example.com CAA 0 issue "ca2.example; priority=2"
-```
+~~~
 
 Implementers and operators should carefully configure CAA records according to their specific requirements and considerations.
 // COMMENT: If a mechanism for enabling or disabling auto-discovery is required, users may need to configure their preferences accordingly. While enabling auto-discovery by default could promote adoption, it could lead to unexpected certificate issuance (see the security considerations). For instance, in the given example, if the default setting is set to false, only CA 2 will be used to retrieve the ACME client configuration.
 
-```
+~~~ dns-rr
 example.com CAA 0 issue "ca1.example"
 example.com CAA 0 issue "ca2.example; discovery=true"
-```
+~~~
 
 # ACME Client Configuration
 
