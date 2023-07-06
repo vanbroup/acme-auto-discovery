@@ -117,8 +117,8 @@ By default, when multiple CAA records are present, the CAs are randomized to dis
 In the next example, the domain "example.com" has two CAA records. The CAA record with "ca1.example" has a higher priority value of 1, indicating it should be attempted first. The CAA record with "ca2.example" has a lower priority value of 2, indicating it should be attempted second.
 
 ~~~ dns-rr
-example.com CAA 0 issue "ca1.example; priority=2"
-example.com CAA 0 issue "ca2.example; priority=1"
+example.com CAA 0 issue "ca1.example; priority=1"
+example.com CAA 0 issue "ca2.example; priority=2"
 ~~~
 
 CAA records that do not explicitly specify a priority are automatically assigned the lowest priority. In cases where multiple CAA records have the same priority, the usage will be randomized.
