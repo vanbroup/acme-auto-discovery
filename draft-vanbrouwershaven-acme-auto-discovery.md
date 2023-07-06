@@ -162,11 +162,40 @@ It is important for implementers and operators to ensure the availability and ac
 
 The process looks as follows:
 
++----------------------+                              +----------------------------+
+|                      |                              |                            |
+|     ACME Client      |     1. DNS Lookup (CAA)      |       DNS Resolver         |
+|                      +----------------------------->+                            |
+|                      |                              +------------+---------------+
+|                      |<------------+                             |
++-------------------+--+             |                             v
+                  ^ |                | DNS Response   +----------------------------+
+                  | |                +----------------+ example.com CAA            |
+                  | |                                 | Record:                    |
+                  | |                                 |                            |
+                  | |        2. Select issuer (CA)    | example.com                |
+                  | |           based on priority     | CAA 0 issue "ca.example    |
+                  | |                                 +----------------------------+
+                  | |
+                  | |                                 +----------------------------+
+                  | |        3. Connect issuer (CA)   |                            |
+                  | +-------------------------------->+  https://example.ca/       +--+
+                  |                                   |          .well-known/acme  |  |
+                  |                                   |                            |  |
+                  |                                   +----------------------------+  |
+                  |                                                                   | Redirect
+                  |                                                                   | or alias
+                  |                                   +----------------------------+  | 
+                  |        ACME Directory Object      |                            |  |
+                  +-----------------------------------+ https://acme.ca.example/v2 |<-+
+                                                      |                            |
+                                                      +----------------------------+
+
 1. The ACME client initiates a DNS lookup to retrieve the CAA record(s) according to [RFC8659].
   a. The DNS resolver responds with the CAA record for each domain, specifying the authorized CAs capable of issuing certificates, along with their priorities and other optional parameters.
 2. The ACME client analyzes the CAA records for the domain and selects the CA with the highest priority.
 3. The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected CA (https://[issuer-domain-name]/.well-known/acme)
-4. If an External Account Binding is required but not configured the ACME client will try to determine an alternative common CA in step 2.
+4. If the directory object indicates that an External Account Binding is required, but this is not configured on the ACME client, the client will try to determine an alternative common CA in step 2.
   a. If no alternative CA can be found, the process with end with a failure and the user will be informed.
 5. The ACME client proceeds with the ACME challenge process, where it interacts with the ACME server to complete the required validation steps.
 6. Upon successful completion of the challenge, the ACME client sends a finalize request to the ACME server, indicating the completion of the certificate issuance process.
@@ -178,7 +207,7 @@ Prior to establishing a connection with the default ACME server or a pool of ACM
 
 In the event of a failed attempt to obtain a certificate from a particular CA, the ACME client employs a retry mechanism to ensure successful certificate acquisition. However, in cases where certain CAs are known to be temporarily unavailable, the ACME client MAY choose to ignore those CAs for a limited period of time. By temporarily excluding unresponsive CAs from the issuance process, the client can optimize its certificate acquisition strategy and enhance overall efficiency. This approach helps mitigate potential delays caused by unresponsive CAs and allows the client to focus on viable options for obtaining the required certificate.
 
-ACME clients MUST notify the user if the enrollment of a certificate from a specific CA fails multiple times, even if the client successfully obtains a certificate from an alternative CA. This notification is essential to ensure that users are promptly informed about recurring enrollment failures, allowing them to take appropriate measures. By providing such notifications, clients enable users to assess and address any underlying issues, seek alternative solutions, or make informed decisions regarding their certificate management processes.
+ACME clients SHOULD notify the user if the enrollment of a certificate from a specific CA fails multiple times, even if the client successfully obtains a certificate from an alternative CA. This notification is essential to ensure that users are promptly informed about recurring enrollment failures, allowing them to take appropriate measures. By providing such notifications, clients enable users to assess and address any underlying issues, seek alternative solutions, or make informed decisions regarding their certificate management processes.
 
 In order to promote the adoption of ACME in Enterprise environments, it is crucial for implementers and operators to recognize the significance of External Account Bindings. The section dedicated to External Account Bindings provides valuable information and guidelines for effectively incorporating this feature.
 
@@ -272,6 +301,12 @@ In scenarios where a domain name authorizes multiple CAs without specifying a we
 To mitigate this risk, it is recommended that users who have multiple CAA records explicitly configure the CAA record to include a weight or preference attribute to indicate their desired CA for certificate issuance.
 
 Additionally, ACME clients should provide clear visibility and feedback to users regarding the CA from which certificates will be obtained, ensuring that it aligns with their expectations.
+
+## Malicious ACME Servers
+
+One potential security risk associated with the mechanism defined in this document is the possibility of clients being directed to malicious ACME servers. Malicious actors could exploit vulnerabilities in the ACME client implementation or inject malicious code, potentially leading to unauthorized access or remote code execution on the client's system.
+
+To minimize this risk, clients must adopt a cautious and security-conscious approach when interacting with ACME servers. It is crucial not to blindly trust servers to behave securely and in accordance with the ACME protocol.
 
 ## Terms of Service and Acceptance
 
