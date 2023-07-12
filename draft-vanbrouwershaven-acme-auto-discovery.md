@@ -92,13 +92,14 @@ This document defines the "discovery" and "priority" CAA parameters in the conte
 ### The "discovery" Parameter
 
 The "discovery" parameter is used to control the auto-discovery functionality of the record in the context of this document.
+
 The value of this parameter, if specified, MUST be a Boolean, where "true" indicates that this record can be used for auto discovery, and "false" indicates that this record should not be used for auto discovery.
 
 When this parameter is not specified the client MUST assume that discovery is enabled.
 
 ### The "priority" Parameter
 
-The value of this parameter, if specified, MUST contain a positive integer, where the value "1" represents the highest priority, and subsequent values like "2", "3", and so on, indicate progressively lower priorities. 
+The value of this parameter, if specified, MUST contain a positive integer, where the value "1" represents the highest priority, and subsequent values like "2", "3", and so on, indicate progressively lower priorities.
 
 To adhere to the definition of a positive integer, the value "0" should not be used as it does not meet the criteria of a positive value. Therefore, any occurrence of "0" as the value for the priority attribute MUST be rejected as invalid.
 
