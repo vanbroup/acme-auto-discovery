@@ -100,7 +100,7 @@ When this parameter is not specified the client MUST assume that discovery is en
 
 The value of this parameter, if specified, MUST contain a positive integer, where the value "1" represents the highest priority, and subsequent values like "2", "3", and so on, indicate progressively lower priorities.
 
-In the case that this parameter is not specified or contains the value "0", the entry will be considered to have a lower priority than all entries which specify any priority.
+In the case that this parameter is not specified, the entry will be considered to have a lower priority than all entries which specify any priority.
 
 ## Examples
 
