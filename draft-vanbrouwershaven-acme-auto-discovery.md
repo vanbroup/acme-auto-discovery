@@ -100,7 +100,7 @@ When this parameter is not specified the client MUST assume that discovery is en
 
 The value of this parameter, if specified, MUST contain a positive integer, where the value "1" represents the highest priority, and subsequent values like "2", "3", and so on, indicate progressively lower priorities.
 
-In the case that this parameter is not specified, the entry will be considered to have a lower priority than all entries which specify any priority.
+In the case that this parameter is not specified or contains the value "0", the entry will be considered to have a lower priority than all entries which specify any priority.
 
 ## Examples
 
@@ -199,7 +199,7 @@ The process looks as follows:
 
 1. The ACME client initiates a DNS lookup to retrieve the CAA record(s) according to [RFC8659].
    1. The DNS resolver responds with the CAA record for each domain, specifying the authorized CAs capable of issuing certificates, along with their priorities and other optional parameters.
-2. The ACME client analyzes the valid CAA records for the domain and selects the CA with the highest priority.
+2. The ACME client analyzes the valid CAA records, ignoring any it cannot process, for the domain and selects the CA with the highest priority.
 3. The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected CA (https://\[issuer-domain-name\]/.well-known/acme)
 4. If the directory object indicates that an External Account Binding is required, but this is not configured on the ACME client, the client will try to determine an alternative common CA in step 2.
    1. If no alternative CA can be found, the process with end with a failure and the user will be informed.
@@ -228,7 +228,7 @@ The process with multiple domain names looks as follows:
 1. The ACME client identifies the list of domain names for which a certificate is requested.
 2. For each domain in the list, the ACME client initiates a DNS lookup to retrieve the CAA record(s) according to [RFC8659].
    1. The DNS resolver responds with the CAA record for each domain, specifying the authorized CAs capable of issuing certificates, along with their priorities and other optional parameters.
-3. The ACME client analyzes the valid CAA records for all domains to identify a common CA that is authorized by all included domains and has the highest priority.
+3. The ACME client analyzes the valid CAA records, ignoring any it cannot process, for all domains to identify a common CA that is authorized by all included domains and has the highest priority.
    1. If a common CA is found, the ACME client proceeds with step 4.
    2. If no common CA is found, the ACME client tries to find a compromise using as few as possible domains with a lower priority.
    3. If no compromise can be found, the process will end with a failure and the user will be informed.
