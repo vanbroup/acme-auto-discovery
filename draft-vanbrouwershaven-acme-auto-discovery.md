@@ -241,6 +241,23 @@ The process with multiple domain names looks as follows:
 9. The ACME client receives the issued certificate from the ACME server.
 10. The certificate is ready for use by the ACME client for the specified domain(s).
 
+### Selecting a common CA through Compromise
+
+In the example below, we have three domains: "one.example", "two.example", and "three.example". Among these domains, "one.example" and "three.example" prioritize "ca1.example", while "two.example" prioritizes "ca2.example" over "ca1.example". To select a common Certificate Authority (CA) that is authorized by all domains, a compromise needs to be established.
+
+Based on the priorities specified, "ca1.example" is preferred by two out of the three domains. Since "ca1.example" is authorized by all domains and has the highest overall preference, it is selected as the common CA.
+
+~~~ dns-rr
+one.example CAA 0 issue "ca1.example; priority=1"
+one.example CAA 0 issue "ca2.example; priority=2"
+
+two.example CAA 0 issue "ca1.example; priority=2"
+two.example CAA 0 issue "ca2.example; priority=1"
+
+three.example CAA 0 issue "ca1.example; priority=1"
+three.example CAA 0 issue "ca2.example; priority=2"
+~~~
+
 # External Account Binding
 
 Clients SHOULD provide users with the ability to configure and utilize external account bindings per CA or ACME server, as it offers enhanced security and flexibility in managing the certificate provisioning process.
