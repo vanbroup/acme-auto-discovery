@@ -229,9 +229,9 @@ The process with multiple domain names looks as follows:
 2. For each domain in the list, the ACME client initiates a DNS lookup to retrieve the CAA record(s) according to [RFC8659].
    1. The DNS resolver responds with the CAA record for each domain, specifying the authorized CAs capable of issuing certificates, along with their priorities and other optional parameters.
 3. The ACME client analyzes the valid CAA records for all domains to identify a common CA that is authorized by all included domains and has the highest priority.
-  a. If a common CA is found, the ACME client proceeds with step 4.
-  b. If no common CA is found, the ACME client tries to find a compromise using as few as possible domains with a lower priority.
-  c. If no compromise can be found, the process will end with a failure and the user will be informed.
+   1. If a common CA is found, the ACME client proceeds with step 4.
+   2. If no common CA is found, the ACME client tries to find a compromise using as few as possible domains with a lower priority.
+   3. If no compromise can be found, the process will end with a failure and the user will be informed.
 4. The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected common CA (https://\[issuer-domain-name\]/.well-known/acme)
 5. If an External Account Binding is required but not configured the ACME client will try to determine an alternative common CA in step 3.
    1. If no alternative CA can be found, the process with end with a failure and the user will be informed.
