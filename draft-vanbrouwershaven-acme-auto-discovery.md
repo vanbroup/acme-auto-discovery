@@ -332,6 +332,14 @@ One potential security risk associated with the mechanism defined in this docume
 
 To minimize this risk, ACME clients must be written with a cautious and security-conscious approach when interacting with ACME servers. It is crucial not to blindly trust servers to behave securely and in accordance with the ACME protocol.
 
+## ACME Keys
+
+To ensure a secure account binding per customer, it is essential that each customer possesses their own unique ACME key. The utilization of individual ACME keys allows for a distinct association between the customer's account and the established account binding.
+
+If an account binding were to be established based on a shared ACME key, it could potentially lead to unauthorized users obtaining certificates using the same Certificate Authority (CA) based on the established account binding. This scenario poses a significant security risk and could result in the compromise of sensitive information or unauthorized certificate issuance.
+
+To mitigate this risk, it is crucial to enforce the use of individual ACME keys for each customer. This ensures that the account binding is securely linked to the respective customer's account, preventing unauthorized access or misuse by other users. By maintaining separate ACME keys per customer, the integrity and confidentiality of the account binding process are upheld, enhancing the overall security posture of the system.
+
 ## Terms of Service and Acceptance
 
 The terms of service associated with different CAs can vary, and it is important to consider how these terms are handled within the context of auto-discovery.
