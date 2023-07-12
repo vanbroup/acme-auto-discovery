@@ -134,9 +134,9 @@ example.com CAA 0 issue "ca3.example; priority=1"
 Furthermore, it is possible to configure CAA records to indicate a preference for specific types of certificates. In the following example, the domain "example.com" prefers Extended Validation (EV) certificates issued by "ca1.example". If the issuance of an EV certificate fails, the ACME client will attempt to obtain any type of certificate from "ca1.example". If that also fails, it will then try to obtain any type of certificate from "ca2.example".
 
 ~~~ dns-rr
-example.com CAA 0 issue "ca1.example; validationmethods=ca-ev"
-example.com CAA 0 issue "ca1.example; priority=1"
-example.com CAA 0 issue "ca2.example; priority=2"
+example.com CAA 0 issue "ca1.example; priority=1 validationmethods=ca-ev"
+example.com CAA 0 issue "ca1.example; priority=2"
+example.com CAA 0 issue "ca2.example; priority=3"
 ~~~
 
 Implementers and operators should carefully configure CAA records according to their specific requirements and considerations.
