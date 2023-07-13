@@ -252,9 +252,9 @@ The process with multiple domain names looks as follows:
 
 ### Selecting a common CA through Compromise
 
-In the example below, we have three domains: "one.example", "two.example", and "three.example". Among these domains, "one.example" and "three.example" prioritize "ca1.example", while "two.example" prioritizes "ca2.example" over "ca1.example". To select a common Certificate Authority (CA) that is authorized by all domains, a compromise needs to be established.
+In the example below, we have three domains: "one.example", "two.example", and "three.example". Among these domains, "one.example" and "three.example" prioritize "ca1.example", while "two.example" prioritizes "ca2.example" over "ca1.example". To select a Certification Authority (CA), a compromise on the priority needs to be established.
 
-Based on the priorities specified, "ca1.example" is preferred by two out of the three domains. Since "ca1.example" is authorized by all domains and has the highest overall preference, it is selected as the common CA.
+Based on the priorities specified, "ca1.example" is preferred by two out of the three domains. Since "ca1.example" is authorized by all domains and has the highest overall preference, it is selected as the CA to continue the process.
 
 ~~~ dns-rr
 one.example CAA 0 issue "ca1.example; priority=1"
