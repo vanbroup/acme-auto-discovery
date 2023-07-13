@@ -140,6 +140,14 @@ example.com CAA 0 issue "ca1.example; priority=2"
 example.com CAA 0 issue "ca2.example; priority=3"
 ~~~
 
+When an ACME client requests the issuance of a wildcard certificate, the issuewild CAA property takes precedence over each issue property when specified, see also section 4.3 of [RFC8659]. The following example specifies that only ca3.example can issue certificates for "*.example.com" or "*.sub.example.com". However ca3.example is not permitted to issue for "example.com" or "sub.example.com". In the case the issuewild property was not specified all listed CAs would be authorized to issue wildcards for this domain.
+
+~~~ dns-rr
+example.com CAA 0 issue "ca1.example; priority=1"
+example.com CAA 0 issue "ca2.example; priority=2"
+example.com CAA 0 issuewild "ca3.example; priority=3"
+~~~
+
 Implementers and operators should carefully configure CAA records according to their specific requirements and considerations.
 
 // COMMENT: If a mechanism for enabling or disabling auto-discovery is required, users may need to configure their preferences accordingly. While enabling auto-discovery by default could promote adoption, it could lead to unexpected certificate issuance (see the security considerations). For instance, in the given example, if the default setting is set to false, only CA 2 will be used to retrieve the ACME client configuration.
