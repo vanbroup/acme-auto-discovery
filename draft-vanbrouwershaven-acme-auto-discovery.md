@@ -211,7 +211,7 @@ The process looks as follows:
 2. The ACME client analyzes the valid CAA records for the domain, ignoring any it cannot process, and selects the CA with the highest priority.
 3. The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected CA (https://\[issuer-domain-name\]/.well-known/acme)
 4. If the directory object indicates that an External Account Binding is required, but this is not configured on the ACME client, the client will try to determine an alternative common CA in step 2.
-   1. If no alternative CA can be found, the process with end with a failure and the user will be informed.
+   1. If no alternative CA can be found, the process with end with a failure and the user SHOULD be notified.
 5. The ACME client proceeds with the ACME challenge process, where it interacts with the ACME server to complete the required validation steps.
 6. Upon successful completion of the challenge, the ACME client sends a finalize request to the ACME server, indicating the completion of the certificate issuance process.
 7. The ACME server processes the request and issues the certificate.
@@ -237,13 +237,13 @@ The process with multiple domain names looks as follows:
 1. The ACME client identifies the list of domain names for which a certificate is requested.
 2. For each domain in the list, the ACME client initiates a DNS lookup to retrieve the CAA record(s) according to [RFC8659].
    1. The DNS resolver responds with the CAA record for each domain, specifying the authorized CAs capable of issuing certificates, along with their priorities and other optional parameters.
-3. The ACME client analyzes the valid CAA records for all domains to identify a common CA that is authorized by all included domains and has the highest priority while it ignores any CAA records it cannot process.
-   1. If a common CA is found, the ACME client proceeds with step 4.
-   2. If no common CA is found, the ACME client tries to find a compromise using as few as possible domains with a lower priority.
-   3. If no compromise can be found, the process will end with a failure and the user will be informed.
-4. The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected common CA (https://\[issuer-domain-name\]/.well-known/acme)
-5. If an External Account Binding is required but not configured the ACME client will try to determine an alternative common CA in step 3.
-   1. If no alternative CA can be found, the process with end with a failure and the user will be informed.
+3. The ACME client analyzes the valid CAA records for each domain to identify a CA that is authorized by all included domains and which has the highest priority while it ignores any CAA records it cannot process.
+   1. If all domains prioritize the same CA, the ACME client proceeds with step 4.
+   2. If not all domains prioritize the same CA, the ACME client tries to find a compromise using as few as possible domains with a lower priority.
+   3. If no compromise can be found, the process will end with a failure and the user SHOULD be notified.
+4. The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected CA (https://\[issuer-domain-name\]/.well-known/acme)
+5. If an External Account Binding is required but not configured the ACME client will try to determine an alternative CA in step 3.
+   1. If no alternative CA can be found, the process with end with a failure and the user SHOULD be notified.
 6. The ACME client proceeds with the ACME challenge process, where it interacts with the ACME server to complete the required validation steps.
 7. Upon successful completion of the challenge, the ACME client sends a finalize request to the ACME server, indicating the completion of the certificate issuance process.
 8. The ACME server processes the request and issues the certificate.
