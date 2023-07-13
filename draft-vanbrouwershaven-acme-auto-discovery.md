@@ -239,7 +239,7 @@ The process with multiple domain names looks as follows:
    1. The DNS resolver responds with the CAA record for each domain, specifying the authorized CAs capable of issuing certificates, along with their priorities and other optional parameters.
 3. The ACME client analyzes the valid CAA records for each domain to identify a CA that is authorized by all included domains and which has the highest priority while it ignores any CAA records it cannot process.
    1. If all domains prioritize the same CA, the ACME client proceeds with step 4.
-   2. If not all domains prioritize the same CA, the ACME client tries to find a compromise using as few as possible domains with a lower priority.
+   2. If not all domains prioritize the same CA, the ACME client tries to find a compromise based on the highest overall preference.
    3. If no compromise can be found, the process will end with a failure and the user SHOULD be notified.
 4. The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected CA (https://\[issuer-domain-name\]/.well-known/acme)
 5. If an External Account Binding is required but not configured the ACME client will try to determine an alternative CA in step 3.
@@ -250,7 +250,7 @@ The process with multiple domain names looks as follows:
 9. The ACME client receives the issued certificate from the ACME server.
 10. The certificate is ready for use by the ACME client for the specified domain(s).
 
-### Selecting a common CA through Compromise
+### Selecting a CA through Compromise
 
 In the example below, we have three domains: "one.example", "two.example", and "three.example". Among these domains, "one.example" and "three.example" prioritize "ca1.example", while "two.example" prioritizes "ca2.example" over "ca1.example". To select a Certification Authority (CA), a compromise on the priority needs to be established.
 
