@@ -21,7 +21,7 @@ venue:
   mail: acme@ietf.org
   arch: https://datatracker.ietf.org/wg/acme/about/
   github: vanbroup/acme-auto-discovery
-  latest: TODO
+  latest: https://vanbroup.github.io/acme-auto-discovery/draft-vanbrouwershaven-acme-auto-discovery.html
 
 author:
   -
