@@ -93,7 +93,7 @@ This document defines the "discovery" and "priority" CAA parameters in the conte
 
 The "discovery" parameter is used to control the auto-discovery functionality of the record in the context of this document.
 
-The value of this parameter, if specified, MUST be a Boolean, where "true" indicates that this record can be used for auto discovery, and "false" indicates that this record should not be used for auto discovery.
+The value of this parameter, if specified, MUST be a lower-case Boolean, where "true" indicates that this record can be used for auto discovery, and "false" indicates that this record should not be used for auto discovery.
 
 When this parameter is not specified the client MUST assume that discovery is enabled.
 
