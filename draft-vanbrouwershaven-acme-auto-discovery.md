@@ -1,7 +1,7 @@
 ---
 title: "Auto-discovery mechanism for ACME client configuration"
 abbrev: "ACME Auto-Discovery"
-category: info
+category: std
 
 docname: draft-vanbrouwershaven-acme-auto-discovery-latest
 submissiontype: IETF  # also: "independent", "IAB", or "IRTF"
@@ -138,14 +138,6 @@ Furthermore, it is possible to configure CAA records to indicate a preference fo
 example.com CAA 0 issue "ca1.example; priority=1 validationmethods=ca-ev"
 example.com CAA 0 issue "ca1.example; priority=2"
 example.com CAA 0 issue "ca2.example; priority=3"
-~~~
-
-When an ACME client requests the issuance of a wildcard certificate, the issuewild CAA property takes precedence over each issue property when specified, see also section 4.3 of [RFC8659]. The following example specifies that only ca3.example can issue certificates for "*.example.com" or "*.sub.example.com". However ca3.example is not permitted to issue for "example.com" or "sub.example.com". In the case the issuewild property was not specified all listed CAs would be authorized to issue wildcards for this domain.
-
-~~~ dns-rr
-example.com CAA 0 issue "ca1.example; priority=1"
-example.com CAA 0 issue "ca2.example; priority=2"
-example.com CAA 0 issuewild "ca3.example; priority=3"
 ~~~
 
 Implementers and operators should carefully configure CAA records according to their specific requirements and considerations.
