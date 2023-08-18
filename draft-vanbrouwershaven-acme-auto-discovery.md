@@ -122,7 +122,7 @@ It is important to note that this document is informational in nature and serves
 3. The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected CA (https://\[issuer-domain-name\]/.well-known/acme)
 4. If the directory object indicates that an External Account Binding is required, but this is not configured on the ACME client, the client will try to determine an alternative common CA in step 2.
    1. If no alternative CA can be found, the process with end with a failure and the user SHOULD be notified.
-5. The ACME clients continues normal operation according to [RFC8555].
+5. The ACME client continues normal operation according to [RFC8555].
 
 # CAA Record
 
