@@ -297,6 +297,26 @@ When ACME clients provide the email address associated with the user's account d
 
 However, it is crucial to acknowledge that this internal account binding mechanism introduces potential vulnerabilities, particularly in relation to phishing attacks. It is imperative to exercise caution when utilizing this mechanism since the email address associated with the ACME account is not verified, and the account binding request can be initiated by any party. Careful consideration should be given to the security implications of relying solely on the email address for establishing the account linkage.
 
+# Implementation Considerations 
+
+## Terms of Service and Acceptance
+
+The terms of service associated with different CAs can vary, and it is important to consider how these terms are handled within the context of auto-discovery.
+
+### Implicit Acceptance of Terms of Service
+
+As the ACME client is not explicitly controlled by the user in a shared environment, the user's explicit approval of the terms of service presented by the CA becomes challenging. In the absence of a direct user interaction with the ACME client, it is assumed that the user accepts the terms of service by explicitly configuring the CAA record to authorize the CA.
+
+ACME clients are strongly encouraged to display the relevant terms of service for the obtained certificates to ensure users have visibility into the associated obligations and restrictions. This helps users make informed decisions about their certificate management and ensures compliance with the terms of service set by the authorized CA.
+
+### Acceptance Through CAA Attribute
+
+One potential enhancement to address the explicit acceptance of terms of service is the inclusion of a CAA attribute called "termsOfServiceAgreed". This attribute would provide a direct mechanism for users to indicate their agreement to the terms of service.
+
+However, it is important to consider the trade-offs associated with adding this type of data to the CAA record. The inclusion of additional attributes can be perceived as clutter and may increase the complexity of configuring the CAA record. Therefore, the authors of this document recommend relying on the implicit acceptance of the terms of service.
+
+By configuring the CAA record to authorize a specific CA, users implicitly indicate their acceptance of the associated terms of service. This approach strikes a balance between simplicity and compliance with the CA's requirements. It is crucial for ACME clients to display the relevant terms of service for the obtained certificates, ensuring that users have visibility and can make informed decisions regarding their certificate management.
+
 # IANA Considerations {#sec-iana}
 
 ##  Well-Known URI for the ACME Directory
@@ -348,25 +368,6 @@ To ensure a secure account binding per customer, it is essential that each custo
 If an account binding were to be established based on a shared ACME key, it could potentially lead to unauthorized users obtaining certificates using the same Certificate Authority (CA) based on the established account binding. This scenario poses a significant security risk and could result in the compromise of sensitive information or unauthorized certificate issuance.
 
 To mitigate this risk, it is crucial to enforce the use of individual ACME keys for each customer. This ensures that the account binding is securely linked to the respective customer's account, preventing unauthorized access or misuse by other users. By maintaining separate ACME keys per customer, the integrity and confidentiality of the account binding process are upheld, enhancing the overall security posture of the system.
-
-## Terms of Service and Acceptance
-
-The terms of service associated with different CAs can vary, and it is important to consider how these terms are handled within the context of auto-discovery.
-
-### Implicit Acceptance of Terms of Service
-
-As the ACME client is not explicitly controlled by the user in a shared environment, the user's explicit approval of the terms of service presented by the CA becomes challenging. In the absence of a direct user interaction with the ACME client, it is assumed that the user accepts the terms of service by explicitly configuring the CAA record to authorize the CA.
-
-ACME clients are strongly encouraged to display the relevant terms of service for the obtained certificates to ensure users have visibility into the associated obligations and restrictions. This helps users make informed decisions about their certificate management and ensures compliance with the terms of service set by the authorized CA.
-
-### Acceptance Through CAA Attribute
-
-One potential enhancement to address the explicit acceptance of terms of service is the inclusion of a CAA attribute called "termsOfServiceAgreed". This attribute would provide a direct mechanism for users to indicate their agreement to the terms of service.
-
-However, it is important to consider the trade-offs associated with adding this type of data to the CAA record. The inclusion of additional attributes can be perceived as clutter and may increase the complexity of configuring the CAA record. Therefore, the authors of this document recommend relying on the implicit acceptance of the terms of service.
-
-By configuring the CAA record to authorize a specific CA, users implicitly indicate their acceptance of the associated terms of service. This approach strikes a balance between simplicity and compliance with the CA's requirements. It is crucial for ACME clients to display the relevant terms of service for the obtained certificates, ensuring that users have visibility and can make informed decisions regarding their certificate management.
-
 
 --- back
 
