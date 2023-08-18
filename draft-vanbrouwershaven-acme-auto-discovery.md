@@ -294,17 +294,19 @@ However, it is crucial to acknowledge that this internal account binding mechani
 
 ## Terms of Service and Acceptance
 
-The terms of service associated with different CAs can vary, and it is important to consider how these terms are handled within the context of auto-discovery.
+The terms of service associated with different CAs can vary, and it is important to consider how these terms are handled within the context of auto-discovery. 
 
 ### Implicit Acceptance of Terms of Service
 
-As the ACME client is not explicitly controlled by the user in a shared environment, the user's explicit approval of the terms of service presented by the CA becomes challenging. In the absence of a direct user interaction with the ACME client, it is assumed that the user accepts the terms of service by explicitly configuring the CAA record to authorize the CA.
+As the ACME client is not explicitly controlled by the user in a shared environment, the user's explicit approval of the terms of service presented by the CA becomes challenging. In the absence of a direct user interaction with the ACME client, it is assumed that the user accepts the terms of service by explicitly configuring the CAA record to authorize the CA. 
+
+CAs will typically provide documentation indicating how to configure a domain's CAA record for ACME auto-discovery and are encouraged to note in alongside those instructions that doing so will be taken as implicit agreement to the Terms of Service, and also to include a direct link to those Terms of Service.
 
 ACME clients are strongly encouraged to display the relevant terms of service for the obtained certificates to ensure users have visibility into the associated obligations and restrictions. This helps users make informed decisions about their certificate management and ensures compliance with the terms of service set by the authorized CA.
 
-### Acceptance Through CAA Attribute
+### Acceptance Through CAA Parameter
 
-One potential enhancement to address the explicit acceptance of terms of service is the inclusion of a CAA attribute called "termsOfServiceAgreed". This attribute would provide a direct mechanism for users to indicate their agreement to the terms of service.
+One potential enhancement to address the explicit acceptance of terms of service is the inclusion of a CAA parameter called "termsOfServiceAgreed". This parameter would provide a direct mechanism for users to indicate their agreement to the terms of service.
 
 However, it is important to consider the trade-offs associated with adding this type of data to the CAA record. The inclusion of additional attributes can be perceived as clutter and may increase the complexity of configuring the CAA record. Therefore, the authors of this document recommend relying on the implicit acceptance of the terms of service.
 
