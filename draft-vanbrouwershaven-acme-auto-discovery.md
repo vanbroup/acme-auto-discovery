@@ -259,7 +259,7 @@ three.example CAA 0 issue "ca1.example; priority=1"
 three.example CAA 0 issue "ca2.example; priority=2"
 ~~~
 
-# Implementation Considerations 
+# Implementation Considerations
 
 ## External Account Binding
 
