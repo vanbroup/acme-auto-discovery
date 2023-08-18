@@ -80,6 +80,10 @@ This document provides a detailed description of the proposed mechanism, along w
 
 Additionally, it outlines the security aspects associated with the use of CAA records for ACME client configuration discovery. Finally, this document presents IANA considerations and references relevant normative and informative documents.
 
+> **RFC Editor's Note:**  Please remove this section prior to publication of a final version of this document.
+>
+> The authors of the document considered both SRV and URI DNS resource record types as an alternative to the proposed Well-Known URI, see also: https://github.com/vanbroup/acme-auto-discovery/issues/15
+
 # Protocol Overview
 
 ~~~ aasvg
