@@ -193,7 +193,7 @@ The process looks as follows:
          | |
          | |                             +--------------------------+
          | |     3. Connect issuer (CA)  |                          |
-         | +---------------------------->+  https://example.ca/     |
+         | +---------------------------->+  https://ca.example/     |
          |                               |        .well-known/acme  |
          |                               |                          |
          |                               +------------+-------------+
