@@ -267,7 +267,9 @@ three.example CAA 0 issue "ca1.example; priority=1"
 three.example CAA 0 issue "ca2.example; priority=2"
 ~~~
 
-# External Account Binding
+# Implementation Considerations 
+
+## External Account Binding
 
 Clients SHOULD provide users with the ability to configure and utilize external account bindings per CA or ACME server, as it offers enhanced security and flexibility in managing the certificate provisioning process.
 
@@ -275,7 +277,7 @@ External account bindings are not only crucial for users seeking to provision ce
 
 It is crucial for Certification Authorities (CAs) to carefully consider the internal account binding mechanisms described in this document. This is especially critical given the current lack of widespread support for external account bindings in user interfaces, with only a few command line utilities offering such functionality. By recognizing and implementing the internal account binding approach, CAs can provide a viable alternative for users who may not have access to or be familiar with external account binding options. This will help ensure a seamless and secure account linkage process, even in situations where the availability of external account binding configurations is limited.
 
-## Internal Account Binding using Domain Control Validation
+### Internal Account Binding using Domain Control Validation
 
 In addition to the external account binding mechanism, an alternative approach can be implemented by the CAs that offers distinct advantages, particularly in cases where service providers may not expose the account binding configuration options to their users. This alternative method leverages domain control validation as the initial step in the process and subsequently pauses to await confirmation from the account holder regarding the account binding. The email address associated with the ACME account can be utilized for differentiating between multiple Certification Authority (CA) accounts holding the same domain name.
 
@@ -291,13 +293,11 @@ The process to establish an internal account binding would be as follows:
 
 It is important to note that before the ACME process can start, the domain name must be added to the CA account and the domain control validation process must be successfully completed. This ensures that the domain ownership is verified for both accounts before proceeding with the account binding.
 
-## Internal Account Binding using Email Address
+### Internal Account Binding using Email Address
 
 When ACME clients provide the email address associated with the user's account during the creation of a new account, Certification Authorities (CAs) can utilize this email address to establish an internal account binding between the ACME account and the corresponding customer account within their internal systems. This approach offers an alternative method for establishing the account linkage, particularly in cases where the ACME integration's user interface does not provide explicit external account binding configuration options.
 
 However, it is crucial to acknowledge that this internal account binding mechanism introduces potential vulnerabilities, particularly in relation to phishing attacks. It is imperative to exercise caution when utilizing this mechanism since the email address associated with the ACME account is not verified, and the account binding request can be initiated by any party. Careful consideration should be given to the security implications of relying solely on the email address for establishing the account linkage.
-
-# Implementation Considerations 
 
 ## Terms of Service and Acceptance
 
