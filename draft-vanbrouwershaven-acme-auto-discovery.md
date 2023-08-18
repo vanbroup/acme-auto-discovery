@@ -298,7 +298,7 @@ The terms of service associated with different CAs can vary, and it is important
 
 ### Implicit Acceptance of Terms of Service
 
-As the ACME client is not explicitly controlled by the user in a shared environment, the user's explicit approval of the terms of service presented by the CA becomes challenging. In the absence of a direct user interaction with the ACME client, it is assumed that the user accepts the terms of service by explicitly configuring the CAA record to authorize the CA. 
+As the ACME client is not explicitly controlled by the user in a shared environment, the user's explicit approval of the terms of service presented by the CA becomes challenging. In the absence of a direct user interaction with the ACME client, it is assumed that the user accepts the terms of service by explicitly configuring the CAA record to authorize the CA.
 
 CAs will typically provide documentation indicating how to configure a domain's CAA record for ACME auto-discovery and are encouraged to note in alongside those instructions that doing so will be taken as implicit agreement to the Terms of Service, and also to include a direct link to those Terms of Service.
 
