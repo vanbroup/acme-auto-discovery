@@ -52,6 +52,7 @@ normative:
 informative:
   RFC8657:
   RFC5785:
+  draft-tweedale-acme-discovery:
 
 --- abstract
 
