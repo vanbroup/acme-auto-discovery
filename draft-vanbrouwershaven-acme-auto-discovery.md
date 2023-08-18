@@ -294,7 +294,7 @@ However, it is crucial to acknowledge that this internal account binding mechani
 
 ## Terms of Service and Acceptance
 
-The terms of service associated with different CAs can vary, and it is important to consider how these terms are handled within the context of auto-discovery. 
+The terms of service associated with different CAs can vary, and it is important to consider how these terms are handled within the context of auto-discovery.
 
 ### Implicit Acceptance of Terms of Service
 
