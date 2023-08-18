@@ -189,14 +189,14 @@ example.com CAA 0 issue "ca2.example; priority=2"
 example.com CAA 0 issuewild "ca3.example; priority=3"
 ~~~
 
-Implementers and operators should carefully configure CAA records according to their specific requirements and considerations.
-
-// COMMENT: If a mechanism for enabling or disabling auto-discovery is required, users may need to configure their preferences accordingly. While enabling auto-discovery by default could promote adoption, it could lead to unexpected certificate issuance (see the security considerations). For instance, in the given example, if the default setting is set to false, only CA 2 will be used to retrieve the ACME client configuration.
+To disable auto discovery for a particular record users can set the discovery parameter to false, in the example below this will ensure that the ACME client will only try to obtain a certificate from ca1.example and ignore ca2.example.
 
 ~~~ dns-rr
 example.com CAA 0 issue "ca1.example"
-example.com CAA 0 issue "ca2.example; discovery=true"
+example.com CAA 0 issue "ca2.example; discovery=false"
 ~~~
+
+Implementers and operators should carefully configure CAA records according to their specific requirements and considerations.
 
 # ACME Client Configuration
 
