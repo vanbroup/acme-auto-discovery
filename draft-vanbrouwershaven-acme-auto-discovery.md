@@ -83,6 +83,46 @@ Additionally, it outlines the security aspects associated with the use of CAA re
 
 It is important to note that this document is informational in nature and serves to provide guidance and recommendations to implementers and operators within the Internet community.
 
+# Protocol Overview
+
+~~~ aasvg
++-------------+                          +--------------------------+
+|             |                          |                          |
+|             |  1. DNS Lookup (CAA)     |       DNS Resolver       |
+| ACME Client +------------------------->+                          |
+|             |                          +------------+-------------+
+|             |<---------+                            |
++----------+--+          |                            v
+         ^ |             |               +--------------------------+
+         | |             | DNS Response  | example.com CAA          |
+         | |             +---------------+ Record:                  |
+         | |                             |                          |
+         | |     2. Select issuer (CA)   | example.com              |
+         | |        based on priority    | CAA 0 issue "ca.example" |
+         | |                             +--------------------------+
+         | |
+         | |                             +--------------------------+
+         | |     3. Connect issuer (CA)  |                          |
+         | +---------------------------->+  https://ca.example/     |
+         |                               |        .well-known/acme  |
+         |                               |                          |
+         |                               +------------+-------------+
+         |                                            | Redirect
+         |                                            v or alias
+         |                               +--------------------------+
+         |     ACME Directory Object     |                          |
+         +-------------------------------+ https://acme.ca.example/ |
+                                         |                          |
+                                         +--------------------------+
+~~~
+
+1. The ACME client initiates a DNS lookup to retrieve the CAA record(s) according to [RFC8659].
+   1. The DNS resolver responds with the CAA record for each domain, specifying the authorized CAs capable of issuing certificates, along with their priorities and other optional parameters.
+2. The ACME client analyzes the valid CAA records for the domain, ignoring any it cannot process, and selects the CA with the highest priority.
+3. The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected CA (https://\[issuer-domain-name\]/.well-known/acme)
+4. If the directory object indicates that an External Account Binding is required, but this is not configured on the ACME client, the client will try to determine an alternative common CA in step 2.
+   1. If no alternative CA can be found, the process with end with a failure and the user SHOULD be notified.
+5. The ACME clients continues normal operation according to [RFC8555].
 
 # CAA Record
 
@@ -174,51 +214,6 @@ It is important for implementers and operators to ensure the availability and ac
 
 # ACME Client Behavior {#sec-behavior}
 
-The process looks as follows:
-
-~~~ aasvg
-+-------------+                          +--------------------------+
-|             |                          |                          |
-|             |  1. DNS Lookup (CAA)     |       DNS Resolver       |
-| ACME Client +------------------------->+                          |
-|             |                          +------------+-------------+
-|             |<---------+                            |
-+----------+--+          |                            v
-         ^ |             |               +--------------------------+
-         | |             | DNS Response  | example.com CAA          |
-         | |             +---------------+ Record:                  |
-         | |                             |                          |
-         | |     2. Select issuer (CA)   | example.com              |
-         | |        based on priority    | CAA 0 issue "ca.example" |
-         | |                             +--------------------------+
-         | |
-         | |                             +--------------------------+
-         | |     3. Connect issuer (CA)  |                          |
-         | +---------------------------->+  https://ca.example/     |
-         |                               |        .well-known/acme  |
-         |                               |                          |
-         |                               +------------+-------------+
-         |                                            | Redirect
-         |                                            v or alias
-         |                               +--------------------------+
-         |     ACME Directory Object     |                          |
-         +-------------------------------+ https://acme.ca.example/ |
-                                         |                          |
-                                         +--------------------------+
-~~~
-
-1. The ACME client initiates a DNS lookup to retrieve the CAA record(s) according to [RFC8659].
-   1. The DNS resolver responds with the CAA record for each domain, specifying the authorized CAs capable of issuing certificates, along with their priorities and other optional parameters.
-2. The ACME client analyzes the valid CAA records for the domain, ignoring any it cannot process, and selects the CA with the highest priority.
-3. The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected CA (https://\[issuer-domain-name\]/.well-known/acme)
-4. If the directory object indicates that an External Account Binding is required, but this is not configured on the ACME client, the client will try to determine an alternative common CA in step 2.
-   1. If no alternative CA can be found, the process with end with a failure and the user SHOULD be notified.
-5. The ACME client proceeds with the ACME challenge process, where it interacts with the ACME server to complete the required validation steps.
-6. Upon successful completion of the challenge, the ACME client sends a finalize request to the ACME server, indicating the completion of the certificate issuance process.
-7. The ACME server processes the request and issues the certificate.
-8. The ACME client receives the issued certificate from the ACME server.
-9. The certificate is ready for use by the ACME client for the specified domain(s).
-
 Prior to establishing a connection with the default ACME server or a pool of ACME servers, the ACME client verifies the presence of any configured CA Authorization records (CAA) as defined in [RFC8659]. If a CAA record is found, the ACME client will attempt to obtain a certificate from the CA with the highest priority. If the certificate issuance attempt fails, the client will proceed to lower-priority CAs in an attempt to obtain the certificate.
 
 In the event of a failed attempt to obtain a certificate from a particular CA, the ACME client employs a retry mechanism to ensure successful certificate acquisition. However, in cases where certain CAs are known to be temporarily unavailable, the ACME client MAY choose to ignore those CAs for a limited period of time. By temporarily excluding unresponsive CAs from the issuance process, the client can optimize its certificate acquisition strategy and enhance overall efficiency. This approach helps mitigate potential delays caused by unresponsive CAs and allows the client to focus on viable options for obtaining the required certificate.
@@ -245,11 +240,7 @@ The process with multiple domain names looks as follows:
 4. The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected CA (https://\[issuer-domain-name\]/.well-known/acme)
 5. If an External Account Binding is required but not configured the ACME client will try to determine an alternative CA in step 3.
    1. If no alternative CA can be found, the process with end with a failure and the user SHOULD be notified.
-6. The ACME client proceeds with the ACME challenge process, where it interacts with the ACME server to complete the required validation steps.
-7. Upon successful completion of the challenge, the ACME client sends a finalize request to the ACME server, indicating the completion of the certificate issuance process.
-8. The ACME server processes the request and issues the certificate.
-9. The ACME client receives the issued certificate from the ACME server.
-10. The certificate is ready for use by the ACME client for the specified domain(s).
+6. The ACME clients continues normal operation according to [RFC8555].
 
 ### Selecting a CA through Compromise
 
