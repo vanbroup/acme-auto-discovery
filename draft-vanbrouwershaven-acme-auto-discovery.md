@@ -141,7 +141,7 @@ When this parameter is not specified the client MUST assume that discovery is en
 
 ### The "priority" Parameter
 
-The value of this parameter, if specified, MUST contain an integer greater than zero, where the value "1" represents the highest priority, and subsequent values like "2", "3", and so on, indicate progressively lower priorities.
+The value of this parameter, if specified, MUST contain an integer greater than zero, where the value "1" represents the highest priority, and subsequent values like "2", "3", and so on, indicate progressively lower priorities. Where records specify an equal priority, their usage SHOULD be randomized.
 
 In the case that this parameter is not specified, the entry will be considered to have a lower priority than all entries which specify any priority.
 
