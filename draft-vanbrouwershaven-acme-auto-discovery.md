@@ -80,9 +80,6 @@ This document provides a detailed description of the proposed mechanism, along w
 
 Additionally, it outlines the security aspects associated with the use of CAA records for ACME client configuration discovery. Finally, this document presents IANA considerations and references relevant normative and informative documents.
 
-
-It is important to note that this document is informational in nature and serves to provide guidance and recommendations to implementers and operators within the Internet community.
-
 # Protocol Overview
 
 ~~~ aasvg
