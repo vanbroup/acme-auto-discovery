@@ -334,6 +334,8 @@ As per [RFC8659], the parameter namespace for the CAA "issue" and "issuewild" Pr
 > **RFC Editor's Note:**  Please remove this section prior to publication of a final version of this document.
 >
 > Although there is no requirement for a RFC 8659-compliant CA to process parameters, having a list of parameters whose recommended semantics have been defined would likely be useful. Therefor the authors of this document have the intention to establishing a CAA parameter registry in another document.
+>
+> See also: https://github.com/vanbroup/acme-auto-discovery/issues/14
 
 <!-- End of IANA Considerations section -->
 
