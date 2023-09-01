@@ -325,9 +325,15 @@ Specification document(s): RFC XXXX, Section Y.Z
 Related information: N/A
 ~~~
 
-RFC EDITOR: Please replace XXXX above with the RFC number assigned to this document
+> **RFC Editor's Note:** Please replace XXXX above with the RFC number assigned to this document
 
-// TODO: add CAA attributes (not sure if these can be registered)
+## CAA Parameters
+
+As per [RFC8659], the parameter namespace for the CAA "issue" and "issuewild" Properties has CA-defined semantics, and the identifiers within that namespace may be freely and arbitrarily assigned by a CA. This document merely specifies recommended semantics for parameters of the names "discovery" and "priority", which CAs may choose to adopt.
+
+> **RFC Editor's Note:**  Please remove this section prior to publication of a final version of this document.
+>
+> Although there is no requirement for a RFC 8659-compliant CA to process parameters, having a list of parameters whose recommended semantics have been defined would likely be useful. Therefor the authors of this document have the intention to establishing a CAA parameter registry in another document.
 
 <!-- End of IANA Considerations section -->
 
