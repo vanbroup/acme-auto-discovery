@@ -52,7 +52,7 @@ normative:
 informative:
   RFC8657:
   RFC5785:
-  draft-tweedale-acme-discovery:
+  I-D.tweedale-acme-discovery:
 
 --- abstract
 
@@ -79,6 +79,8 @@ This approach facilitates a more diverse and adaptable certificate management pr
 This document provides a detailed description of the proposed mechanism, along with its benefits and considerations.
 
 Additionally, it outlines the security aspects associated with the use of CAA records for ACME client configuration discovery. Finally, this document presents IANA considerations and references relevant normative and informative documents.
+
+There is previous work in this area in {{I-D.tweedale-acme-discovery}} which attempts to solve a similar ACME discovery problem for private networks and private ACME CAs.
 
 > **RFC Editor's Note:**  Please remove this section prior to publication of a final version of this document.
 >
