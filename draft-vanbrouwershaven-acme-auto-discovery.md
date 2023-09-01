@@ -364,6 +364,12 @@ If an account binding were to be established based on a shared ACME key, it coul
 
 To mitigate this risk, it is crucial to enforce the use of individual ACME keys for each customer. This ensures that the account binding is securely linked to the respective customer's account, preventing unauthorized access or misuse by other users. By maintaining separate ACME keys per customer, the integrity and confidentiality of the account binding process are upheld, enhancing the overall security posture of the system.
 
+## Use of DNS Security 
+
+The use of DNSSEC to authenticate CAA RRs is strongly RECOMMENDED but not required. In scenarios where DNSSEC is not utilized, there is a potential risk wherein the ACME client may be compelled to request a certificate from an alternative ACME server, which could be malicious in nature.
+
+In the context of the public PKI, a compliant CA associated with the ACME server will deny such unauthorized requests if it was not delegated the authority through a CAA record. However, for ACME servers that operate outside the scope of public trust and may have malicious intentions, the ACME client can validate certificates against it local root store, thus identifying and mitigating this potential attack.
+
 --- back
 
 # Acknowledgments
