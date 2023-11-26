@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-11-23T00:41:14.468789+00:00",
+  "timestamp": "2023-11-26T00:43:48.104770+00:00",
   "repo": "vanbroup/acme-auto-discovery",
   "labels": [
     {
@@ -533,7 +533,7 @@
       "labels": [],
       "body": "Corey Bonnell pointed out that because this scheme will result in ACME clients creating new accounts more frequently than they do now, there is greater potential for MitM attacks where an attacker intercepts ACME new-account reqs and replaces the account key with their own; then they have full control of the ACME account.\r\n\r\nThe only real prevention of this is for CAs to be diligent about checking the \"url\" ACME JWT header and make sure that it matches the CA / ACME server's public URL.\r\n\r\nhttps://www.rfc-editor.org/rfc/rfc8555.html#section-6.4.1",
       "createdAt": "2023-08-23T17:00:28Z",
-      "updatedAt": "2023-09-01T11:33:15Z",
+      "updatedAt": "2023-11-24T20:33:30Z",
       "closedAt": null,
       "comments": [
         {
@@ -542,8 +542,31 @@
           "body": "If we assume that the client validates the TLS certificate of the ACME server and both the client and server are not compromised, the attacker needs to compromise the TLS connection, or poisen the DNS lookup for the auto discovery as described in #16.",
           "createdAt": "2023-09-01T11:33:08Z",
           "updatedAt": "2023-09-01T11:33:08Z"
+        },
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "The attack here is that an attacker can spoof the CAA record of the subscribers domain.",
+          "createdAt": "2023-11-24T20:33:29Z",
+          "updatedAt": "2023-11-24T20:33:29Z"
         }
       ]
+    },
+    {
+      "number": 18,
+      "id": "I_kwDOJ4NlCM530Sy9",
+      "title": "Security Considerations for ACME account key sharing",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/issues/18",
+      "state": "OPEN",
+      "author": "vanbroup",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "It's implied that cloud service providers (i.e., a specific ACME account key) can request certificates for any domain for which they can demonstrate domain control; there is an open question about whether a mechanism should exist whereby subscribers can explicitly authorize a given cloud service provider to issue a certificate with a given subject name (OV/EV).\r\n\r\nWe should evaluate the Security Considerations for situations where the ACME account key is managed by a Cloud Service Provider and shared between multiple subscribers.\r\n\r\n- Does it introduce security risks if you share an account key across subscribers within the same service provider?\r\n- Is it sufficient to create an account binding based on a successful domain control validation?\r\n- Is proving domain control by the service provider sufficient to imply that the subscriber is authorizing the CA to issue certificates from the configured certificate profile for that domain?",
+      "createdAt": "2023-11-24T20:30:10Z",
+      "updatedAt": "2023-11-24T20:30:10Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
