@@ -124,7 +124,7 @@ There is previous work in this area in {{I-D.tweedale-acme-discovery}} which att
 2. The ACME client analyzes the valid CAA records for the domain, ignoring any it cannot process, and selects the CA with the highest priority.
 3. The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected CA (https://\[issuer-domain-name\]/.well-known/acme)
 4. If the directory object indicates that an External Account Binding is required, but this is not configured on the ACME client, the client will try to determine an alternative common CA in step 2.
-   1. If no alternative CA can be found, the process with end with a failure and the user SHOULD be notified.
+   1. If no alternative CA can be found, the process will end with a failure and the user SHOULD be notified.
 5. The ACME client continues normal operation according to [RFC8555].
 
 # CAA Record
