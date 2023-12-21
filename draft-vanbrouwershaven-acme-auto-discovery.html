@@ -11,26 +11,26 @@
        A significant impediment to the widespread adoption of the Automated Certificate Management Environment (ACME)   is that ACME clients need to be pre-configured with the URL of the ACME server to be used. This often leaves domain owners at the mercy of their hosting provider as to which Certification Authorities (CAs) can be used. This specification provides a mechanism to bootstrap ACME client configuration from a domain's DNS CAA Resource Record  , thus giving control of which CA(s) to use back to the domain owner. 
        Specifically, this document specifies two new extensions to the DNS CAA Resource Record: the &quot;discovery&quot; and &quot;priority&quot; parameters. Additionally, it registers the URI &quot;/.well-known/acme&quot; at which all compliant ACME servers will host their ACME directory object. By retrieving instructions for the ACME client from the authorized CA(s), this mechanism allows for the domain owner to configure multiple CAs in either load-balanced or fallback prioritizations which improves user preferences and increases diversity in certificate issuers. 
     " name="description">
-<meta content="xml2rfc 3.18.0" name="generator">
+<meta content="xml2rfc 3.19.0" name="generator">
 <meta content="ACME" name="keyword">
 <meta content="Auto-discovery" name="keyword">
 <meta content="CAA" name="keyword">
 <meta content="draft-vanbrouwershaven-acme-auto-discovery-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.18.0
-    Python 3.11.4
-    ConfigArgParse 1.5.3
+  xml2rfc 3.19.0
+    Python 3.11.6
+    ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 3.10.0
+    platformdirs 4.1.0
     pycountry 22.3.5
-    PyYAML 6.0
+    PyYAML 6.0.1
     requests 2.31.0
-    setuptools 67.7.2
+    setuptools 68.2.2
     six 1.16.0
-    wcwidth 0.2.6
+    wcwidth 0.2.12
 -->
 <link href="draft-vanbrouwershaven-acme-auto-discovery.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -653,7 +653,7 @@ sub, sup {
 }
 #toc nav li {
   line-height: 1.3em;
-  margin: 0.75em 0;
+  margin: 2px 0;
   padding-left: 1.2em;
   text-indent: -1.2em;
 }
@@ -746,7 +746,7 @@ hr.addr {
     z-index: 2;
     top: 0;
     right: 0;
-    padding: 0;
+    padding: 1px 0 0 0;
     margin: 0;
     border-bottom: 1px solid #ccc;
     opacity: 0.6;
@@ -870,16 +870,13 @@ hr.addr {
     border-top: none;
     padding-top: 0;
   }
-  figure, pre {
+  figure, pre, .vcard {
     page-break-inside: avoid;
-  }
-  figure {
-    overflow: scroll;
   }
   h1, h2, h3, h4, h5, h6 {
     page-break-after: avoid;
   }
-  h2+*, h3+*, h4+*, h5+*, h6+* {
+  :is(h2, h3, h4, h5, h6)+*, dd {
     page-break-before: avoid;
   }
   pre {
@@ -892,6 +889,9 @@ hr.addr {
   }
   td {
     border-top: 1px solid #ddd;
+  }
+  .toplink {
+    display: none;
   }
 }
 
@@ -993,28 +993,6 @@ address div.right {
   text-align: right;
 }
 
-/* Give the table caption label the same styling as the figcaption */
-
-@media print {
-  .toplink {
-    display: none;
-  }
-
-  /* avoid overwriting the top border line with the ToC header */
-  #toc {
-    padding-top: 1px;
-  }
-
-  /* Avoid page breaks inside dl and author address entries */
-  dd {
-    page-break-before: avoid;
-  }
-  .vcard {
-    page-break-inside: avoid;
-  }
-
-}
-
 /* Dark mode. */
 @media (prefers-color-scheme: dark) {
 :root {
@@ -1051,11 +1029,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">ACME Auto-Discovery</td>
-<td class="right">September 2023</td>
+<td class="right">December 2023</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">van Brouwershaven &amp; Ounsworth</td>
-<td class="center">Expires 4 March 2024</td>
+<td class="center">Expires 23 June 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1068,12 +1046,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-vanbrouwershaven-acme-auto-discovery-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-09-01" class="published">1 September 2023</time>
+<time datetime="2023-12-21" class="published">21 December 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-03-04">4 March 2024</time></dd>
+<dd class="expires"><time datetime="2024-06-23">23 June 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1128,7 +1106,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 4 March 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 23 June 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1409,22 +1387,27 @@ This document provides a detailed description of the proposed mechanism, along w
 <li id="section-3-2.1">
           <p id="section-3-2.1.1">The ACME client initiates a DNS lookup to retrieve the CAA record(s) according to <span>[<a href="#RFC8659" class="cite xref">RFC8659</a>]</span>.<a href="#section-3-2.1.1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-3-2.1.2">
-<li id="section-3-2.1.2.1">The DNS resolver responds with the CAA record for each domain, specifying the authorized CAs capable of issuing certificates, along with their priorities and other optional parameters.<a href="#section-3-2.1.2.1" class="pilcrow">¶</a>
+<li id="section-3-2.1.2.1">
+              <p id="section-3-2.1.2.1.1">The DNS resolver responds with the CAA record for each domain, specifying the authorized CAs capable of issuing certificates, along with their priorities and other optional parameters.<a href="#section-3-2.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ol>
 </li>
-        <li id="section-3-2.2">The ACME client analyzes the valid CAA records for the domain, ignoring any it cannot process, and selects the CA with the highest priority.<a href="#section-3-2.2" class="pilcrow">¶</a>
+        <li id="section-3-2.2">
+          <p id="section-3-2.2.1">The ACME client analyzes the valid CAA records for the domain, ignoring any it cannot process, and selects the CA with the highest priority.<a href="#section-3-2.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li id="section-3-2.3">The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected CA (https://[issuer-domain-name]/.well-known/acme)<a href="#section-3-2.3" class="pilcrow">¶</a>
+        <li id="section-3-2.3">
+          <p id="section-3-2.3.1">The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected CA (https://[issuer-domain-name]/.well-known/acme)<a href="#section-3-2.3.1" class="pilcrow">¶</a></p>
 </li>
         <li id="section-3-2.4">
           <p id="section-3-2.4.1">If the directory object indicates that an External Account Binding is required, but this is not configured on the ACME client, the client will try to determine an alternative common CA in step 2.<a href="#section-3-2.4.1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-3-2.4.2">
-<li id="section-3-2.4.2.1">If no alternative CA can be found, the process with end with a failure and the user <span class="bcp14">SHOULD</span> be notified.<a href="#section-3-2.4.2.1" class="pilcrow">¶</a>
+<li id="section-3-2.4.2.1">
+              <p id="section-3-2.4.2.1.1">If no alternative CA can be found, the process will end with a failure and the user <span class="bcp14">SHOULD</span> be notified.<a href="#section-3-2.4.2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ol>
 </li>
-        <li id="section-3-2.5">The ACME client continues normal operation according to <span>[<a href="#RFC8555" class="cite xref">RFC8555</a>]</span>.<a href="#section-3-2.5" class="pilcrow">¶</a>
+        <li id="section-3-2.5">
+          <p id="section-3-2.5.1">The ACME client continues normal operation according to <span>[<a href="#RFC8555" class="cite xref">RFC8555</a>]</span>.<a href="#section-3-2.5.1" class="pilcrow">¶</a></p>
 </li>
       </ol>
 </section>
@@ -1549,36 +1532,44 @@ example.com CAA 0 issue "ca2.example; discovery=false"
 <p id="section-6.1-2">To mitigate the risk of encountering failures in the certificate issuance process due to incompatible CAA records, it is crucial to ensure that certificates only include domain names that are under the control of the same entity. By maintaining a consistent ownership and control of the domain names included in a certificate, the likelihood of encountering authorization conflicts among CAA records is minimized. This practice promotes a more streamlined and reliable certificate issuance process, reducing the potential for errors and ensuring that the certificate accurately represents the domains controlled by a single entity.<a href="#section-6.1-2" class="pilcrow">¶</a></p>
 <p id="section-6.1-3">The process with multiple domain names looks as follows:<a href="#section-6.1-3" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-6.1-4">
-<li id="section-6.1-4.1">The ACME client identifies the list of domain names for which a certificate is requested.<a href="#section-6.1-4.1" class="pilcrow">¶</a>
+<li id="section-6.1-4.1">
+            <p id="section-6.1-4.1.1">The ACME client identifies the list of domain names for which a certificate is requested.<a href="#section-6.1-4.1.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-6.1-4.2">
             <p id="section-6.1-4.2.1">For each domain in the list, the ACME client initiates a DNS lookup to retrieve the CAA record(s) according to <span>[<a href="#RFC8659" class="cite xref">RFC8659</a>]</span>.<a href="#section-6.1-4.2.1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-6.1-4.2.2">
-<li id="section-6.1-4.2.2.1">The DNS resolver responds with the CAA record for each domain, specifying the authorized CAs capable of issuing certificates, along with their priorities and other optional parameters.<a href="#section-6.1-4.2.2.1" class="pilcrow">¶</a>
+<li id="section-6.1-4.2.2.1">
+                <p id="section-6.1-4.2.2.1.1">The DNS resolver responds with the CAA record for each domain, specifying the authorized CAs capable of issuing certificates, along with their priorities and other optional parameters.<a href="#section-6.1-4.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
             </ol>
 </li>
           <li id="section-6.1-4.3">
             <p id="section-6.1-4.3.1">The ACME client analyzes the valid CAA records for each domain to identify a CA that is authorized by all included domains and which has the highest priority while it ignores any CAA records it cannot process.<a href="#section-6.1-4.3.1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-6.1-4.3.2">
-<li id="section-6.1-4.3.2.1">If all domains prioritize the same CA, the ACME client proceeds with step 4.<a href="#section-6.1-4.3.2.1" class="pilcrow">¶</a>
+<li id="section-6.1-4.3.2.1">
+                <p id="section-6.1-4.3.2.1.1">If all domains prioritize the same CA, the ACME client proceeds with step 4.<a href="#section-6.1-4.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li id="section-6.1-4.3.2.2">If not all domains prioritize the same CA, the ACME client tries to find a compromise based on the highest overall preference.<a href="#section-6.1-4.3.2.2" class="pilcrow">¶</a>
+              <li id="section-6.1-4.3.2.2">
+                <p id="section-6.1-4.3.2.2.1">If not all domains prioritize the same CA, the ACME client tries to find a compromise based on the highest overall preference.<a href="#section-6.1-4.3.2.2.1" class="pilcrow">¶</a></p>
 </li>
-              <li id="section-6.1-4.3.2.3">If no compromise can be found, the process will end with a failure and the user <span class="bcp14">SHOULD</span> be notified.<a href="#section-6.1-4.3.2.3" class="pilcrow">¶</a>
+              <li id="section-6.1-4.3.2.3">
+                <p id="section-6.1-4.3.2.3.1">If no compromise can be found, the process will end with a failure and the user <span class="bcp14">SHOULD</span> be notified.<a href="#section-6.1-4.3.2.3.1" class="pilcrow">¶</a></p>
 </li>
             </ol>
 </li>
-          <li id="section-6.1-4.4">The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected CA (https://[issuer-domain-name]/.well-known/acme)<a href="#section-6.1-4.4" class="pilcrow">¶</a>
+          <li id="section-6.1-4.4">
+            <p id="section-6.1-4.4.1">The ACME client will download the ACME directory from the well-known location of the issuer-domain-name of the selected CA (https://[issuer-domain-name]/.well-known/acme)<a href="#section-6.1-4.4.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-6.1-4.5">
             <p id="section-6.1-4.5.1">If an External Account Binding is required but not configured the ACME client will try to determine an alternative CA in step 3.<a href="#section-6.1-4.5.1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-6.1-4.5.2">
-<li id="section-6.1-4.5.2.1">If no alternative CA can be found, the process with end with a failure and the user <span class="bcp14">SHOULD</span> be notified.<a href="#section-6.1-4.5.2.1" class="pilcrow">¶</a>
+<li id="section-6.1-4.5.2.1">
+                <p id="section-6.1-4.5.2.1.1">If no alternative CA can be found, the process with end with a failure and the user <span class="bcp14">SHOULD</span> be notified.<a href="#section-6.1-4.5.2.1.1" class="pilcrow">¶</a></p>
 </li>
             </ol>
 </li>
-          <li id="section-6.1-4.6">The ACME clients continues normal operation according to <span>[<a href="#RFC8555" class="cite xref">RFC8555</a>]</span>.<a href="#section-6.1-4.6" class="pilcrow">¶</a>
+          <li id="section-6.1-4.6">
+            <p id="section-6.1-4.6.1">The ACME clients continues normal operation according to <span>[<a href="#RFC8555" class="cite xref">RFC8555</a>]</span>.<a href="#section-6.1-4.6.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
 <div id="selecting-a-ca-through-compromise">
@@ -1627,19 +1618,26 @@ three.example CAA 0 issue "ca2.example; priority=2"
 <p id="section-7.1.1-1">In addition to the external account binding mechanism, an alternative approach can be implemented by the CAs that offers distinct advantages, particularly in cases where service providers may not expose the account binding configuration options to their users. This alternative method leverages domain control validation as the initial step in the process and subsequently pauses to await confirmation from the account holder regarding the account binding. The email address associated with the ACME account can be utilized for differentiating between multiple Certification Authority (CA) accounts holding the same domain name.<a href="#section-7.1.1-1" class="pilcrow">¶</a></p>
 <p id="section-7.1.1-2">The process to establish an internal account binding would be as follows:<a href="#section-7.1.1-2" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-7.1.1-3">
-<li id="section-7.1.1-3.1">The user adds the domain name to their Certification Authority (CA) account and completes the domain control verification process within this account.<a href="#section-7.1.1-3.1" class="pilcrow">¶</a>
+<li id="section-7.1.1-3.1">
+              <p id="section-7.1.1-3.1.1">The user adds the domain name to their Certification Authority (CA) account and completes the domain control verification process within this account.<a href="#section-7.1.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li id="section-7.1.1-3.2">The user initiates the ACME process for certificate issuance or a new authorization.<a href="#section-7.1.1-3.2" class="pilcrow">¶</a>
+            <li id="section-7.1.1-3.2">
+              <p id="section-7.1.1-3.2.1">The user initiates the ACME process for certificate issuance or a new authorization.<a href="#section-7.1.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li id="section-7.1.1-3.3">The ACME client validates domain control for the requested domain.<a href="#section-7.1.1-3.3" class="pilcrow">¶</a>
+            <li id="section-7.1.1-3.3">
+              <p id="section-7.1.1-3.3.1">The ACME client validates domain control for the requested domain.<a href="#section-7.1.1-3.3.1" class="pilcrow">¶</a></p>
 </li>
-            <li id="section-7.1.1-3.4">Upon successful domain control validation the CA does not mark the authorizations as completed but awaits the completion of the account binding.<a href="#section-7.1.1-3.4" class="pilcrow">¶</a>
+            <li id="section-7.1.1-3.4">
+              <p id="section-7.1.1-3.4.1">Upon successful domain control validation the CA does not mark the authorizations as completed but awaits the completion of the account binding.<a href="#section-7.1.1-3.4.1" class="pilcrow">¶</a></p>
 </li>
-            <li id="section-7.1.1-3.5">The CA, having confirmed domain control, uses the provided email address associated with the ACME account to distinguish between different CA accounts that have confirmed control over the same domain name.<a href="#section-7.1.1-3.5" class="pilcrow">¶</a>
+            <li id="section-7.1.1-3.5">
+              <p id="section-7.1.1-3.5.1">The CA, having confirmed domain control, uses the provided email address associated with the ACME account to distinguish between different CA accounts that have confirmed control over the same domain name.<a href="#section-7.1.1-3.5.1" class="pilcrow">¶</a></p>
 </li>
-            <li id="section-7.1.1-3.6">The account holder receives a notification or prompt and confirms the account binding within the CA's system.<a href="#section-7.1.1-3.6" class="pilcrow">¶</a>
+            <li id="section-7.1.1-3.6">
+              <p id="section-7.1.1-3.6.1">The account holder receives a notification or prompt and confirms the account binding within the CA's system.<a href="#section-7.1.1-3.6.1" class="pilcrow">¶</a></p>
 </li>
-            <li id="section-7.1.1-3.7">Once the account binding is confirmed, the CA marks the ACME authorization as completed and the ACME client proceeds with the remaining steps of the ACME process, such as finalizing the certificate issuance.<a href="#section-7.1.1-3.7" class="pilcrow">¶</a>
+            <li id="section-7.1.1-3.7">
+              <p id="section-7.1.1-3.7.1">Once the account binding is confirmed, the CA marks the ACME authorization as completed and the ACME client proceeds with the remaining steps of the ACME process, such as finalizing the certificate issuance.<a href="#section-7.1.1-3.7.1" class="pilcrow">¶</a></p>
 </li>
           </ol>
 <p id="section-7.1.1-4">It is important to note that before the ACME process can start, the domain name must be added to the CA account and the domain control validation process must be successfully completed. This ensures that the domain ownership is verified for both accounts before proceeding with the account binding.<a href="#section-7.1.1-4" class="pilcrow">¶</a></p>
@@ -1795,6 +1793,7 @@ To mitigate this risk, it is recommended that users who have multiple CAA record
       <h2 id="name-references">
 <a href="#section-10" class="section-number selfRef">10. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
 <section id="section-10.1">
         <h3 id="name-normative-references">
 <a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
@@ -1818,6 +1817,8 @@ To mitigate this risk, it is recommended that users who have multiple CAA record
 <dd class="break"></dd>
 </dl>
 </section>
+</div>
+<div id="sec-informative-references">
 <section id="section-10.2">
         <h3 id="name-informative-references">
 <a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
@@ -1837,6 +1838,7 @@ To mitigate this risk, it is recommended that users who have multiple CAA record
 <dd class="break"></dd>
 </dl>
 </section>
+</div>
 </section>
 <div id="acknowledgments">
 <section id="appendix-A">
