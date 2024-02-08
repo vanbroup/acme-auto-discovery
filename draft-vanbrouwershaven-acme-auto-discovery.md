@@ -50,6 +50,7 @@ normative:
   RFC8659:
 
 informative:
+  RFC3986:
   RFC8657:
   RFC5785:
   I-D.tweedale-acme-discovery:
@@ -146,6 +147,16 @@ When this parameter is not specified the client MUST assume that discovery is en
 The value of this parameter, if specified, MUST contain an integer greater than zero, where the value "1" represents the highest priority, and subsequent values like "2", "3", and so on, indicate progressively lower priorities. Where records specify an equal priority, their usage SHOULD be randomized.
 
 In the case that this parameter is not specified, the entry will be considered to have a lower priority than all entries which specify any priority.
+
+### the "accounturi" Parameter
+
+The intention of this parameter is to provide the CA with an account disambiguation hint in cases where the ACME request does not contain sufficient information to uniquely identify the account within the CA that this request should be processed against. For example, it may be the case that muliple accounts are authorized to issue for the same domain in order to separate out different certificate profiles, validation levels, or billing information. If a CA's account model expects to run into account ambiguities of this form, then they MAY instruct their subscribers wishing to leverage ACME auto-discovery to place an `accounturi` parameter into their DNS CAA record for the CA to check during processing of ACME requests.
+
+The value of this paramater, if specified, MUST contain a non-empty string which SHOULD be in the format of a URI as specified in [RFC3986], but since this is an account identifier which only needs to be intelligeble to the CA, it MAY be in other formats.
+
+This parameter MAY be omitted either when ACME requests leveraging the auto-discovery mechanism are not to be associated with any existing account, or when some other account disambiguation mechanism is in use.
+
+Note that this value is not secret; therefore it does not provide any authentication or authorization; it is merely a hint to the CA for routing purposes.
 
 ## Examples
 
