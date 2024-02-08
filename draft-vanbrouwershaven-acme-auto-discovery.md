@@ -1,6 +1,6 @@
 ---
-title: "Auto-discovery mechanism for ACME client configuration"
-abbrev: "ACME Auto-Discovery"
+title: "Auto-discovery mechanism for ACME servers"
+abbrev: "ACME Server Discovery"
 category: std
 
 docname: draft-vanbrouwershaven-acme-auto-discovery-latest
@@ -44,6 +44,28 @@ author:
       country: Canada
       code: K2K 3G5
       email: mike.ounsworth@entrust.com
+  -
+      ins: C. Bonnell
+      name: Corey Bonnell
+      organization: DigiCert, Inc
+      abbrev: DigiCert
+      street:
+      city: Pittsburgh
+      region: PA
+      country: United States of America
+      email: corey.bonnell@digicert.com
+   -
+      ins: I.Barreira
+      name: Iñigo Barreira
+      org: Sectigo (Europe) SL
+      abbrev: Sectigo
+      street: Rambla Catalunya 86, 3 1. 08008 Barcelona.
+      city: Barcelona
+      country: Spain
+      code: 08008
+      email: inigo.barreira@sectigo.com
+
+   #add Corey, Inigo, ask Q
 
 normative:
   RFC8555:
