@@ -5,7 +5,7 @@
 ACME                                                P. van Brouwershaven
 Internet-Draft                                              M. Ounsworth
 Intended status: Standards Track                                 Entrust
-Expires: 11 August 2024                                  8 February 2024
+Expires: 12 August 2024                                  9 February 2024
 
 
          Auto-discovery mechanism for ACME client configuration
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 August 2024.
+   This Internet-Draft will expire on 12 August 2024.
 
 Copyright Notice
 
@@ -91,8 +91,12 @@ Table of Contents
      4.1.  Extensions to the CAA Record
        4.1.1.  The "discovery" Parameter
        4.1.2.  The "priority" Parameter
-       4.1.3.  the "accounturi" Parameter
      4.2.  Examples
+       4.2.1.  Single CA
+       4.2.2.  Multiple CAs with priority
+       4.2.3.  Using validationmethods
+       4.2.4.  Using issuewild
+       4.2.5.  Using accounturi
    5.  ACME Client Configuration
    6.  ACME Client Behavior
      6.1.  Certificates with multiple domain names
@@ -266,40 +270,17 @@ Table of Contents
    considered to have a lower priority than all entries which specify
    any priority.
 
-4.1.3.  the "accounturi" Parameter
-
-   The intention of this parameter is to provide the CA with an account
-   disambiguation hint in cases where the ACME request does not contain
-   sufficient information to uniquely identify the account within the CA
-   that this request should be processed against.  For example, it may
-   be the case that muliple accounts are authorized to issue for the
-   same domain in order to separate out different certificate profiles,
-   validation levels, or billing information.  If a CA's account model
-   expects to run into account ambiguities of this form, then they MAY
-   instruct their subscribers wishing to leverage ACME auto-discovery to
-   place an accounturi parameter into their DNS CAA record for the CA to
-   check during processing of ACME requests.
-
-   The value of this paramater, if specified, MUST contain a non-empty
-   string which SHOULD be in the format of a URI as specified in
-   [RFC3986], but since this is an account identifier which only needs
-   to be intelligeble to the CA, it MAY be in other formats.
-
-   This parameter MAY be omitted either when ACME requests leveraging
-   the auto-discovery mechanism are not to be associated with any
-   existing account, or when some other account disambiguation mechanism
-   is in use.
-
-   Note that this value is not secret; therefore it does not provide any
-   authentication or authorization; it is merely a hint to the CA for
-   routing purposes.
-
 4.2.  Examples
 
    This section shows some examples of how CAA records can be configured
    in the context of ACME auto discovery.  CAA records are used to
    authorize Certification Authorities (CAs) to issue certificates for a
    specific domain name.
+
+   Implementers and operators should carefully configure CAA records
+   according to their specific requirements and considerations.
+
+4.2.1.  Single CA
 
    A simple CAA record allows the issuance of certificates from a single
    designated CA.  In the following example, the CAA record for the
@@ -309,6 +290,8 @@ Table of Contents
    certificate, the certificate issuance will fail.
 
    example.com CAA 0 issue "ca.example"
+
+4.2.2.  Multiple CAs with priority
 
    By default, when multiple CAA records are present, the CAs are
    randomized to distribute the load.  However, some users may have
@@ -343,17 +326,23 @@ Table of Contents
    example.com CAA 0 issue "ca2.example; priority=1"
    example.com CAA 0 issue "ca3.example; priority=1"
 
+4.2.3.  Using validationmethods
+
    Furthermore, it is possible to configure CAA records to indicate a
-   preference for specific types of certificates.  In the following
-   example, the domain "example.com" prefers Extended Validation (EV)
-   certificates issued by "ca1.example".  If the issuance of an EV
-   certificate fails, the ACME client will attempt to obtain any type of
-   certificate from "ca1.example".  If that also fails, it will then try
-   to obtain any type of certificate from "ca2.example".
+   preference for specific types of certificates, which can be indicated
+   by using the validationmethods CAA extension defined in [RFC8657].
+   In the following example, the domain "example.com" prefers Extended
+   Validation (EV) certificates issued by "ca1.example".  If the
+   issuance of an EV certificate fails, the ACME client will attempt to
+   obtain any type of certificate from "ca1.example".  If that also
+   fails, it will then try to obtain any type of certificate from
+   "ca2.example".
 
    example.com CAA 0 issue "ca1.example; priority=1 validationmethods=ca-ev"
    example.com CAA 0 issue "ca1.example; priority=2"
    example.com CAA 0 issue "ca2.example; priority=3"
+
+4.2.4.  Using issuewild
 
    When an ACME client requests the issuance of a wildcard certificate,
    the issuewild CAA property takes precedence over each issue property
@@ -376,8 +365,53 @@ Table of Contents
    example.com CAA 0 issue "ca1.example"
    example.com CAA 0 issue "ca2.example; discovery=false"
 
-   Implementers and operators should carefully configure CAA records
-   according to their specific requirements and considerations.
+4.2.5.  Using accounturi
+
+   Some cases may arise where the ACME request does not contain
+   sufficient information to uniquely identify the account within the CA
+   that this request should be processed against.  Auto-discovery
+   potentially exacerbates these cases since it assumes that explicit
+   client configuration such as External Account Binding tokens are not
+   available, and that ACME account keys may not uniquely identify a CA
+   account.  The following example demonstrates using the accounturi CAA
+   paremeter, as defined in [RFC8657].
+
+   example.com CAA 0 issue "ca1.example; priority=1; accounturi=https://ca1.example/account/1234"
+   example.com CAA 0 issue "ca2.example; priority=2"
+
+   The primary function of accounturi, as stated in [RFC8657] is to
+   indicate which CA accounts are authorized to issue certificates for
+   example.com.  The accounturi parameter retains this function here,
+   but may additionally be consulted by the CA in order to resolve
+   account ambiguity arising from auto-discovered ACME requests.  When
+   multiple accounturis are specified for the same CA, the priority
+   parameter MAY be used to indicate to the CA the subscriber's
+   preferred order for using CA accounts with auto-discovered ACME
+   requests.  The CA SHOULD first attempt to issue against the
+   accounturi with the lowest priority value, and then fall back to
+   accounturis with higher priority values if the issuance fails.
+
+   example.com CAA 0 issue "ca1.example; priority=1; accounturi=https://ca1.example/account/1234"
+   example.com CAA 0 issue "ca1.example; priority=2; accounturi=https://ca1.example/account/1235"
+
+   Domain owners SHOULD configure their CAA records so that the
+   accounturi that is intended to be used with auto-discovered ACME
+   requests is associated with the CAA record of the lowest priority
+   value.  For example, a domain owner could configure their CAA records
+   as follows to indicate that accounts 1234, 1235, and 1236 are all
+   authorized to issue for example.com, but that account 1234 SHOULD be
+   used for ambiguous requests.
+
+   example.com CAA 0 issue "ca1.example; priority=1; accounturi=https://ca1.example/account/1234"
+   example.com CAA 0 issue "ca1.example; priority=2; accounturi=https://ca1.example/account/1235"
+   example.com CAA 0 issue "ca1.example; priority=2; accounturi=https://ca1.example/account/1236"
+
+   Since an omitted priority parameter implies the lowest priority, this
+   could equivalently be written as:
+
+   example.com CAA 0 issue "ca1.example; priority=1; accounturi=https://ca1.example/account/1234"
+   example.com CAA 0 issue "ca1.example; accounturi=https://ca1.example/account/1235"
+   example.com CAA 0 issue "ca1.example; accounturi=https://ca1.example/account/1236"
 
 5.  ACME Client Configuration
 

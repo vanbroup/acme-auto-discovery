@@ -1033,7 +1033,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">van Brouwershaven &amp; Ounsworth</td>
-<td class="center">Expires 11 August 2024</td>
+<td class="center">Expires 12 August 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1046,12 +1046,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-vanbrouwershaven-acme-auto-discovery-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-02-08" class="published">8 February 2024</time>
+<time datetime="2024-02-09" class="published">9 February 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-08-11">11 August 2024</time></dd>
+<dd class="expires"><time datetime="2024-08-12">12 August 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1106,7 +1106,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 11 August 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 12 August 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1156,13 +1156,27 @@ svg :is([fill="white"], [fill^="#fff"]) {
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1.2.2">
                     <p id="section-toc.1-1.4.2.1.2.2.1"><a href="#section-4.1.2" class="auto internal xref">4.1.2</a>.  <a href="#name-the-priority-parameter" class="internal xref">The "priority" Parameter</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1.2.3">
-                    <p id="section-toc.1-1.4.2.1.2.3.1"><a href="#section-4.1.3" class="auto internal xref">4.1.3</a>.  <a href="#name-the-accounturi-parameter" class="internal xref">the "accounturi" Parameter</a></p>
-</li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
                 <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-examples" class="internal xref">Examples</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.1">
+                    <p id="section-toc.1-1.4.2.2.2.1.1"><a href="#section-4.2.1" class="auto internal xref">4.2.1</a>.  <a href="#name-single-ca" class="internal xref">Single CA</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.2">
+                    <p id="section-toc.1-1.4.2.2.2.2.1"><a href="#section-4.2.2" class="auto internal xref">4.2.2</a>.  <a href="#name-multiple-cas-with-priority" class="internal xref">Multiple CAs with priority</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.3">
+                    <p id="section-toc.1-1.4.2.2.2.3.1"><a href="#section-4.2.3" class="auto internal xref">4.2.3</a>.  <a href="#name-using-validationmethods" class="internal xref">Using validationmethods</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.4">
+                    <p id="section-toc.1-1.4.2.2.2.4.1"><a href="#section-4.2.4" class="auto internal xref">4.2.4</a>.  <a href="#name-using-issuewild" class="internal xref">Using issuewild</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.5">
+                    <p id="section-toc.1-1.4.2.2.2.5.1"><a href="#section-4.2.5" class="auto internal xref">4.2.5</a>.  <a href="#name-using-accounturi" class="internal xref">Using accounturi</a></p>
+</li>
+                </ul>
 </li>
             </ul>
 </li>
@@ -1445,17 +1459,6 @@ This document provides a detailed description of the proposed mechanism, along w
 <p id="section-4.1.2-2">In the case that this parameter is not specified, the entry will be considered to have a lower priority than all entries which specify any priority.<a href="#section-4.1.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="the-accounturi-parameter">
-<section id="section-4.1.3">
-          <h4 id="name-the-accounturi-parameter">
-<a href="#section-4.1.3" class="section-number selfRef">4.1.3. </a><a href="#name-the-accounturi-parameter" class="section-name selfRef">the "accounturi" Parameter</a>
-          </h4>
-<p id="section-4.1.3-1">The intention of this parameter is to provide the CA with an account disambiguation hint in cases where the ACME request does not contain sufficient information to uniquely identify the account within the CA that this request should be processed against. For example, it may be the case that muliple accounts are authorized to issue for the same domain in order to separate out different certificate profiles, validation levels, or billing information. If a CA's account model expects to run into account ambiguities of this form, then they <span class="bcp14">MAY</span> instruct their subscribers wishing to leverage ACME auto-discovery to place an <code>accounturi</code> parameter into their DNS CAA record for the CA to check during processing of ACME requests.<a href="#section-4.1.3-1" class="pilcrow">¶</a></p>
-<p id="section-4.1.3-2">The value of this paramater, if specified, <span class="bcp14">MUST</span> contain a non-empty string which <span class="bcp14">SHOULD</span> be in the format of a URI as specified in <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, but since this is an account identifier which only needs to be intelligeble to the CA, it <span class="bcp14">MAY</span> be in other formats.<a href="#section-4.1.3-2" class="pilcrow">¶</a></p>
-<p id="section-4.1.3-3">This parameter <span class="bcp14">MAY</span> be omitted either when ACME requests leveraging the auto-discovery mechanism are not to be associated with any existing account, or when some other account disambiguation mechanism is in use.<a href="#section-4.1.3-3" class="pilcrow">¶</a></p>
-<p id="section-4.1.3-4">Note that this value is not secret; therefore it does not provide any authentication or authorization; it is merely a hint to the CA for routing purposes.<a href="#section-4.1.3-4" class="pilcrow">¶</a></p>
-</section>
-</div>
 </section>
 </div>
 <div id="examples">
@@ -1464,53 +1467,118 @@ This document provides a detailed description of the proposed mechanism, along w
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-examples" class="section-name selfRef">Examples</a>
         </h3>
 <p id="section-4.2-1">This section shows some examples of how CAA records can be configured in the context of ACME auto discovery. CAA records are used to authorize Certification Authorities (CAs) to issue certificates for a specific domain name.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.2-2">A simple CAA record allows the issuance of certificates from a single designated CA. In the following example, the CAA record for the domain "example.com" authorizes the CA "ca.example" to issue certificates. However, it does not specify any backup CA. Consequently, if the authorized CA is unable to issue the requested certificate, the certificate issuance will fail.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
-<div class="lang-dns-rr sourcecode" id="section-4.2-3">
+<p id="section-4.2-2">Implementers and operators should carefully configure CAA records according to their specific requirements and considerations.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
+<div id="single-ca">
+<section id="section-4.2.1">
+          <h4 id="name-single-ca">
+<a href="#section-4.2.1" class="section-number selfRef">4.2.1. </a><a href="#name-single-ca" class="section-name selfRef">Single CA</a>
+          </h4>
+<p id="section-4.2.1-1">A simple CAA record allows the issuance of certificates from a single designated CA. In the following example, the CAA record for the domain "example.com" authorizes the CA "ca.example" to issue certificates. However, it does not specify any backup CA. Consequently, if the authorized CA is unable to issue the requested certificate, the certificate issuance will fail.<a href="#section-4.2.1-1" class="pilcrow">¶</a></p>
+<div class="lang-dns-rr sourcecode" id="section-4.2.1-2">
 <pre>
 example.com CAA 0 issue "ca.example"
-</pre><a href="#section-4.2-3" class="pilcrow">¶</a>
+</pre><a href="#section-4.2.1-2" class="pilcrow">¶</a>
 </div>
-<p id="section-4.2-4">By default, when multiple CAA records are present, the CAs are randomized to distribute the load. However, some users may have preferences regarding the order in which CAs are attempted for certificate issuance. To explicitly specify the order, the "priority" parameter can be used.<a href="#section-4.2-4" class="pilcrow">¶</a></p>
-<p id="section-4.2-5">In the next example, the domain "example.com" has two CAA records. The CAA record with "ca2.example" has a higher priority value of 1, indicating it should be attempted first. The CAA record with "ca1.example" has a lower priority value of 2, indicating it should be attempted second.<a href="#section-4.2-5" class="pilcrow">¶</a></p>
-<div class="lang-dns-rr sourcecode" id="section-4.2-6">
+</section>
+</div>
+<div id="multiple-cas-with-priority">
+<section id="section-4.2.2">
+          <h4 id="name-multiple-cas-with-priority">
+<a href="#section-4.2.2" class="section-number selfRef">4.2.2. </a><a href="#name-multiple-cas-with-priority" class="section-name selfRef">Multiple CAs with priority</a>
+          </h4>
+<p id="section-4.2.2-1">By default, when multiple CAA records are present, the CAs are randomized to distribute the load. However, some users may have preferences regarding the order in which CAs are attempted for certificate issuance. To explicitly specify the order, the "priority" parameter can be used.<a href="#section-4.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-2">In the next example, the domain "example.com" has two CAA records. The CAA record with "ca2.example" has a higher priority value of 1, indicating it should be attempted first. The CAA record with "ca1.example" has a lower priority value of 2, indicating it should be attempted second.<a href="#section-4.2.2-2" class="pilcrow">¶</a></p>
+<div class="lang-dns-rr sourcecode" id="section-4.2.2-3">
 <pre>
 example.com CAA 0 issue "ca1.example; priority=2"
 example.com CAA 0 issue "ca2.example; priority=1"
-</pre><a href="#section-4.2-6" class="pilcrow">¶</a>
+</pre><a href="#section-4.2.2-3" class="pilcrow">¶</a>
 </div>
-<p id="section-4.2-7">CAA records that do not explicitly specify a priority are automatically assigned the lowest priority. In cases where multiple CAA records have the same priority, the usage will be randomized.<a href="#section-4.2-7" class="pilcrow">¶</a></p>
-<p id="section-4.2-8">Consider the following example, where the domain "example.com" has three CAA records. The CAA record with "ca1.example" has no specified priority, and thus it is assigned the lowest priority. The CAA records with "ca2.example" and "ca3.example" both have a priority of 1. In this scenario, the ACME client will first attempt to obtain its configuration from either "ca2.example" or "ca3.example", selected at random. If both of those fail, it will fall back to "ca1.example". If all attempts fail, the certificate issuance will ultimately fail.<a href="#section-4.2-8" class="pilcrow">¶</a></p>
-<div class="lang-dns-rr sourcecode" id="section-4.2-9">
+<p id="section-4.2.2-4">CAA records that do not explicitly specify a priority are automatically assigned the lowest priority. In cases where multiple CAA records have the same priority, the usage will be randomized.<a href="#section-4.2.2-4" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-5">Consider the following example, where the domain "example.com" has three CAA records. The CAA record with "ca1.example" has no specified priority, and thus it is assigned the lowest priority. The CAA records with "ca2.example" and "ca3.example" both have a priority of 1. In this scenario, the ACME client will first attempt to obtain its configuration from either "ca2.example" or "ca3.example", selected at random. If both of those fail, it will fall back to "ca1.example". If all attempts fail, the certificate issuance will ultimately fail.<a href="#section-4.2.2-5" class="pilcrow">¶</a></p>
+<div class="lang-dns-rr sourcecode" id="section-4.2.2-6">
 <pre>
 example.com CAA 0 issue "ca1.example"
 example.com CAA 0 issue "ca2.example; priority=1"
 example.com CAA 0 issue "ca3.example; priority=1"
-</pre><a href="#section-4.2-9" class="pilcrow">¶</a>
+</pre><a href="#section-4.2.2-6" class="pilcrow">¶</a>
 </div>
-<p id="section-4.2-10">Furthermore, it is possible to configure CAA records to indicate a preference for specific types of certificates. In the following example, the domain "example.com" prefers Extended Validation (EV) certificates issued by "ca1.example". If the issuance of an EV certificate fails, the ACME client will attempt to obtain any type of certificate from "ca1.example". If that also fails, it will then try to obtain any type of certificate from "ca2.example".<a href="#section-4.2-10" class="pilcrow">¶</a></p>
-<div class="lang-dns-rr sourcecode" id="section-4.2-11">
+</section>
+</div>
+<div id="using-validationmethods">
+<section id="section-4.2.3">
+          <h4 id="name-using-validationmethods">
+<a href="#section-4.2.3" class="section-number selfRef">4.2.3. </a><a href="#name-using-validationmethods" class="section-name selfRef">Using validationmethods</a>
+          </h4>
+<p id="section-4.2.3-1">Furthermore, it is possible to configure CAA records to indicate a preference for specific types of certificates, which can be indicated by using the <code>validationmethods</code> CAA extension defined in <span>[<a href="#RFC8657" class="cite xref">RFC8657</a>]</span>. In the following example, the domain "example.com" prefers Extended Validation (EV) certificates issued by "ca1.example". If the issuance of an EV certificate fails, the ACME client will attempt to obtain any type of certificate from "ca1.example". If that also fails, it will then try to obtain any type of certificate from "ca2.example".<a href="#section-4.2.3-1" class="pilcrow">¶</a></p>
+<div class="lang-dns-rr sourcecode" id="section-4.2.3-2">
 <pre>
 example.com CAA 0 issue "ca1.example; priority=1 validationmethods=ca-ev"
 example.com CAA 0 issue "ca1.example; priority=2"
 example.com CAA 0 issue "ca2.example; priority=3"
-</pre><a href="#section-4.2-11" class="pilcrow">¶</a>
+</pre><a href="#section-4.2.3-2" class="pilcrow">¶</a>
 </div>
-<p id="section-4.2-12">When an ACME client requests the issuance of a wildcard certificate, the issuewild CAA property takes precedence over each issue property when specified, see also section 4.3 of <span>[<a href="#RFC8659" class="cite xref">RFC8659</a>]</span>. The following example specifies that only ca3.example can issue certificates for "<em>.example.com" or "</em>.sub.example.com". However ca3.example is not permitted to issue for "example.com" or "sub.example.com". In the case the issuewild property was not specified all listed CAs would be authorized to issue wildcards for this domain.<a href="#section-4.2-12" class="pilcrow">¶</a></p>
-<div class="lang-dns-rr sourcecode" id="section-4.2-13">
+</section>
+</div>
+<div id="using-issuewild">
+<section id="section-4.2.4">
+          <h4 id="name-using-issuewild">
+<a href="#section-4.2.4" class="section-number selfRef">4.2.4. </a><a href="#name-using-issuewild" class="section-name selfRef">Using issuewild</a>
+          </h4>
+<p id="section-4.2.4-1">When an ACME client requests the issuance of a wildcard certificate, the issuewild CAA property takes precedence over each issue property when specified, see also section 4.3 of <span>[<a href="#RFC8659" class="cite xref">RFC8659</a>]</span>. The following example specifies that only ca3.example can issue certificates for "<em>.example.com" or "</em>.sub.example.com". However ca3.example is not permitted to issue for "example.com" or "sub.example.com". In the case the issuewild property was not specified all listed CAs would be authorized to issue wildcards for this domain.<a href="#section-4.2.4-1" class="pilcrow">¶</a></p>
+<div class="lang-dns-rr sourcecode" id="section-4.2.4-2">
 <pre>
 example.com CAA 0 issue "ca1.example; priority=1"
 example.com CAA 0 issue "ca2.example; priority=2"
 example.com CAA 0 issuewild "ca3.example; priority=3"
-</pre><a href="#section-4.2-13" class="pilcrow">¶</a>
+</pre><a href="#section-4.2.4-2" class="pilcrow">¶</a>
 </div>
-<p id="section-4.2-14">To disable auto discovery for a particular record users can set the discovery parameter to false, in the example below this will ensure that the ACME client will only try to obtain a certificate from ca1.example and ignore ca2.example.<a href="#section-4.2-14" class="pilcrow">¶</a></p>
-<div class="lang-dns-rr sourcecode" id="section-4.2-15">
+<p id="section-4.2.4-3">To disable auto discovery for a particular record users can set the discovery parameter to false, in the example below this will ensure that the ACME client will only try to obtain a certificate from ca1.example and ignore ca2.example.<a href="#section-4.2.4-3" class="pilcrow">¶</a></p>
+<div class="lang-dns-rr sourcecode" id="section-4.2.4-4">
 <pre>
 example.com CAA 0 issue "ca1.example"
 example.com CAA 0 issue "ca2.example; discovery=false"
-</pre><a href="#section-4.2-15" class="pilcrow">¶</a>
+</pre><a href="#section-4.2.4-4" class="pilcrow">¶</a>
 </div>
-<p id="section-4.2-16">Implementers and operators should carefully configure CAA records according to their specific requirements and considerations.<a href="#section-4.2-16" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="using-accounturi">
+<section id="section-4.2.5">
+          <h4 id="name-using-accounturi">
+<a href="#section-4.2.5" class="section-number selfRef">4.2.5. </a><a href="#name-using-accounturi" class="section-name selfRef">Using accounturi</a>
+          </h4>
+<p id="section-4.2.5-1">Some cases may arise where the ACME request does not contain sufficient information to uniquely identify the account within the CA that this request should be processed against. Auto-discovery potentially exacerbates these cases since it assumes that explicit client configuration such as External Account Binding tokens are not available, and that ACME account keys may not uniquely identify a CA account. The following example demonstrates using the <code>accounturi</code> CAA paremeter, as defined in <span>[<a href="#RFC8657" class="cite xref">RFC8657</a>]</span>.<a href="#section-4.2.5-1" class="pilcrow">¶</a></p>
+<div class="lang-dns-rr sourcecode" id="section-4.2.5-2">
+<pre>
+example.com CAA 0 issue "ca1.example; priority=1; accounturi=https://ca1.example/account/1234"
+example.com CAA 0 issue "ca2.example; priority=2"
+</pre><a href="#section-4.2.5-2" class="pilcrow">¶</a>
+</div>
+<p id="section-4.2.5-3">The primary function of <code>accounturi</code>, as stated in <span>[<a href="#RFC8657" class="cite xref">RFC8657</a>]</span> is to indicate which CA accounts are authorized to issue certificates for <code>example.com</code>. The <code>accounturi</code> parameter retains this function here, but may additionally be consulted by the CA in order to resolve account ambiguity arising from auto-discovered ACME requests. When multiple <code>accounturi</code>s are specified for the same CA, the <code>priority</code> parameter <span class="bcp14">MAY</span> be used to indicate to the CA the subscriber's preferred order for using CA accounts with auto-discovered ACME requests. The CA <span class="bcp14">SHOULD</span> first attempt to issue against the <code>accounturi</code> with the lowest <code>priority</code> value, and then fall back to <code>accounturi</code>s with higher priority values if the issuance fails.<a href="#section-4.2.5-3" class="pilcrow">¶</a></p>
+<div class="lang-dns-rr sourcecode" id="section-4.2.5-4">
+<pre>
+example.com CAA 0 issue "ca1.example; priority=1; accounturi=https://ca1.example/account/1234"
+example.com CAA 0 issue "ca1.example; priority=2; accounturi=https://ca1.example/account/1235"
+</pre><a href="#section-4.2.5-4" class="pilcrow">¶</a>
+</div>
+<p id="section-4.2.5-5">Domain owners <span class="bcp14">SHOULD</span> configure their CAA records so that the <code>accounturi</code> that is intended to be used with auto-discovered ACME requests is associated with the CAA record of the lowest priority value. For example, a domain owner could configure their CAA records as follows to indicate that accounts 1234, 1235, and 1236 are all authorized to issue for <code>example.com</code>, but that account 1234 <span class="bcp14">SHOULD</span> be used for ambiguous requests.<a href="#section-4.2.5-5" class="pilcrow">¶</a></p>
+<div class="lang-dns-rr sourcecode" id="section-4.2.5-6">
+<pre>
+example.com CAA 0 issue "ca1.example; priority=1; accounturi=https://ca1.example/account/1234"
+example.com CAA 0 issue "ca1.example; priority=2; accounturi=https://ca1.example/account/1235"
+example.com CAA 0 issue "ca1.example; priority=2; accounturi=https://ca1.example/account/1236"
+</pre><a href="#section-4.2.5-6" class="pilcrow">¶</a>
+</div>
+<p id="section-4.2.5-7">Since an omitted <code>priority</code> parameter implies the lowest priority, this could equivalently be written as:<a href="#section-4.2.5-7" class="pilcrow">¶</a></p>
+<div class="lang-dns-rr sourcecode" id="section-4.2.5-8">
+<pre>
+example.com CAA 0 issue "ca1.example; priority=1; accounturi=https://ca1.example/account/1234"
+example.com CAA 0 issue "ca1.example; accounturi=https://ca1.example/account/1235"
+example.com CAA 0 issue "ca1.example; accounturi=https://ca1.example/account/1236"
+</pre><a href="#section-4.2.5-8" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
 </section>
 </div>
 </section>
