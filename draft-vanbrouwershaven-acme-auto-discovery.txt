@@ -5,10 +5,14 @@
 ACME                                                P. van Brouwershaven
 Internet-Draft                                              M. Ounsworth
 Intended status: Standards Track                                 Entrust
-Expires: 23 June 2024                                   21 December 2023
+Expires: 12 August 2024                                       C. Bonnell
+                                                                DigiCert
+                                                             I. Barreira
+                                                                 Sectigo
+                                                         9 February 2024
 
 
-         Auto-discovery mechanism for ACME client configuration
+               Auto-discovery mechanism for ACME servers
            draft-vanbrouwershaven-acme-auto-discovery-latest
 
 Abstract
@@ -66,11 +70,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 June 2024.
+   This Internet-Draft will expire on 12 August 2024.
 
 Copyright Notice
 
-   Copyright (c) 2023 IETF Trust and the persons identified as the
+   Copyright (c) 2024 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -861,3 +865,18 @@ Authors' Addresses
    Ottawa, Ontario  K2K 3G5
    Canada
    Email: mike.ounsworth@entrust.com
+
+
+   Corey Bonnell
+   DigiCert, Inc
+   Pittsburgh, PA
+   United States of America
+   Email: corey.bonnell@digicert.com
+
+
+   Iñigo Barreira
+   Sectigo (Europe) SL
+   Rambla Catalunya 86, 3 1. 08008 Barcelona.
+   08008 Barcelona
+   Spain
+   Email: inigo.barreira@sectigo.com
