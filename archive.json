@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-08T00:38:49.545374+00:00",
+  "timestamp": "2024-02-11T00:42:38.924691+00:00",
   "repo": "vanbroup/acme-auto-discovery",
   "labels": [
     {
@@ -702,6 +702,67 @@
         }
       ],
       "reviews": []
+    },
+    {
+      "number": 20,
+      "id": "PR_kwDOJ4NlCM5mbSAP",
+      "title": "added caa accounturi",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/pull/20",
+      "state": "OPEN",
+      "author": "ounsworth",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-02-08T21:28:33Z",
+      "updatedAt": "2024-02-09T20:05:07Z",
+      "baseRepository": "vanbroup/acme-auto-discovery",
+      "baseRefName": "main",
+      "baseRefOid": "260f914bd6f789c191e863d02aeb75103c2ce8d1",
+      "headRepository": "vanbroup/acme-auto-discovery",
+      "headRefName": "mikeo_accounturi",
+      "headRefOid": "179e088e9fa25e98cf72b9ba9ec7b4a47e91a7ec",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "Shall we just make a reference to [RFC8657](https://datatracker.ietf.org/doc/rfc8657/)?",
+          "createdAt": "2024-02-09T05:21:27Z",
+          "updatedAt": "2024-02-09T05:21:27Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJ4NlCM5vpWeN",
+          "commit": {
+            "abbreviatedOid": "179e088"
+          },
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-09T19:59:47Z",
+          "updatedAt": "2024-02-09T20:05:07Z",
+          "comments": [
+            {
+              "originalPosition": 74,
+              "body": "Can you explain this further? I can imagine that if account 1234 is out of funds or the domain is not pre-configured you fall back to account 1235, etc. But is this not an exceptional example?",
+              "createdAt": "2024-02-09T19:59:47Z",
+              "updatedAt": "2024-02-09T20:05:07Z"
+            },
+            {
+              "originalPosition": 4,
+              "body": "Should this be deleted as it's not referenced?",
+              "createdAt": "2024-02-09T20:04:48Z",
+              "updatedAt": "2024-02-09T20:05:07Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
