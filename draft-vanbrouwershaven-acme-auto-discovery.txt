@@ -5,11 +5,13 @@
 ACME                                                P. van Brouwershaven
 Internet-Draft                                              M. Ounsworth
 Intended status: Standards Track                                 Entrust
-Expires: 12 August 2024                                       C. Bonnell
+Expires: 16 August 2024                                       C. Bonnell
                                                                 DigiCert
                                                              I. Barreira
                                                                  Sectigo
-                                                         9 February 2024
+                                                               Q. Misell
+                                                                AS207960
+                                                        13 February 2024
 
 
                Auto-discovery mechanism for ACME servers
@@ -70,7 +72,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 August 2024.
+   This Internet-Draft will expire on 16 August 2024.
 
 Copyright Notice
 
@@ -880,3 +882,10 @@ Authors' Addresses
    08008 Barcelona
    Spain
    Email: inigo.barreira@sectigo.com
+
+
+   Q Misell
+   AS207960 Cyfyngedig
+   13 Pen-y-lan Terrace
+   Caerdydd
+   Email: q@as207960.net
