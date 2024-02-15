@@ -5,7 +5,7 @@
 ACME                                                P. van Brouwershaven
 Internet-Draft                                              M. Ounsworth
 Intended status: Standards Track                                 Entrust
-Expires: 12 August 2024                                  9 February 2024
+Expires: 18 August 2024                                 15 February 2024
 
 
          Auto-discovery mechanism for ACME client configuration
@@ -66,7 +66,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 August 2024.
+   This Internet-Draft will expire on 18 August 2024.
 
 Copyright Notice
 
@@ -892,11 +892,6 @@ Table of Contents
               Internet-Draft, draft-tweedale-acme-discovery-01, 16
               November 2020, <https://datatracker.ietf.org/doc/html/
               draft-tweedale-acme-discovery-01>.
-
-   [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
-              Resource Identifier (URI): Generic Syntax", STD 66,
-              RFC 3986, DOI 10.17487/RFC3986, January 2005,
-              <https://www.rfc-editor.org/rfc/rfc3986>.
 
    [RFC5785]  Nottingham, M. and E. Hammer-Lahav, "Defining Well-Known
               Uniform Resource Identifiers (URIs)", RFC 5785,
