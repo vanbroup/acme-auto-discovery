@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-13T00:39:46.275279+00:00",
+  "timestamp": "2024-02-15T00:39:31.987645+00:00",
   "repo": "vanbroup/acme-auto-discovery",
   "labels": [
     {
@@ -763,6 +763,34 @@
           ]
         }
       ]
+    },
+    {
+      "number": 21,
+      "id": "PR_kwDOJ4NlCM5mu9d4",
+      "title": "Add Q as an author",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/pull/21",
+      "state": "MERGED",
+      "author": "TheEnbyperor",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-02-13T10:23:46Z",
+      "updatedAt": "2024-02-13T12:04:06Z",
+      "baseRepository": "vanbroup/acme-auto-discovery",
+      "baseRefName": "main",
+      "baseRefOid": "611c03ebcc9fb142a53eb97f86abb15560b06a27",
+      "headRepository": "TheEnbyperor/acme-auto-discovery",
+      "headRefName": "main",
+      "headRefOid": "fe7e1bb0d4d4283de65353c3a8d541c033007429",
+      "closedAt": "2024-02-13T12:04:06Z",
+      "mergedAt": "2024-02-13T12:04:06Z",
+      "mergedBy": "vanbroup",
+      "mergeCommit": {
+        "oid": "5fad0872ea0b7c4b2f2157c96269f356c5b79a5f"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
