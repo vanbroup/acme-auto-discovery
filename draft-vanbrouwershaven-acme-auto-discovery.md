@@ -171,15 +171,22 @@ The value of this parameter, if specified, MUST contain an integer greater than 
 
 In the case that this parameter is not specified, the entry will be considered to have a lower priority than all entries which specify any priority.
 
+
 ## Examples
 
 This section shows some examples of how CAA records can be configured in the context of ACME auto discovery. CAA records are used to authorize Certification Authorities (CAs) to issue certificates for a specific domain name.
+
+Implementers and operators should carefully configure CAA records according to their specific requirements and considerations.
+
+### Single CA
 
 A simple CAA record allows the issuance of certificates from a single designated CA. In the following example, the CAA record for the domain "example.com" authorizes the CA "ca.example" to issue certificates. However, it does not specify any backup CA. Consequently, if the authorized CA is unable to issue the requested certificate, the certificate issuance will fail.
 
 ~~~ dns-rr
 example.com CAA 0 issue "ca.example"
 ~~~
+
+### Multiple CAs with priority
 
 By default, when multiple CAA records are present, the CAs are randomized to distribute the load. However, some users may have preferences regarding the order in which CAs are attempted for certificate issuance. To explicitly specify the order, the "priority" parameter can be used.
 
@@ -200,13 +207,17 @@ example.com CAA 0 issue "ca2.example; priority=1"
 example.com CAA 0 issue "ca3.example; priority=1"
 ~~~
 
-Furthermore, it is possible to configure CAA records to indicate a preference for specific types of certificates. In the following example, the domain "example.com" prefers Extended Validation (EV) certificates issued by "ca1.example". If the issuance of an EV certificate fails, the ACME client will attempt to obtain any type of certificate from "ca1.example". If that also fails, it will then try to obtain any type of certificate from "ca2.example".
+### Using validationmethods
+
+Furthermore, it is possible to configure CAA records to indicate a preference for specific types of certificates, which can be indicated by using the `validationmethods` CAA extension defined in [RFC8657]. In the following example, the domain "example.com" prefers Extended Validation (EV) certificates issued by "ca1.example". If the issuance of an EV certificate fails, the ACME client will attempt to obtain any type of certificate from "ca1.example". If that also fails, it will then try to obtain any type of certificate from "ca2.example".
 
 ~~~ dns-rr
 example.com CAA 0 issue "ca1.example; priority=1 validationmethods=ca-ev"
 example.com CAA 0 issue "ca1.example; priority=2"
 example.com CAA 0 issue "ca2.example; priority=3"
 ~~~
+
+### Using issuewild
 
 When an ACME client requests the issuance of a wildcard certificate, the issuewild CAA property takes precedence over each issue property when specified, see also section 4.3 of [RFC8659]. The following example specifies that only ca3.example can issue certificates for "*.example.com" or "*.sub.example.com". However ca3.example is not permitted to issue for "example.com" or "sub.example.com". In the case the issuewild property was not specified all listed CAs would be authorized to issue wildcards for this domain.
 
@@ -223,7 +234,40 @@ example.com CAA 0 issue "ca1.example"
 example.com CAA 0 issue "ca2.example; discovery=false"
 ~~~
 
-Implementers and operators should carefully configure CAA records according to their specific requirements and considerations.
+### Using accounturi
+
+Some cases may arise where the ACME request does not contain sufficient information to uniquely identify the account within the CA that this request should be processed against. Auto-discovery potentially exacerbates these cases since it assumes that explicit client configuration such as External Account Binding tokens are not available, and that ACME account keys may not uniquely identify a CA account. The following example demonstrates using the `accounturi` CAA paremeter, as defined in [RFC8657].
+
+~~~ dns-rr
+example.com CAA 0 issue "ca1.example; priority=1; accounturi=https://ca1.example/account/1234"
+example.com CAA 0 issue "ca2.example; priority=2"
+~~~
+
+The primary function of `accounturi`, as stated in [RFC8657] is to indicate which CA accounts are authorized to issue certificates for `example.com`. The `accounturi` parameter retains this function here, but may additionally be consulted by the CA in order to resolve account ambiguity arising from auto-discovered ACME requests. When multiple `accounturi`s are specified for the same CA, the `priority` parameter MAY be used to indicate to the CA the subscriber's preferred order for using CA accounts with auto-discovered ACME requests. The CA SHOULD first attempt to issue against the `accounturi` with the lowest `priority` value, and then fall back to `accounturi`s with higher priority values if the issuance fails.
+
+
+~~~ dns-rr
+example.com CAA 0 issue "ca1.example; priority=1; accounturi=https://ca1.example/account/1234"
+example.com CAA 0 issue "ca1.example; priority=2; accounturi=https://ca1.example/account/1235"
+~~~
+
+Domain owners SHOULD configure their CAA records so that the `accounturi` that is intended to be used with auto-discovered ACME requests is associated with the CAA record of the lowest priority value. For example, a domain owner could configure their CAA records as follows to indicate that accounts 1234, 1235, and 1236 are all authorized to issue for `example.com`, but that account 1234 SHOULD be used for ambiguous requests.
+
+~~~ dns-rr
+example.com CAA 0 issue "ca1.example; priority=1; accounturi=https://ca1.example/account/1234"
+example.com CAA 0 issue "ca1.example; priority=2; accounturi=https://ca1.example/account/1235"
+example.com CAA 0 issue "ca1.example; priority=2; accounturi=https://ca1.example/account/1236"
+~~~
+
+Since an omitted `priority` parameter implies the lowest priority, this could equivalently be written as:
+
+~~~ dns-rr
+example.com CAA 0 issue "ca1.example; priority=1; accounturi=https://ca1.example/account/1234"
+example.com CAA 0 issue "ca1.example; accounturi=https://ca1.example/account/1235"
+example.com CAA 0 issue "ca1.example; accounturi=https://ca1.example/account/1236"
+~~~
+
+
 
 # ACME Client Configuration
 
