@@ -74,7 +74,6 @@ normative:
   RFC8659:
 
 informative:
-  RFC3986:
   RFC8657:
   RFC5785:
   I-D.tweedale-acme-discovery:
