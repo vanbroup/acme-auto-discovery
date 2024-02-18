@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-15T00:39:31.987645+00:00",
+  "timestamp": "2024-02-18T00:41:57.125278+00:00",
   "repo": "vanbroup/acme-auto-discovery",
   "labels": [
     {
@@ -708,24 +708,26 @@
       "id": "PR_kwDOJ4NlCM5mbSAP",
       "title": "added caa accounturi",
       "url": "https://github.com/vanbroup/acme-auto-discovery/pull/20",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "ounsworth",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2024-02-08T21:28:33Z",
-      "updatedAt": "2024-02-09T20:05:07Z",
+      "updatedAt": "2024-02-15T15:59:01Z",
       "baseRepository": "vanbroup/acme-auto-discovery",
       "baseRefName": "main",
       "baseRefOid": "260f914bd6f789c191e863d02aeb75103c2ce8d1",
       "headRepository": "vanbroup/acme-auto-discovery",
       "headRefName": "mikeo_accounturi",
-      "headRefOid": "179e088e9fa25e98cf72b9ba9ec7b4a47e91a7ec",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "af8202a64987e0c8480697162469300f0e655891",
+      "closedAt": "2024-02-15T15:58:53Z",
+      "mergedAt": "2024-02-15T15:58:53Z",
+      "mergedBy": "vanbroup",
+      "mergeCommit": {
+        "oid": "d78543bc01657c7c4f2ed49881246aa0a684c17c"
+      },
       "comments": [
         {
           "author": "vanbroup",
@@ -733,6 +735,13 @@
           "body": "Shall we just make a reference to [RFC8657](https://datatracker.ietf.org/doc/rfc8657/)?",
           "createdAt": "2024-02-09T05:21:27Z",
           "updatedAt": "2024-02-09T05:21:27Z"
+        },
+        {
+          "author": "ounsworth",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Shall we just make a reference to [RFC8657](https://datatracker.ietf.org/doc/rfc8657/)?\r\n\r\nBasically yes, but I think there are meaningful things to say about the interactions between `accounturi` defined in RFC8657, and `priority` defined here.",
+          "createdAt": "2024-02-15T14:51:03Z",
+          "updatedAt": "2024-02-15T14:51:03Z"
         }
       ],
       "reviews": [
@@ -759,6 +768,66 @@
               "body": "Should this be deleted as it's not referenced?",
               "createdAt": "2024-02-09T20:04:48Z",
               "updatedAt": "2024-02-09T20:05:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJ4NlCM5wPDlb",
+          "commit": {
+            "abbreviatedOid": "179e088"
+          },
+          "author": "ounsworth",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-15T14:51:19Z",
+          "updatedAt": "2024-02-15T14:51:19Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "Done. Thanks.",
+              "createdAt": "2024-02-15T14:51:19Z",
+              "updatedAt": "2024-02-15T14:51:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJ4NlCM5wPF4x",
+          "commit": {
+            "abbreviatedOid": "af8202a"
+          },
+          "author": "ounsworth",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-15T14:54:45Z",
+          "updatedAt": "2024-02-15T14:54:45Z",
+          "comments": [
+            {
+              "originalPosition": 74,
+              "body": "I'm not sure how to explain this further. \r\nLet's say that a customer needs to have CAA records for all three accounts -- maybe for reasons completely unrelated to ACME, they just need to be in the CAA record.\r\n\r\nNow then, the whole point of including `accounturi` in the auto-discovery draft is to tell the CA which account to use for ambiguous auto-discovery requests. Ranking them with the `priority` parameter seems like the obvious way.\r\n\r\nThe point here is not about failover; but rather being able to single out one from the group.\r\n\r\nIf you have better wording, feel free to suggest something.",
+              "createdAt": "2024-02-15T14:54:45Z",
+              "updatedAt": "2024-02-15T14:58:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJ4NlCM5wP1v4",
+          "commit": {
+            "abbreviatedOid": "af8202a"
+          },
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-15T15:58:18Z",
+          "updatedAt": "2024-02-15T15:58:18Z",
+          "comments": [
+            {
+              "originalPosition": 74,
+              "body": "I will merge this for now, but I'm not sure if this particular example is helping or just causing confusion.",
+              "createdAt": "2024-02-15T15:58:18Z",
+              "updatedAt": "2024-02-15T15:58:18Z"
             }
           ]
         }
