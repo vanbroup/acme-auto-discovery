@@ -1,0 +1,865 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2024-03-26T00:06:32.586761+00:00",
+  "repo": "vanbroup/acme-auto-discovery",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 2,
+      "id": "I_kwDOJ4NlCM5qzQVy",
+      "title": "Fix contradiction between definition and examples of priority",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/issues/2",
+      "state": "CLOSED",
+      "author": "aarongable",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 3.1.2:\r\n> the value \"1\" represents the highest priority, and subsequent values like \"2\", \"3\", and so on, indicate progressively lower priorities.\r\n\r\nSection 3.2:\r\n> The CAA record with \"ca2.example\" has a higher priority value of 2, indicating it should be attempted first. The CAA record with \"ca1.example\" has a lower priority value of 1, indicating it should be attempted second.\r\n\r\nThis contradicts Section 3.1.2, which says that \"2\" is a lower priority than \"1\".\r\n\r\nSection 3.2:\r\n> CAA records that do not explicitly specify a priority are automatically assigned the highest priority, which is 0.\r\n\r\nThis contradicts Section 3.1.2, which says that \"1\" is the highest priority.\r\n\r\nI'd file a PR to fix this, but I'm not sure which direction you'd prefer to fix it in!",
+      "createdAt": "2023-07-06T15:52:19Z",
+      "updatedAt": "2023-07-06T16:35:58Z",
+      "closedAt": "2023-07-06T16:35:58Z",
+      "comments": [
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "Thanks for spotting that, I would suggest that \"1\" represents the highest priority.",
+          "createdAt": "2023-07-06T15:54:17Z",
+          "updatedAt": "2023-07-06T15:54:17Z"
+        },
+        {
+          "author": "aarongable",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Yeah, I think that the combination of:\r\n- lower numbers mean higher priority\r\n- no number at all means the lowest priority\r\n\r\nprobably leads to the most intuitive behavior",
+          "createdAt": "2023-07-06T15:59:53Z",
+          "updatedAt": "2023-07-06T15:59:53Z"
+        },
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "That works for me!",
+          "createdAt": "2023-07-06T16:02:21Z",
+          "updatedAt": "2023-07-06T16:02:21Z"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "id": "I_kwDOJ4NlCM5q3tYx",
+      "title": "Who is the holder of the account in context of Terms of Service and Acceptance",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/issues/4",
+      "state": "OPEN",
+      "author": "vanbroup",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "In the security considerations we describe currently two mechanisms, implicit approval by setting the CAA record, or explicit approval by including a CAA parameter. \r\n\r\nAdd that if a CA would like to get an explicit approval, they could also send a request to the ACME account email to approve the terms of service before activating the ACME account.\r\n\r\nWhere a CA is using an external account binding the terms of service have already been agreed to for the CA account.",
+      "createdAt": "2023-07-07T07:45:12Z",
+      "updatedAt": "2023-09-01T14:40:48Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "ounsworth",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The main point here is that if this draft requires hosting providers (who operate the automated ACME client) to blindly accept the TOS of arbitrary ACME servers, then this draft will never proceed.\r\n\r\nWe need to be sure that the person who needs to accept the ACME TOS is the domain owner and not the ACME client operator.\r\n\r\nI think we are ok on this point, but it is worth more consideration, and clarification of the text.",
+          "createdAt": "2023-07-20T01:40:39Z",
+          "updatedAt": "2023-07-20T01:40:39Z"
+        },
+        {
+          "author": "ounsworth",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Some more useful text that Paul wrote:\r\n\r\n> If the terms of service limit usage to non-commercial use, the domain owner should not set the CAA record if they run a commercial service, the domain owner is the entity giving the instruction to the ACME client and thus requests the certificate from the CA and be bound to the terms of service.\r\n\r\nhttps://mailarchive.ietf.org/arch/msg/acme/5CQLiuUN8yaPN4u_LmSAC1yqDu0/\r\n",
+          "createdAt": "2023-07-20T01:41:56Z",
+          "updatedAt": "2023-07-20T01:41:56Z"
+        },
+        {
+          "author": "ounsworth",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Also a similar comment from Q Missel:\r\n\r\n> Might it be worth spelling out in the I-D the\r\nauthor's intentions about who is the holder of the account. This would also\r\nhelp clarify who is actually agreeing to the CA ToS.\r\n\r\nhttps://mailarchive.ietf.org/arch/msg/acme/-KBunXt1BN6GIAKRSraw_IXqfbw/",
+          "createdAt": "2023-07-20T01:50:41Z",
+          "updatedAt": "2023-07-20T01:50:41Z"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOJ4NlCM5q4Lbf",
+      "title": "ACME key per customer ",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/issues/5",
+      "state": "CLOSED",
+      "author": "vanbroup",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Add to the document that each customer is supposed to have its own ACME. This is important to enable account binding and might help to clarify who agreed to the terms of service.",
+      "createdAt": "2023-07-07T09:00:19Z",
+      "updatedAt": "2023-07-12T18:58:22Z",
+      "closedAt": "2023-07-12T18:58:22Z",
+      "comments": []
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOJ4NlCM5sD02e",
+      "title": "Add a \"Protocol Overview\" section",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/issues/6",
+      "state": "CLOSED",
+      "author": "ounsworth",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Comment from Richard Barnes:\r\n\r\n> A brief \"protocol overview\" section might be helpful to capture the intended happy-path flow.\r\n\r\nhttps://mailarchive.ietf.org/arch/msg/acme/4p523wENVeqgodyIn7TmwarCIgU/",
+      "createdAt": "2023-07-20T00:38:36Z",
+      "updatedAt": "2023-08-18T12:00:47Z",
+      "closedAt": "2023-08-18T12:00:46Z",
+      "comments": [
+        {
+          "author": "ounsworth",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Perhaps this is as simple as bringing Section 5: ACME Client Behaviour to the beginning (or duplicating part of it to the beginning).",
+          "createdAt": "2023-07-20T01:30:28Z",
+          "updatedAt": "2023-07-20T01:30:28Z"
+        },
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "A Protocol Overview section has been added on top in commit 61b6b22 ",
+          "createdAt": "2023-08-18T12:00:46Z",
+          "updatedAt": "2023-08-18T12:00:46Z"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "id": "I_kwDOJ4NlCM5sD-7d",
+      "title": "Add an informative reference to draft-tweedale-acme-discovery",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/issues/7",
+      "state": "CLOSED",
+      "author": "ounsworth",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "ounsworth"
+      ],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-07-20T01:32:22Z",
+      "updatedAt": "2023-09-01T16:18:03Z",
+      "closedAt": "2023-09-01T16:17:49Z",
+      "comments": [
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "Ad reference to draft-tweedale-acme-discovery had been added in commit 9e5d570, however the build system does not seem to support references to draft documents.\r\n\r\n@ounsworth any suggestions? should we keep this in, remove?",
+          "createdAt": "2023-08-18T12:02:28Z",
+          "updatedAt": "2023-08-18T12:02:28Z"
+        },
+        {
+          "author": "ounsworth",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Oh, yeah, it's super picky.\r\n\r\nInstead of\r\n\r\n```\r\ninformative:\r\n  draft-tweedale-acme-discovery:\r\n```\r\n\r\nYou need:\r\n\r\n```\r\ninformative:\r\n  I.D.tweedale-acme-discovery:\r\n```",
+          "createdAt": "2023-09-01T16:18:03Z",
+          "updatedAt": "2023-09-01T16:18:03Z"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "id": "I_kwDOJ4NlCM5sD_FC",
+      "title": "Correct IANA registry for CAA attributes",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/issues/8",
+      "state": "CLOSED",
+      "author": "ounsworth",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From Fraser Tweedale:\r\n\r\n> Regarding registration of CAA attributes (IANA considerations): they\r\nneed to be registered in the \"Certification Authority Restriction\r\nProperties\" registry:\r\nhttps://www.iana.org/assignments/pkix-parameters/pkix-parameters.xhtml#caa-properties\r\n\r\nhttps://mailarchive.ietf.org/arch/msg/acme/o-P1fOtiIDyQvwkdXJJ93S5jZKI/\r\n",
+      "createdAt": "2023-07-20T01:33:18Z",
+      "updatedAt": "2023-09-01T14:45:12Z",
+      "closedAt": "2023-09-01T14:45:11Z",
+      "comments": [
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "This is a parameter and not a property, I don't think there is a registry for parameters. Parameters can be CA specific.",
+          "createdAt": "2023-07-20T18:26:52Z",
+          "updatedAt": "2023-07-20T18:26:52Z"
+        },
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "Replied to the thread above with the following message:\r\nhttps://mailarchive.ietf.org/arch/msg/acme/THWuO-M02Jd8emz170MAM8GMtsQ/",
+          "createdAt": "2023-08-18T15:17:32Z",
+          "updatedAt": "2023-08-18T15:17:32Z"
+        },
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "Duplicate of #14 ",
+          "createdAt": "2023-09-01T14:45:11Z",
+          "updatedAt": "2023-09-01T14:45:11Z"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "I_kwDOJ4NlCM5sEEBb",
+      "title": "Additional feedback from Q",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/issues/9",
+      "state": "CLOSED",
+      "author": "ounsworth",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "ounsworth"
+      ],
+      "labels": [],
+      "body": "> I think priority=0 should be the same as specifying no priority at all.\r\nThat is priority defaults to 0 unless otherwise specified.\r\n\r\n> I would also suggest the\r\nwording:\r\n\"The ACME client analyzes the valid CAA records, ignoring any it cannot\r\nprocess\"\r\n\r\n> One final suggestion I've thought of is defining an 'Auto Discovery\r\nCritical' flag, that a client must be able to understand all parameters\r\nbefore proceeding with using this record, in case breaking parameters are\r\nadded in future.\r\n\r\nhttps://mailarchive.ietf.org/arch/msg/acme/bYU4pN4nqATifJasFkv5vUdSLmQ/",
+      "createdAt": "2023-07-20T01:57:17Z",
+      "updatedAt": "2023-09-01T15:49:43Z",
+      "closedAt": "2023-09-01T15:49:42Z",
+      "comments": [
+        {
+          "author": "ounsworth",
+          "authorAssociation": "COLLABORATOR",
+          "body": "From Paul:\r\n\r\n> Humm, what if we change the discovery parameter so that instead of a Boolean that it can be \"enabled\", \"disabled\", \"strict\" or something? I just don't like to overload CAA with even more parameters.\r\n\r\nPaul may have already updated text to address this.",
+          "createdAt": "2023-07-20T02:00:22Z",
+          "updatedAt": "2023-07-20T02:00:22Z"
+        },
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "> I would also suggest the\r\n> wording:\r\n> \"The ACME client analyzes the valid CAA records, ignoring any it cannot\r\n> process\"\r\n\r\nThis was addressed in 599df05\r\n\r\n",
+          "createdAt": "2023-08-18T15:53:59Z",
+          "updatedAt": "2023-08-18T15:53:59Z"
+        },
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "> From Paul:\r\n> \r\n> > Humm, what if we change the discovery parameter so that instead of a Boolean that it can be \"enabled\", \"disabled\", \"strict\" or something? I just don't like to overload CAA with even more parameters.\r\n> \r\n> Paul may have already updated text to address this.\r\n\r\n@ounsworth what is your thought on this?",
+          "createdAt": "2023-08-18T15:54:27Z",
+          "updatedAt": "2023-08-18T15:54:27Z"
+        },
+        {
+          "author": "ounsworth",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Looks good.",
+          "createdAt": "2023-09-01T15:49:42Z",
+          "updatedAt": "2023-09-01T15:49:42Z"
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "id": "I_kwDOJ4NlCM5sEEXP",
+      "title": "Feedback from Carl Wallace",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/issues/10",
+      "state": "CLOSED",
+      "author": "ounsworth",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "```\r\n- Why is the draft informational and not standards track?\r\n\r\n- Why does absence turn the feature on? Wouldn't this invite sending spurious requests for ACME information to CAs configured before this draft existed that do not support ACME? \r\n\r\n- Is a boolean the right type for discovery or should it be a string that indicates the protocol that is the target of auto-discovery?\r\n\r\n- Do/ought parent domains apply (as they do in CAA)? If not, it might be worth a few words since the usage here is different.\r\n\r\n- In the next to last example in 3.2, why does EV without priority go first?\r\n\r\n- In 5.1, you might want to replace the long paragraph with bullets. \r\n\r\n- In 5.1, what does 3.b mean? Can you add an example?\r\n\r\n- You should expand QWAC on first use and maybe add an informational reference. \r\n```\r\n\r\nhttps://mailarchive.ietf.org/arch/msg/acme/rAR61Lh-jaDeMMqaI-xE8bLSAbM/",
+      "createdAt": "2023-07-20T01:59:04Z",
+      "updatedAt": "2023-09-01T14:36:09Z",
+      "closedAt": "2023-09-01T14:36:00Z",
+      "comments": [
+        {
+          "author": "ounsworth",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I believe Paul has already addressed these.\r\n\r\nSee:\r\nhttps://mailarchive.ietf.org/arch/msg/acme/uu2QgtgsgZ2ilO5fB9SspQYcAD4/",
+          "createdAt": "2023-07-20T02:02:35Z",
+          "updatedAt": "2023-07-20T02:02:35Z"
+        },
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "I agree that these issues have been addressed on the mailing list, closing this issue.\r\n",
+          "createdAt": "2023-09-01T14:36:00Z",
+          "updatedAt": "2023-09-01T14:36:09Z"
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "id": "I_kwDOJ4NlCM5sEMwu",
+      "title": "Multiple entries of the same priority should be discussed in 3.1.2",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/issues/11",
+      "state": "CLOSED",
+      "author": "ounsworth",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This is a core part of the Priority attribute and should be discussed in 3.1.2, not left until the end of 3.2 Examples.",
+      "createdAt": "2023-07-20T02:40:59Z",
+      "updatedAt": "2023-08-18T14:59:06Z",
+      "closedAt": "2023-08-18T14:59:06Z",
+      "comments": [
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "Added the statement \"Where records specify an equal priority, their usage SHOULD be randomized\" in commit 1478613.",
+          "createdAt": "2023-08-18T14:59:06Z",
+          "updatedAt": "2023-08-18T14:59:06Z"
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "id": "I_kwDOJ4NlCM5sEOo4",
+      "title": "CA's obligation for TOS Security Consideration",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/issues/12",
+      "state": "CLOSED",
+      "author": "ounsworth",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We could add to 8.4.1 something to the effect of:\r\n\r\n> CAs will typically provide documentation indicating how to configure a domain's CAA record for ACME auto-discovery. CAs are encouraged to note in alongside those instructions that doing so will be taken as implicit agreement to the Terms of Service, and also to include a direct link to those Terms of Service.",
+      "createdAt": "2023-07-20T02:50:56Z",
+      "updatedAt": "2023-08-18T15:42:22Z",
+      "closedAt": "2023-08-18T15:42:21Z",
+      "comments": [
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "Add this in 4a75188",
+          "createdAt": "2023-08-18T15:42:21Z",
+          "updatedAt": "2023-08-18T15:42:21Z"
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "id": "I_kwDOJ4NlCM5sERGG",
+      "title": "Associate the 'related-implementation' through datatracker",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/issues/13",
+      "state": "CLOSED",
+      "author": "ounsworth",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "ounsworth"
+      ],
+      "labels": [],
+      "body": "From Charles Eckel:\r\n\r\n> I am catching up on this thread and would like to share a suggestion for your consideration. It seems a great deal of helpful discussion was triggered as a result of the implementation at [https://github.com/as207960/certbot/tree/auto-discovery](https://urldefense.com/v3/__https:/github.com/as207960/certbot/tree/auto-discovery__;!!FJ-Y8qCqXTj2!eY4H58dN5hWOQQ7xZjg2r0R2IahaCWEbFDNt9GmqbKbIx-05kSM741cAzzLVS66-oWM9dTGfOdwWwymahVI$). It might we appropriate to associate this as an Additional Resource using the \u201crelated-implementation\u201d tag in the Datatracker. More info on this tag can be found here: [https://www.ietf.org/archive/id/draft-eckel-edm-find-code-03.html#name-datatracker](https://urldefense.com/v3/__https:/www.ietf.org/archive/id/draft-eckel-edm-find-code-03.html*name-datatracker__;Iw!!FJ-Y8qCqXTj2!eY4H58dN5hWOQQ7xZjg2r0R2IahaCWEbFDNt9GmqbKbIx-05kSM741cAzzLVS66-oWM9dTGfOdwWKL7DAyo$).",
+      "createdAt": "2023-07-20T03:04:44Z",
+      "updatedAt": "2023-08-07T10:02:42Z",
+      "closedAt": "2023-08-07T10:02:42Z",
+      "comments": [
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "A link to the repository and list of related implementations has now been added to the datatracker with a link to the wiki: https://github.com/vanbroup/acme-auto-discovery/wiki/Implementations\r\n\r\n![image](https://github.com/vanbroup/acme-auto-discovery/assets/722070/60068a47-6d12-48c0-9faa-50d0e0cdac63)\r\n",
+          "createdAt": "2023-08-07T10:02:42Z",
+          "updatedAt": "2023-08-07T10:02:42Z"
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "id": "I_kwDOJ4NlCM5sURCH",
+      "title": "Establishing a CAA parameter registry in another document",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/issues/14",
+      "state": "OPEN",
+      "author": "ounsworth",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Corey Bonnell suggested that we structure the Discovery and Priority definitions and IANA registry requests on how they did it in rfc8657.",
+      "createdAt": "2023-07-23T18:25:29Z",
+      "updatedAt": "2023-09-01T14:45:58Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "RFC8657 includes the following IANA Considerations:\n\n> This document has no IANA actions. As per [RFC8659], the parameter namespace for the CAA \"issue\" and \"issuewild\" Properties has CA-defined semantics, and the identifiers within that namespace may be freely and arbitrarily assigned by a CA. This document merely specifies recommended semantics for parameters of the names \"accounturi\" and \"validationmethods\", which CAs may choose to adopt.\n\nWe can include the same statement but I'm not sure how helpful this is.",
+          "createdAt": "2023-07-23T19:52:19Z",
+          "updatedAt": "2023-07-23T19:52:19Z"
+        },
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "@CBonnell can you clarify your suggestion?",
+          "createdAt": "2023-08-18T14:49:24Z",
+          "updatedAt": "2023-08-18T14:49:24Z"
+        },
+        {
+          "author": "CBonnell",
+          "authorAssociation": "NONE",
+          "body": "@vanbroup My recollection might be a bit hazy, but @ounsworth and I discussed the verbiage that you quoted in https://github.com/vanbroup/acme-auto-discovery/issues/14#issuecomment-1646945483. A statement similar to the quoted RFC 8657 text would be useful, as it explains to the reader why these parameters are not in any registry.\r\n\r\nAnother proposal that we discussed was this document (or perhaps another document?) establishing a CAA parameter registry. Although there is no requirement for a RFC 8659-compliant CA to process parameters, having a list of parameters whose recommended semantics have been defined would likely be useful.\r\n\r\nIf I had to choose between the two options, I'd lean towards the latter one, as it adds discoverability to the IETF-defined parameters.",
+          "createdAt": "2023-08-18T17:04:54Z",
+          "updatedAt": "2023-08-18T17:04:54Z"
+        },
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "Thanks for clarifying, I agree that we might want to establish a registry in a seperate document.",
+          "createdAt": "2023-08-18T17:16:48Z",
+          "updatedAt": "2023-08-18T17:16:48Z"
+        },
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "@ounsworth wrote:\r\n> At 117, I spoke with Phillip Hallam-Baker (the IANA Designated Expert for the CAA registry) and he\u2019s ok with creating whatever registries for whatever parameters we need to make this work.\r\n\r\nhttps://mailarchive.ietf.org/arch/msg/acme/UV5ET0T7cOnVjh-SfkdbRIgrtfw/",
+          "createdAt": "2023-09-01T14:45:58Z",
+          "updatedAt": "2023-09-01T14:45:58Z"
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "id": "I_kwDOJ4NlCM5uqbGE",
+      "title": "Consider SRV or URI record types instead of Well-Known URI",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/issues/15",
+      "state": "CLOSED",
+      "author": "vanbroup",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-08-18T12:08:38Z",
+      "updatedAt": "2023-08-18T12:40:09Z",
+      "closedAt": "2023-08-18T12:40:09Z",
+      "comments": [
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "The SRV records also come with their own priority and weight giving more flexibility to the CA but more complexity for the client.\r\n\r\nAn SRV record could look like: \r\n```dns\r\n_acme._tls.ca.example. 86400 IN SRV 0 5 443 acme.ca.example.\r\n```\r\n\r\nThe problem is that the target is a fqdn of most acme servers do not run at the root directory but a path such as https://acme.ca.example/v2 or with even more subdirectories, something that cannot be specified in an SRV record.\r\n\r\nA URI record could be considered instead, this has a similar format to the SRV record but can hold a URI. To my knowledge URI records are not well supported by DNS providers, but I will some research on that,\r\n",
+          "createdAt": "2023-08-18T12:12:53Z",
+          "updatedAt": "2023-08-18T12:12:53Z"
+        },
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "## Most large DNS server software support the URI record:\r\n\r\n**DNS servers supporting the URI record type:**\r\n- [Bind](https://bind9.readthedocs.io/en/latest/general.html)\r\n- [Unbound](https://unbound.docs.nlnetlabs.nl/en/latest/reference/rfc-compliance.html)\r\n- [PowerDNS](https://doc.powerdns.com/authoritative/appendices/types.html#uri)\r\n\r\n## Unfortunately there is very limited support for the URI record type:\r\n\r\n**Providers supporting the URI record type:**\r\n\r\n- [Cloudflare](https://blog.cloudflare.com/additional-record-types-available-with-cloudflare-dns/)\r\n\r\n**No supporting the URI record type:**\r\n\r\n- [AWS Route53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/ResourceRecordTypes.html)\r\n- [Akamai](https://techdocs.akamai.com/edge-dns/docs/features#supported-resource-record-types)\r\n- [Azure DNS](https://learn.microsoft.com/en-us/azure/dns/dns-zones-records)\r\n- [DigitalOcean](https://docs.digitalocean.com/products/networking/dns/how-to/manage-records/)\r\n- [Dyn](https://help.dyn.com/standard-dns/managing-resource-records-in-dyn-standard-dns/)\r\n- [Google CloudDNS](https://cloud.google.com/dns/docs/records-overview)\r\n- [NS1](https://help.ns1.com/hc/en-us/articles/360022091074-Guide-to-DNS-record-types)\r\n",
+          "createdAt": "2023-08-18T12:39:13Z",
+          "updatedAt": "2023-08-18T12:39:13Z"
+        },
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "Based on the limited support for URI DNS records we will stick with the Well-Known URI as specified in the draft.",
+          "createdAt": "2023-08-18T12:40:09Z",
+          "updatedAt": "2023-08-18T12:40:09Z"
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "id": "I_kwDOJ4NlCM5vFdKC",
+      "title": "Security Consideration about effects of DNS poisoning",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/issues/16",
+      "state": "CLOSED",
+      "author": "ounsworth",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "ounsworth"
+      ],
+      "labels": [],
+      "body": "If the DNS is poisoned, then the ACME client can be forced to get a cert from evil.ca. That could lead to a DoS where the ACME client returns success even though it received a cert from evil.ca.\r\n\r\nWithin the Public CA usecase, you can fix it my checking that the cert you get back was from one of the CAs in your OS' trust store.\r\n",
+      "createdAt": "2023-08-23T16:59:24Z",
+      "updatedAt": "2023-09-01T15:47:24Z",
+      "closedAt": "2023-09-01T15:47:23Z",
+      "comments": [
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "@ounsworth please review section 9.4: \r\nhttps://vanbroup.github.io/acme-auto-discovery/draft-vanbrouwershaven-acme-auto-discovery.html#section-9.4",
+          "createdAt": "2023-09-01T14:08:49Z",
+          "updatedAt": "2023-09-01T14:08:49Z"
+        },
+        {
+          "author": "ounsworth",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Looks good.",
+          "createdAt": "2023-09-01T15:47:23Z",
+          "updatedAt": "2023-09-01T15:47:23Z"
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "id": "I_kwDOJ4NlCM5vFdhj",
+      "title": "Add security considerations about checking ACME 'url'",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/issues/17",
+      "state": "OPEN",
+      "author": "ounsworth",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "ounsworth"
+      ],
+      "labels": [],
+      "body": "Corey Bonnell pointed out that because this scheme will result in ACME clients creating new accounts more frequently than they do now, there is greater potential for MitM attacks where an attacker intercepts ACME new-account reqs and replaces the account key with their own; then they have full control of the ACME account.\r\n\r\nThe only real prevention of this is for CAs to be diligent about checking the \"url\" ACME JWT header and make sure that it matches the CA / ACME server's public URL.\r\n\r\nhttps://www.rfc-editor.org/rfc/rfc8555.html#section-6.4.1",
+      "createdAt": "2023-08-23T17:00:28Z",
+      "updatedAt": "2023-11-24T20:33:30Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "If we assume that the client validates the TLS certificate of the ACME server and both the client and server are not compromised, the attacker needs to compromise the TLS connection, or poisen the DNS lookup for the auto discovery as described in #16.",
+          "createdAt": "2023-09-01T11:33:08Z",
+          "updatedAt": "2023-09-01T11:33:08Z"
+        },
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "The attack here is that an attacker can spoof the CAA record of the subscribers domain.",
+          "createdAt": "2023-11-24T20:33:29Z",
+          "updatedAt": "2023-11-24T20:33:29Z"
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "id": "I_kwDOJ4NlCM530Sy9",
+      "title": "Security Considerations for ACME account key sharing",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/issues/18",
+      "state": "OPEN",
+      "author": "vanbroup",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "It's implied that cloud service providers (i.e., a specific ACME account key) can request certificates for any domain for which they can demonstrate domain control; there is an open question about whether a mechanism should exist whereby subscribers can explicitly authorize a given cloud service provider to issue a certificate with a given subject name (OV/EV).\r\n\r\nWe should evaluate the Security Considerations for situations where the ACME account key is managed by a Cloud Service Provider and shared between multiple subscribers.\r\n\r\n- Does it introduce security risks if you share an account key across subscribers within the same service provider?\r\n- Is it sufficient to create an account binding based on a successful domain control validation?\r\n- Is proving domain control by the service provider sufficient to imply that the subscriber is authorizing the CA to issue certificates from the configured certificate profile for that domain?",
+      "createdAt": "2023-11-24T20:30:10Z",
+      "updatedAt": "2023-11-24T20:30:10Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOJ4NlCM5Uz8SO",
+      "title": "I re-wrote the abstract",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/pull/1",
+      "state": "MERGED",
+      "author": "ounsworth",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-07-06T13:27:52Z",
+      "updatedAt": "2023-07-06T13:38:40Z",
+      "baseRepository": "vanbroup/acme-auto-discovery",
+      "baseRefName": "main",
+      "baseRefOid": "0fcadc124f906aa4ee804ae7af5d3f7c360fff4f",
+      "headRepository": "vanbroup/acme-auto-discovery",
+      "headRefName": "mike_abstract",
+      "headRefOid": "0694667ead43496e5f4589c1d089534165f43b8f",
+      "closedAt": "2023-07-06T13:38:33Z",
+      "mergedAt": "2023-07-06T13:38:33Z",
+      "mergedBy": "vanbroup",
+      "mergeCommit": {
+        "oid": "29707fb37c9891f6a5634c86a9e4f10a19af972e"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDOJ4NlCM5U06mC",
+      "title": "Clarify priority ordering and default",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/pull/3",
+      "state": "MERGED",
+      "author": "aarongable",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Constrain priority values to be positive integers. Update the examples to agree with the definition that smaller numbers indicate higher priorities. Change the meaning of no priority from \"highest\" to \"lowest\", which feels more intuitive (since someone took an intentional action to assign a priority to the other entries).\r\n\r\nFixes https://github.com/vanbroup/acme-auto-discovery/issues/2",
+      "createdAt": "2023-07-06T16:15:03Z",
+      "updatedAt": "2023-07-06T16:35:57Z",
+      "baseRepository": "vanbroup/acme-auto-discovery",
+      "baseRefName": "main",
+      "baseRefOid": "886132c9c87831b0150f5270218c0adc7818c677",
+      "headRepository": "aarongable/acme-auto-discovery",
+      "headRefName": "patch-1",
+      "headRefOid": "db9c962d8ca6de0fc2bb528c8a51795ae008933e",
+      "closedAt": "2023-07-06T16:35:57Z",
+      "mergedAt": "2023-07-06T16:35:57Z",
+      "mergedBy": "vanbroup",
+      "mergeCommit": {
+        "oid": "250ab4d72add066d759bbd34cc5f528189651940"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJ4NlCM5aahun",
+          "commit": {
+            "abbreviatedOid": "535af0c"
+          },
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-06T16:19:31Z",
+          "updatedAt": "2023-07-06T16:20:40Z",
+          "comments": [
+            {
+              "originalPosition": 24,
+              "body": "In the example ca1.example has priority 2, not 1. This was done on purpose to not confuse the case name with the priority value.",
+              "createdAt": "2023-07-06T16:19:31Z",
+              "updatedAt": "2023-07-06T16:20:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJ4NlCM5aai0I",
+          "commit": {
+            "abbreviatedOid": "535af0c"
+          },
+          "author": "aarongable",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-07-06T16:22:20Z",
+          "updatedAt": "2023-07-06T16:22:20Z",
+          "comments": [
+            {
+              "originalPosition": 24,
+              "body": "Flipped it back!",
+              "createdAt": "2023-07-06T16:22:20Z",
+              "updatedAt": "2023-07-06T16:22:21Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "id": "PR_kwDOJ4NlCM5ihwhW",
+      "title": "Minor typo correction",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/pull/19",
+      "state": "MERGED",
+      "author": "webprofusion-chrisc",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-12-21T02:39:24Z",
+      "updatedAt": "2023-12-21T07:01:57Z",
+      "baseRepository": "vanbroup/acme-auto-discovery",
+      "baseRefName": "main",
+      "baseRefOid": "ff24b6eb15deada8d5aa6c042a82d0a7ac0b5920",
+      "headRepository": "webprofusion-chrisc/acme-auto-discovery",
+      "headRefName": "patch-1",
+      "headRefOid": "4db85e5dbd60543d5796a136d1baacce91e8d100",
+      "closedAt": "2023-12-21T07:01:57Z",
+      "mergedAt": "2023-12-21T07:01:57Z",
+      "mergedBy": "vanbroup",
+      "mergeCommit": {
+        "oid": "260f914bd6f789c191e863d02aeb75103c2ce8d1"
+      },
+      "comments": [
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "Thanks @webprofusion-chrisc ",
+          "createdAt": "2023-12-21T07:01:44Z",
+          "updatedAt": "2023-12-21T07:01:44Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 20,
+      "id": "PR_kwDOJ4NlCM5mbSAP",
+      "title": "added caa accounturi",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/pull/20",
+      "state": "MERGED",
+      "author": "ounsworth",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-02-08T21:28:33Z",
+      "updatedAt": "2024-02-15T15:59:01Z",
+      "baseRepository": "vanbroup/acme-auto-discovery",
+      "baseRefName": "main",
+      "baseRefOid": "260f914bd6f789c191e863d02aeb75103c2ce8d1",
+      "headRepository": "vanbroup/acme-auto-discovery",
+      "headRefName": "mikeo_accounturi",
+      "headRefOid": "af8202a64987e0c8480697162469300f0e655891",
+      "closedAt": "2024-02-15T15:58:53Z",
+      "mergedAt": "2024-02-15T15:58:53Z",
+      "mergedBy": "vanbroup",
+      "mergeCommit": {
+        "oid": "d78543bc01657c7c4f2ed49881246aa0a684c17c"
+      },
+      "comments": [
+        {
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "body": "Shall we just make a reference to [RFC8657](https://datatracker.ietf.org/doc/rfc8657/)?",
+          "createdAt": "2024-02-09T05:21:27Z",
+          "updatedAt": "2024-02-09T05:21:27Z"
+        },
+        {
+          "author": "ounsworth",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Shall we just make a reference to [RFC8657](https://datatracker.ietf.org/doc/rfc8657/)?\r\n\r\nBasically yes, but I think there are meaningful things to say about the interactions between `accounturi` defined in RFC8657, and `priority` defined here.",
+          "createdAt": "2024-02-15T14:51:03Z",
+          "updatedAt": "2024-02-15T14:51:03Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJ4NlCM5vpWeN",
+          "commit": {
+            "abbreviatedOid": "179e088"
+          },
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-09T19:59:47Z",
+          "updatedAt": "2024-02-09T20:05:07Z",
+          "comments": [
+            {
+              "originalPosition": 74,
+              "body": "Can you explain this further? I can imagine that if account 1234 is out of funds or the domain is not pre-configured you fall back to account 1235, etc. But is this not an exceptional example?",
+              "createdAt": "2024-02-09T19:59:47Z",
+              "updatedAt": "2024-02-09T20:05:07Z"
+            },
+            {
+              "originalPosition": 4,
+              "body": "Should this be deleted as it's not referenced?",
+              "createdAt": "2024-02-09T20:04:48Z",
+              "updatedAt": "2024-02-09T20:05:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJ4NlCM5wPDlb",
+          "commit": {
+            "abbreviatedOid": "179e088"
+          },
+          "author": "ounsworth",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-15T14:51:19Z",
+          "updatedAt": "2024-02-15T14:51:19Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "Done. Thanks.",
+              "createdAt": "2024-02-15T14:51:19Z",
+              "updatedAt": "2024-02-15T14:51:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJ4NlCM5wPF4x",
+          "commit": {
+            "abbreviatedOid": "af8202a"
+          },
+          "author": "ounsworth",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-15T14:54:45Z",
+          "updatedAt": "2024-02-15T14:54:45Z",
+          "comments": [
+            {
+              "originalPosition": 74,
+              "body": "I'm not sure how to explain this further. \r\nLet's say that a customer needs to have CAA records for all three accounts -- maybe for reasons completely unrelated to ACME, they just need to be in the CAA record.\r\n\r\nNow then, the whole point of including `accounturi` in the auto-discovery draft is to tell the CA which account to use for ambiguous auto-discovery requests. Ranking them with the `priority` parameter seems like the obvious way.\r\n\r\nThe point here is not about failover; but rather being able to single out one from the group.\r\n\r\nIf you have better wording, feel free to suggest something.",
+              "createdAt": "2024-02-15T14:54:45Z",
+              "updatedAt": "2024-02-15T14:58:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJ4NlCM5wP1v4",
+          "commit": {
+            "abbreviatedOid": "af8202a"
+          },
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-15T15:58:18Z",
+          "updatedAt": "2024-02-15T15:58:18Z",
+          "comments": [
+            {
+              "originalPosition": 74,
+              "body": "I will merge this for now, but I'm not sure if this particular example is helping or just causing confusion.",
+              "createdAt": "2024-02-15T15:58:18Z",
+              "updatedAt": "2024-02-15T15:58:18Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "id": "PR_kwDOJ4NlCM5mu9d4",
+      "title": "Add Q as an author",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/pull/21",
+      "state": "MERGED",
+      "author": "TheEnbyperor",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-02-13T10:23:46Z",
+      "updatedAt": "2024-02-13T12:04:06Z",
+      "baseRepository": "vanbroup/acme-auto-discovery",
+      "baseRefName": "main",
+      "baseRefOid": "611c03ebcc9fb142a53eb97f86abb15560b06a27",
+      "headRepository": "TheEnbyperor/acme-auto-discovery",
+      "headRefName": "main",
+      "headRefOid": "fe7e1bb0d4d4283de65353c3a8d541c033007429",
+      "closedAt": "2024-02-13T12:04:06Z",
+      "mergedAt": "2024-02-13T12:04:06Z",
+      "mergedBy": "vanbroup",
+      "mergeCommit": {
+        "oid": "5fad0872ea0b7c4b2f2157c96269f356c5b79a5f"
+      },
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}
