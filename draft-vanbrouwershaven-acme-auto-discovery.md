@@ -33,6 +33,7 @@ author:
     country: Canada
     code: K2K 3G5
     email: paul.vanbrouwershaven@entrust.com
+
   - ins: M. Ounsworth
     name: Mike Ounsworth
     org: Entrust Limited
@@ -42,6 +43,7 @@ author:
     country: Canada
     code: K2K 3G5
     email: mike.ounsworth@entrust.com
+
   - ins: C. Bonnell
     name: Corey Bonnell
     organization: 'DigiCert, Inc'
@@ -50,6 +52,7 @@ author:
     region: PA
     country: United States of America
     email: corey.bonnell@digicert.com
+
   - ins: I.Barreira
     name: Iñigo Barreira
     org: Sectigo (Europe) SL
@@ -59,6 +62,7 @@ author:
     country: Spain
     code: 08008
     email: inigo.barreira@sectigo.com
+
   - ins: Q Misell
     name: Q Misell
     org: AS207960 Cyfyngedig
@@ -77,6 +81,24 @@ informative:
   RFC8657:
   RFC5785:
   I-D.tweedale-acme-discovery:
+  EVBRs:
+    title: "Minimum Security Requirements for Issuance of Mark Certificates, v2.0.1"
+    target: "https://cabforum.org/working-groups/server/extended-validation/documents/CA-Browser-Forum-EV-Guidelines-2.0.1.pdf"
+    author:
+      - org: CA/Browser Forum
+    date: 6 May, 2024
+  QWAC-ENISA:
+    title: "Qualified Website Authentication Certificates"
+    target: "https://www.enisa.europa.eu/publications/qualified-website-authentication-certificates"
+    author:
+      - org: European Union Aguncy for Cybersecurity (ENISA)
+    date: May 16, 2016
+  VMCRequirements:
+    title: "Guidelines for the Issuance and Management of Extended Validation Certificates"
+    target: "https://bimigroup.org/resources/VMC_Requirements_latest.pdf"
+    author:
+      - org: BIMI Group
+    date: March 7, 2024
 
 --- abstract
 
@@ -434,13 +456,13 @@ One potential security risk associated with the mechanism defined in this docume
 
 To minimize this risk, ACME clients must be written with a cautious and security-conscious approach when interacting with ACME servers. It is crucial not to blindly trust servers to behave securely and in accordance with the ACME protocol.
 
-## ACME Keys
+## Authorization of ACME Keys
 
-To ensure a secure account binding per customer, it is essential that each customer possesses their own unique ACME key. The utilization of individual ACME keys allows for a distinct association between the customer's account and the established account binding.
+To ensure a secure account binding, it is essential that each customer be able to control and pre-approve the ACME account keys that are authorized to request certificates against their account, particularly for certificate types that have billing implications, or that have additional verification requirements beyond what can be done inline within the ACME protocol, such as OV, EV [[EVBRs]], Qualified Website [[QWAC-ENISA]], or Verified Mark Certificates [[VMCRequirements]].
 
-If an account binding were to be established based on a shared ACME key, it could potentially lead to unauthorized users obtaining certificates using the same Certificate Authority (CA) based on the established account binding. This scenario poses a significant security risk and could result in the compromise of sensitive information or unauthorized certificate issuance.
+In traditional ACME deployments, this binding is accomplished via External Account Binding (EAB) keys or via unique ACME account keys per CA account. In the deployments for which ACME auto-discovery is envisioned to be useful, these authorization mechanisms may not be appropriate because the ACME client may be under the control of a cloud service provider (CSP) who may use the same ACME client key for all requests across customer accounts and who does not know the customer's EAB key (and if it did, then it would not require an auto-discovery mechanism in the first place).
 
-To mitigate this risk, it is crucial to enforce the use of individual ACME keys for each customer. This ensures that the account binding is securely linked to the respective customer's account, preventing unauthorized access or misuse by other users. By maintaining separate ACME keys per customer, the integrity and confidentiality of the account binding process are upheld, enhancing the overall security posture of the system.
+The mechanism by which a CA obtains authorization to accept requests from a given ACME client key against a given CA account is outside the scope of this document and MAY be proprietary. Such a mechanism should be designed carefully to not lower the overall security of the system, and to not prevent CSPs from being able to rotate client keys.
 
 ## Use of DNS Security
 
