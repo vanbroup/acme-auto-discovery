@@ -14,24 +14,24 @@
        A significant impediment to the widespread adoption of the Automated Certificate Management Environment (ACME)   is that ACME clients need to be pre-configured with the URL of the ACME server to be used. This often leaves domain owners at the mercy of their hosting provider as to which Certification Authorities (CAs) can be used. This specification provides a mechanism to bootstrap ACME client configuration from a domain's DNS CAA Resource Record  , thus giving control of which CA(s) to use back to the domain owner. 
        Specifically, this document specifies two new extensions to the DNS CAA Resource Record: the &quot;discovery&quot; and &quot;priority&quot; parameters. Additionally, it registers the URI &quot;/.well-known/acme&quot; at which all compliant ACME servers will host their ACME directory object. By retrieving instructions for the ACME client from the authorized CA(s), this mechanism allows for the domain owner to configure multiple CAs in either load-balanced or fallback prioritizations which improves user preferences and increases diversity in certificate issuers. 
     " name="description">
-<meta content="xml2rfc 3.19.2" name="generator">
+<meta content="xml2rfc 3.21.0" name="generator">
 <meta content="ACME" name="keyword">
 <meta content="Auto-discovery" name="keyword">
 <meta content="CAA" name="keyword">
 <meta content="draft-vanbrouwershaven-acme-auto-discovery-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.19.2
-    Python 3.11.6
+  xml2rfc 3.21.0
+    Python 3.12.3
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
-    Jinja2 3.1.2
-    lxml 4.9.3
-    platformdirs 4.2.0
+    Jinja2 3.1.4
+    lxml 4.9.4
+    platformdirs 4.2.2
     pycountry 22.3.5
     PyYAML 6.0.1
     requests 2.31.0
-    setuptools 68.2.2
+    setuptools 69.5.1
     six 1.16.0
     wcwidth 0.2.13
 -->
@@ -1032,11 +1032,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">ACME Server Discovery</td>
-<td class="right">February 2024</td>
+<td class="right">June 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">van Brouwershaven, et al.</td>
-<td class="center">Expires 18 August 2024</td>
+<td class="center">Expires 26 December 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1049,12 +1049,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-vanbrouwershaven-acme-auto-discovery-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-02-15" class="published">15 February 2024</time>
+<time datetime="2024-06-24" class="published">24 June 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-08-18">18 August 2024</time></dd>
+<dd class="expires"><time datetime="2024-12-26">26 December 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1121,7 +1121,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 18 August 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 26 December 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1267,7 +1267,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-malicious-acme-servers" class="internal xref">Malicious ACME Servers</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3">
-                <p id="section-toc.1-1.9.2.3.1"><a href="#section-9.3" class="auto internal xref">9.3</a>.  <a href="#name-acme-keys" class="internal xref">ACME Keys</a></p>
+                <p id="section-toc.1-1.9.2.3.1"><a href="#section-9.3" class="auto internal xref">9.3</a>.  <a href="#name-authorization-of-acme-keys" class="internal xref">Authorization of ACME Keys</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.4">
                 <p id="section-toc.1-1.9.2.4.1"><a href="#section-9.4" class="auto internal xref">9.4</a>.  <a href="#name-use-of-dns-security" class="internal xref">Use of DNS Security</a></p>
@@ -1865,14 +1865,14 @@ To mitigate this risk, it is recommended that users who have multiple CAA record
 <p id="section-9.2-2">To minimize this risk, ACME clients must be written with a cautious and security-conscious approach when interacting with ACME servers. It is crucial not to blindly trust servers to behave securely and in accordance with the ACME protocol.<a href="#section-9.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="acme-keys">
+<div id="authorization-of-acme-keys">
 <section id="section-9.3">
-        <h3 id="name-acme-keys">
-<a href="#section-9.3" class="section-number selfRef">9.3. </a><a href="#name-acme-keys" class="section-name selfRef">ACME Keys</a>
+        <h3 id="name-authorization-of-acme-keys">
+<a href="#section-9.3" class="section-number selfRef">9.3. </a><a href="#name-authorization-of-acme-keys" class="section-name selfRef">Authorization of ACME Keys</a>
         </h3>
-<p id="section-9.3-1">To ensure a secure account binding per customer, it is essential that each customer possesses their own unique ACME key. The utilization of individual ACME keys allows for a distinct association between the customer's account and the established account binding.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
-<p id="section-9.3-2">If an account binding were to be established based on a shared ACME key, it could potentially lead to unauthorized users obtaining certificates using the same Certificate Authority (CA) based on the established account binding. This scenario poses a significant security risk and could result in the compromise of sensitive information or unauthorized certificate issuance.<a href="#section-9.3-2" class="pilcrow">¶</a></p>
-<p id="section-9.3-3">To mitigate this risk, it is crucial to enforce the use of individual ACME keys for each customer. This ensures that the account binding is securely linked to the respective customer's account, preventing unauthorized access or misuse by other users. By maintaining separate ACME keys per customer, the integrity and confidentiality of the account binding process are upheld, enhancing the overall security posture of the system.<a href="#section-9.3-3" class="pilcrow">¶</a></p>
+<p id="section-9.3-1">To ensure a secure account binding, it is essential that each customer be able to control and pre-approve the ACME account keys that are authorized to request certificates against their account, particularly for certificate types that have billing implications, or that have additional verification requirements beyond what can be done inline within the ACME protocol, such as OV, EV [<span>[<a href="#EVBRs" class="cite xref">EVBRs</a>]</span>], Qualified Website [<span>[<a href="#QWAC-ENISA" class="cite xref">QWAC-ENISA</a>]</span>], or Verified Mark Certificates [<span>[<a href="#VMCRequirements" class="cite xref">VMCRequirements</a>]</span>].<a href="#section-9.3-1" class="pilcrow">¶</a></p>
+<p id="section-9.3-2">In traditional ACME deployments, this binding is accomplished via External Account Binding (EAB) keys or via unique ACME account keys per CA account. In the deployments for which ACME auto-discovery is envisioned to be useful, these authorization mechanisms may not be appropriate because the ACME client may be under the control of a cloud service provider (CSP) who may use the same ACME client key for all requests across customer accounts and who does not know the customer's EAB key (and if it did, then it would not require an auto-discovery mechanism in the first place).<a href="#section-9.3-2" class="pilcrow">¶</a></p>
+<p id="section-9.3-3">The mechanism by which a CA obtains authorization to accept requests from a given ACME client key against a given CA account is outside the scope of this document and <span class="bcp14">MAY</span> be proprietary. Such a mechanism should be designed carefully to not lower the overall security of the system, and to not prevent CSPs from being able to rotate client keys.<a href="#section-9.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="use-of-dns-security">
@@ -1921,17 +1921,29 @@ To mitigate this risk, it is recommended that users who have multiple CAA record
 <a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="EVBRs">[EVBRs]</dt>
+        <dd>
+<span class="refAuthor">CA/Browser Forum</span>, <span class="refTitle">"Minimum Security Requirements for Issuance of Mark Certificates, v2.0.1"</span>, <time datetime="2024-05" class="refDate">May 2024</time>, <span>&lt;<a href="https://cabforum.org/working-groups/server/extended-validation/documents/CA-Browser-Forum-EV-Guidelines-2.0.1.pdf">https://cabforum.org/working-groups/server/extended-validation/documents/CA-Browser-Forum-EV-Guidelines-2.0.1.pdf</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.tweedale-acme-discovery">[I-D.tweedale-acme-discovery]</dt>
         <dd>
 <span class="refAuthor">Tweedale, F.</span>, <span class="refTitle">"Automated Certificate Management Environment (ACME) Service Discovery"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-tweedale-acme-discovery-01</span>, <time datetime="2020-11-16" class="refDate">16 November 2020</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-tweedale-acme-discovery-01">https://datatracker.ietf.org/doc/html/draft-tweedale-acme-discovery-01</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="QWAC-ENISA">[QWAC-ENISA]</dt>
+        <dd>
+<span class="refAuthor">European Union Aguncy for Cybersecurity (ENISA)</span>, <span class="refTitle">"Qualified Website Authentication Certificates"</span>, <time datetime="2016-05" class="refDate">May 2016</time>, <span>&lt;<a href="https://www.enisa.europa.eu/publications/qualified-website-authentication-certificates">https://www.enisa.europa.eu/publications/qualified-website-authentication-certificates</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC5785">[RFC5785]</dt>
         <dd>
 <span class="refAuthor">Nottingham, M.</span> and <span class="refAuthor">E. Hammer-Lahav</span>, <span class="refTitle">"Defining Well-Known Uniform Resource Identifiers (URIs)"</span>, <span class="seriesInfo">RFC 5785</span>, <span class="seriesInfo">DOI 10.17487/RFC5785</span>, <time datetime="2010-04" class="refDate">April 2010</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5785">https://www.rfc-editor.org/rfc/rfc5785</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8657">[RFC8657]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Landau, H.</span>, <span class="refTitle">"Certification Authority Authorization (CAA) Record Extensions for Account URI and Automatic Certificate Management Environment (ACME) Method Binding"</span>, <span class="seriesInfo">RFC 8657</span>, <span class="seriesInfo">DOI 10.17487/RFC8657</span>, <time datetime="2019-11" class="refDate">November 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8657">https://www.rfc-editor.org/rfc/rfc8657</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="VMCRequirements">[VMCRequirements]</dt>
+      <dd>
+<span class="refAuthor">BIMI Group</span>, <span class="refTitle">"Guidelines for the Issuance and Management of Extended Validation Certificates"</span>, <time datetime="2024-03" class="refDate">March 2024</time>, <span>&lt;<a href="https://bimigroup.org/resources/VMC_Requirements_latest.pdf">https://bimigroup.org/resources/VMC_Requirements_latest.pdf</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>

@@ -5,13 +5,13 @@
 ACME                                                P. van Brouwershaven
 Internet-Draft                                              M. Ounsworth
 Intended status: Standards Track                                 Entrust
-Expires: 18 August 2024                                       C. Bonnell
+Expires: 26 December 2024                                     C. Bonnell
                                                                 DigiCert
                                                              I. Barreira
                                                                  Sectigo
                                                                Q. Misell
                                                                 AS207960
-                                                        15 February 2024
+                                                            24 June 2024
 
 
                Auto-discovery mechanism for ACME servers
@@ -72,7 +72,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 August 2024.
+   This Internet-Draft will expire on 26 December 2024.
 
 Copyright Notice
 
@@ -123,7 +123,7 @@ Table of Contents
        9.1.1.  Unexpected Certificate Issuance
        9.1.2.  Issuance by the ‘wrong’ authorized CA
      9.2.  Malicious ACME Servers
-     9.3.  ACME Keys
+     9.3.  Authorization of ACME Keys
      9.4.  Use of DNS Security
    10. References
      10.1.  Normative References
@@ -829,27 +829,33 @@ Table of Contents
    It is crucial not to blindly trust servers to behave securely and in
    accordance with the ACME protocol.
 
-9.3.  ACME Keys
+9.3.  Authorization of ACME Keys
 
-   To ensure a secure account binding per customer, it is essential that
-   each customer possesses their own unique ACME key.  The utilization
-   of individual ACME keys allows for a distinct association between the
-   customer's account and the established account binding.
+   To ensure a secure account binding, it is essential that each
+   customer be able to control and pre-approve the ACME account keys
+   that are authorized to request certificates against their account,
+   particularly for certificate types that have billing implications, or
+   that have additional verification requirements beyond what can be
+   done inline within the ACME protocol, such as OV, EV [[EVBRs]],
+   Qualified Website [[QWAC-ENISA]], or Verified Mark Certificates
+   [[VMCRequirements]].
 
-   If an account binding were to be established based on a shared ACME
-   key, it could potentially lead to unauthorized users obtaining
-   certificates using the same Certificate Authority (CA) based on the
-   established account binding.  This scenario poses a significant
-   security risk and could result in the compromise of sensitive
-   information or unauthorized certificate issuance.
+   In traditional ACME deployments, this binding is accomplished via
+   External Account Binding (EAB) keys or via unique ACME account keys
+   per CA account.  In the deployments for which ACME auto-discovery is
+   envisioned to be useful, these authorization mechanisms may not be
+   appropriate because the ACME client may be under the control of a
+   cloud service provider (CSP) who may use the same ACME client key for
+   all requests across customer accounts and who does not know the
+   customer's EAB key (and if it did, then it would not require an auto-
+   discovery mechanism in the first place).
 
-   To mitigate this risk, it is crucial to enforce the use of individual
-   ACME keys for each customer.  This ensures that the account binding
-   is securely linked to the respective customer's account, preventing
-   unauthorized access or misuse by other users.  By maintaining
-   separate ACME keys per customer, the integrity and confidentiality of
-   the account binding process are upheld, enhancing the overall
-   security posture of the system.
+   The mechanism by which a CA obtains authorization to accept requests
+   from a given ACME client key against a given CA account is outside
+   the scope of this document and MAY be proprietary.  Such a mechanism
+   should be designed carefully to not lower the overall security of the
+   system, and to not prevent CSPs from being able to rotate client
+   keys.
 
 9.4.  Use of DNS Security
 
@@ -892,12 +898,24 @@ Table of Contents
 
 10.2.  Informative References
 
+   [EVBRs]    CA/Browser Forum, "Minimum Security Requirements for
+              Issuance of Mark Certificates, v2.0.1", May 2024,
+              <https://cabforum.org/working-groups/server/extended-
+              validation/documents/CA-Browser-Forum-EV-Guidelines-
+              2.0.1.pdf>.
+
    [I-D.tweedale-acme-discovery]
               Tweedale, F., "Automated Certificate Management
               Environment (ACME) Service Discovery", Work in Progress,
               Internet-Draft, draft-tweedale-acme-discovery-01, 16
               November 2020, <https://datatracker.ietf.org/doc/html/
               draft-tweedale-acme-discovery-01>.
+
+   [QWAC-ENISA]
+              European Union Aguncy for Cybersecurity (ENISA),
+              "Qualified Website Authentication Certificates", May 2016,
+              <https://www.enisa.europa.eu/publications/qualified-
+              website-authentication-certificates>.
 
    [RFC5785]  Nottingham, M. and E. Hammer-Lahav, "Defining Well-Known
               Uniform Resource Identifiers (URIs)", RFC 5785,
@@ -909,6 +927,12 @@ Table of Contents
               Certificate Management Environment (ACME) Method Binding",
               RFC 8657, DOI 10.17487/RFC8657, November 2019,
               <https://www.rfc-editor.org/rfc/rfc8657>.
+
+   [VMCRequirements]
+              BIMI Group, "Guidelines for the Issuance and Management of
+              Extended Validation Certificates", March 2024,
+              <https://bimigroup.org/resources/
+              VMC_Requirements_latest.pdf>.
 
 Acknowledgments
 
