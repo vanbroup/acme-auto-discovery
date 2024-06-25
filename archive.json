@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-23T00:07:59.195869+00:00",
+  "timestamp": "2024-06-25T00:07:07.087246+00:00",
   "repo": "vanbroup/acme-auto-discovery",
   "labels": [
     {
@@ -878,6 +878,32 @@
       "mergeCommit": {
         "oid": "5fad0872ea0b7c4b2f2157c96269f356c5b79a5f"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 22,
+      "id": "PR_kwDOJ4NlCM5zYuUJ",
+      "title": "Updated the ACME Client Keys security consideration",
+      "url": "https://github.com/vanbroup/acme-auto-discovery/pull/22",
+      "state": "OPEN",
+      "author": "ounsworth",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #18 \r\n\r\nThis change might be a bit contentious, and gets at a number of points raised by TimH. \r\nThis should be reviewed by the author group + Tim.",
+      "createdAt": "2024-06-24T15:56:40Z",
+      "updatedAt": "2024-06-24T15:57:21Z",
+      "baseRepository": "vanbroup/acme-auto-discovery",
+      "baseRefName": "main",
+      "baseRefOid": "d78543bc01657c7c4f2ed49881246aa0a684c17c",
+      "headRepository": "vanbroup/acme-auto-discovery",
+      "headRefName": "mikeo_18",
+      "headRefOid": "714dfb5a00a3f2736900beb2ab25867d9b933db0",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
