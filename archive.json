@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-25T00:07:07.087246+00:00",
+  "timestamp": "2024-06-27T00:07:39.710753+00:00",
   "repo": "vanbroup/acme-auto-discovery",
   "labels": [
     {
@@ -531,15 +531,17 @@
       "id": "I_kwDOJ4NlCM5vFdhj",
       "title": "Add security considerations about checking ACME 'url'",
       "url": "https://github.com/vanbroup/acme-auto-discovery/issues/17",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "ounsworth",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "CBonnell"
+      ],
       "labels": [],
       "body": "Corey Bonnell pointed out that because this scheme will result in ACME clients creating new accounts more frequently than they do now, there is greater potential for MitM attacks where an attacker intercepts ACME new-account reqs and replaces the account key with their own; then they have full control of the ACME account.\r\n\r\nThe only real prevention of this is for CAs to be diligent about checking the \"url\" ACME JWT header and make sure that it matches the CA / ACME server's public URL.\r\n\r\nhttps://www.rfc-editor.org/rfc/rfc8555.html#section-6.4.1",
       "createdAt": "2023-08-23T17:00:28Z",
-      "updatedAt": "2024-06-21T12:37:42Z",
-      "closedAt": null,
+      "updatedAt": "2024-06-26T11:39:34Z",
+      "closedAt": "2024-06-26T11:39:34Z",
       "comments": [
         {
           "author": "vanbroup",
@@ -561,6 +563,20 @@
           "body": "@CBonnell can you have another look at this issue, if you feel that this needs to be included in the implementation/security considerations can you create a pull request for this or let us know if it can be closed.\r\n\r\nWe would like to incorporate this for the next IETF meeting, the deadline for submissions is July 8, 2024.",
           "createdAt": "2024-06-21T12:29:47Z",
           "updatedAt": "2024-06-21T12:29:47Z"
+        },
+        {
+          "author": "CBonnell",
+          "authorAssociation": "NONE",
+          "body": "@vanbroup assign this issue to me, I'll work on making some language this week.",
+          "createdAt": "2024-06-25T16:13:51Z",
+          "updatedAt": "2024-06-25T16:13:51Z"
+        },
+        {
+          "author": "CBonnell",
+          "authorAssociation": "NONE",
+          "body": "I forgot that ACME uses Key Authorizations that mix in a thumbprint of the account key in the challenge token. So even if an ACME server does not follow the guidance in section 6.4 of RFC 8555 in regard to verification of the request URL, it would not be possible for a malicious ACME \"proxy\" to compel a client to prepare a DCV challenge that would enable the malicious proxy to request a certificate with its own key in the CSR after DCV has completed.\r\n\r\nAs such, I think this can be closed.",
+          "createdAt": "2024-06-26T11:27:31Z",
+          "updatedAt": "2024-06-26T11:27:31Z"
         }
       ]
     },
@@ -893,7 +909,7 @@
       "labels": [],
       "body": "Closes #18 \r\n\r\nThis change might be a bit contentious, and gets at a number of points raised by TimH. \r\nThis should be reviewed by the author group + Tim.",
       "createdAt": "2024-06-24T15:56:40Z",
-      "updatedAt": "2024-06-24T15:57:21Z",
+      "updatedAt": "2024-06-25T08:05:34Z",
       "baseRepository": "vanbroup/acme-auto-discovery",
       "baseRefName": "main",
       "baseRefOid": "d78543bc01657c7c4f2ed49881246aa0a684c17c",
@@ -905,7 +921,132 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOJ4NlCM5_agH_",
+          "commit": {
+            "abbreviatedOid": "714dfb5"
+          },
+          "author": "vanbroup",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "I think the changes look good, a few minor suggestions.",
+          "createdAt": "2024-06-25T07:25:20Z",
+          "updatedAt": "2024-06-25T07:36:11Z",
+          "comments": [
+            {
+              "originalPosition": 53,
+              "body": "Do we really need to link to this information and do we want to include links to versions that will be out of date even before publication of the draft itself?\r\n\r\nIf we want to keep this information, I have correct the information and links to the current latest version.\r\n\r\n```suggestion\r\n  BR:\r\n    title: \"Baseline Requirements for the Issuance and Management of Publicly\u2010Trusted TLS Server Certificates\"\r\n    target: \"https://cabforum.org/working-groups/server/baseline-requirements/requirements/\"\r\n    author:\r\n      - org: CA/Browser Forum\r\n  EVG:\r\n    title: \"Guidelines for the Issuance and Management of Extended Validation Certificates\"\r\n    target: \"https://cabforum.org/working-groups/server/extended-validation/guidelines/\"\r\n    author:\r\n      - org: CA/Browser Forum\r\n  QWAC:\r\n    title: \"Electronic Signatures and Infrastructures (ESI); Policy and security requirements for Trust Service Providers issuing certificates; Part 2: Requirements for trust service providers issuing EU qualified certificates\"\r\n    target: \"https://www.etsi.org/deliver/etsi_en/319400_319499/31941102/\"\r\n    author:\r\n      - org: ETSI\r\n  VMC:\r\n    title: \"Guidelines for the Issuance and Management of Extended Validation Certificates\"\r\n    target: \"https://bimigroup.org/resources/VMC_Requirements_latest.pdf\"\r\n    author:\r\n      - org: BIMI Group\r\n```",
+              "createdAt": "2024-06-25T07:25:20Z",
+              "updatedAt": "2024-06-25T07:36:11Z"
+            },
+            {
+              "originalPosition": 65,
+              "body": "Inline with the suggestion above:\r\n\r\n```suggestion\r\nTo ensure a secure account binding, it is essential that each customer is able to control and pre-approve the ACME account keys that are authorized to request certificates against their account, particularly for certificate types that have billing implications, or that have additional verification requirements beyond what can be done inline within the ACME protocol, such as OV [[BR]], EV [[EVG]], Qualified Website [[QWAC]], or Verified Mark Certificates [[VMC]].\r\n```",
+              "createdAt": "2024-06-25T07:27:08Z",
+              "updatedAt": "2024-06-25T07:36:11Z"
+            },
+            {
+              "originalPosition": 68,
+              "body": "```suggestion\r\nIn traditional ACME deployments, this binding is accomplished via External Account Binding (EAB) keys or via unique ACME account keys per CA account. In the deployments for which ACME auto-discovery is envisioned to be useful, these authorization mechanisms may not be appropriate because the ACME client may be under the control of a Cloud Service Provider (CSP) who may use the same ACME client key for all requests across customer accounts and who does not know the customer's EAB key (and if it did, then it would not require an auto-discovery mechanism in the first place).\r\n```",
+              "createdAt": "2024-06-25T07:29:51Z",
+              "updatedAt": "2024-06-25T07:36:11Z"
+            },
+            {
+              "originalPosition": 71,
+              "body": "Should we make a reference here to the [acme-client-discovery](https://github.com/vanbroup/acme-client-discovery) draft?",
+              "createdAt": "2024-06-25T07:31:28Z",
+              "updatedAt": "2024-06-25T07:36:12Z"
+            },
+            {
+              "originalPosition": 71,
+              "body": "Is this relevant or normative?\r\n\r\n```suggestion\r\nThe mechanism by which a CA obtains authorization to accept requests from a given ACME client key against a given CA account is outside the scope of this document. Such a mechanism should be designed carefully to not lower the overall security of the system, and to not prevent CSPs from being able to rotate client keys.\r\n```",
+              "createdAt": "2024-06-25T07:32:49Z",
+              "updatedAt": "2024-06-25T07:36:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJ4NlCM5_bAaZ",
+          "commit": {
+            "abbreviatedOid": "714dfb5"
+          },
+          "author": "barrini",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-25T07:57:38Z",
+          "updatedAt": "2024-06-25T07:57:38Z",
+          "comments": [
+            {
+              "originalPosition": 53,
+              "body": "Agreed",
+              "createdAt": "2024-06-25T07:57:38Z",
+              "updatedAt": "2024-06-25T07:57:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJ4NlCM5_bB_b",
+          "commit": {
+            "abbreviatedOid": "714dfb5"
+          },
+          "author": "barrini",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-25T08:00:29Z",
+          "updatedAt": "2024-06-25T08:00:29Z",
+          "comments": [
+            {
+              "originalPosition": 65,
+              "body": "I\u00b4d remove the \"particularly for certificate types that have billing implications\" because IMO that\u00b4s dependant on the CA if the\u00b4d like to charge for it but it\u00b4s not part of a technical implementation.",
+              "createdAt": "2024-06-25T08:00:29Z",
+              "updatedAt": "2024-06-25T08:00:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJ4NlCM5_bDgl",
+          "commit": {
+            "abbreviatedOid": "714dfb5"
+          },
+          "author": "barrini",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-25T08:02:52Z",
+          "updatedAt": "2024-06-25T08:02:52Z",
+          "comments": [
+            {
+              "originalPosition": 68,
+              "body": "Another potentail editorial comment. I\u00b4d remove the \"In traditional\" because it means that could be ACME deployments not based on the standard which is not our case as per the next sentence.",
+              "createdAt": "2024-06-25T08:02:52Z",
+              "updatedAt": "2024-06-25T08:02:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJ4NlCM5_bFGj",
+          "commit": {
+            "abbreviatedOid": "714dfb5"
+          },
+          "author": "barrini",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-25T08:05:34Z",
+          "updatedAt": "2024-06-25T08:05:34Z",
+          "comments": [
+            {
+              "originalPosition": 71,
+              "body": "I see a potential sync problem if we refer another draft that may have a different progress or not be even published.",
+              "createdAt": "2024-06-25T08:05:34Z",
+              "updatedAt": "2024-06-25T08:05:34Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
