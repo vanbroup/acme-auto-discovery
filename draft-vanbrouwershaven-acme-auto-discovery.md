@@ -44,7 +44,6 @@ author:
     code: K2K 3G5
     email: mike.ounsworth@entrust.com
 
-
   - ins: C. Bonnell
     name: Corey Bonnell
     organization: 'DigiCert, Inc'
